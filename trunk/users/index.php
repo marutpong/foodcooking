@@ -50,7 +50,7 @@
 			useRp : true,
 			rp : 10,
 			showTableToggleBtn : true,
-			width : 700,
+			width : 800,
 			height : 300
 		});
 
@@ -85,7 +85,7 @@
 				$.fancybox.open({
 					href : 'addMul.php',
 					type : 'iframe',
-					width  : 400,
+					width  : 654,
 					height : 300,
 					fitToView   : true,
 					autoSize    : false,
