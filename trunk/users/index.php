@@ -85,8 +85,8 @@
 				$.fancybox.open({
 					href : 'addMul.php',
 					type : 'iframe',
-					width  : 654,
-					height : 300,
+					width  : 700,
+					height : 350,
 					fitToView   : true,
 					autoSize    : false,
 					padding: 5,
@@ -98,6 +98,7 @@
 						window.location.reload();
 					}
 				});
+				//window.location = "/food/foodcooking/users/addMul.php";
 
 			} else if (com == 'Edit') {
 				if ($('.trSelected', grid).length==0){
