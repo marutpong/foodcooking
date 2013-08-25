@@ -3,7 +3,7 @@ include 'connectDB.php';
 
 $page = isset($_POST['page']) ? $_POST['page'] : 1;
 $rp = isset($_POST['rp']) ? $_POST['rp'] : 10;
-$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : 'iid';
+$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : 'fid';
 $sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : 'desc';
 $query = isset($_POST['query']) ? $_POST['query'] : false;
 $qtype = isset($_POST['qtype']) ? $_POST['qtype'] : false;
@@ -15,7 +15,7 @@ $rp = $_POST['rp'];
 $sortname = $_POST['sortname'];
 $sortorder = $_POST['sortorder'];
 
-if (!$sortname) $sortname = 'iid';
+if (!$sortname) $sortname = 'fid';
 if (!$sortorder) $sortorder = 'desc';
 
 $sort = "ORDER BY $sortname $sortorder";
