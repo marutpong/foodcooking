@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Tools</title>
+	<title>Ingredient</title>
 	<link rel="stylesheet" href="css/style.css" /> 
 	<script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" src="js/flexigrid.js"></script>
@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="./fancyapps/source/jquery.fancybox.css" media="screen" />
 </head>
 <body>
-<h2>Tools</h2>
+<h2>Ingredient</h2>
 <div class="fancybox2" style="display: none">ddddddddd</div>
 	<table class="flexme3" style="display: none"></table>
 	<script type="text/javascript">
@@ -22,8 +22,8 @@
 			url : 'post-xml.php',
 			dataType : 'xml',
 			colModel : [ 
-				{ display : 'ลำดับ', name : 'TID', width : 40, sortable : true, align : 'center' }, 
-				{ display : 'ชื่ออุปกรณ์', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
+				{ display : 'ID อาหาร', name : 'FID', width : 130, sortable : true, align : 'center' }, 
+				{ display : 'ID เครื่องมือ', name : 'TID', width : 130, sortable : true, align : 'left', } 
 			],
 			buttons : [ 
 				{ name : 'Add', bclass : 'add', onpress : test}, 
@@ -32,14 +32,13 @@
 				{separator : true}
 			],
 			searchitems : [ 
-				{ display : 'ลำดับ', name : 'TID'}, 
-				{ display : 'ชื่ออุปกรณ์', name : 'NAME', isdefault : true},
-			
+				{ display : 'ID อาหาร', name : 'FID', isdefault : true}, 
+				{ display : 'ID เครื่องมือ', name : 'TID'}
 			],
-			sortname : "TID",
+			sortname : "FID",
 			sortorder : "desc",
 			usepager : true,
-			title : 'Tools',
+			title : 'USE',
 			useRp : true,
 			rp : 10,
 			showTableToggleBtn : true,
@@ -78,7 +77,7 @@
 				$.fancybox.open({
 					href : 'addMul.php',
 					type : 'iframe',
-					width  : 300,
+					width  : 400,
 					height : 300,
 					fitToView   : true,
 					autoSize    : false,

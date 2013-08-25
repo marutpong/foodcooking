@@ -168,25 +168,26 @@
 <body>
  
 <div class="ui-widget">
+
+<form method="get" action="">
   <label>Your preferred programming language: </label>
-  <select id="combobox" name="" required >
-  <option value=""></option>
-  <?
-  	include 'connectDB.php'; 
-  	$strSQL = "SELECT * FROM IINGREDIENT";
-  	$objParse = oci_parse($objConnect, $strSQL);
-    $objExecute = oci_execute($objParse, OCI_DEFAULT);
-	$rows = array();
-    while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-		
-
-  ?>
-    <option value="<?=$row['IID']?>"><?=$row['NAME']?></option>
-    <?
-	}
+  <select id="combobox" name="name[]" required >
+  	<option value=""></option>
+  	<?
+		include 'connectDB.php'; 
+		$strSQL = "SELECT * FROM IINGREDIENT";
+		$objParse = oci_parse($objConnect, $strSQL);
+		$objExecute = oci_execute($objParse, OCI_DEFAULT);
+		$rows = array();
+		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 	?>
-
-  </select>
+    	<option value="<?=$row['IID']?>"><?=$row['NAME']?></option>
+    <?
+		}
+	?>
+  </select><br>
+  <input type="submit"></input>
+  </form>
 </div>
  
  
