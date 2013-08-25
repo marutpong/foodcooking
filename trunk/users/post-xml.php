@@ -50,12 +50,14 @@ $strSQL = "
     while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 		$rows[] = $row;
 }
+/*
 // Diasplay as XML
 header("Content-type: text/xml");
 $xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 $xml .= "<rows>";
 $xml .= "<page>$page</page>";
 $xml .= "<total>$total</total>";
+
 foreach($rows AS $row){
 	$xml .= "<row id='".$row['ID']."'>";
 	$xml .= "<cell><![CDATA[".$row['ID']."]]></cell>";
@@ -64,27 +66,29 @@ foreach($rows AS $row){
 	$xml .= "<cell><![CDATA[".$row['PASSWORD']."]]></cell>";
 	$xml .= "<cell><![CDATA[".$row['GENDER']."]]></cell>";
 	$xml .= "<cell><![CDATA[".$row['BIRTHDATE']."]]></cell>";
-	$xml .= "<cell><![CDATA[".$row['LATITUDE']."]]></cell>";
-	$xml .= "<cell><![CDATA[".$row['LONGITUDE']."]]></cell>";
 	$xml .= "</row>";
 }
+
 $xml .= "</rows>";
 echo $xml;
+*/
 
 //Display as JSON
 //header("Content-type: application/json");
-/*$jsonData = array('page'=>$page,'total'=>$total,'rows'=>array());
+$jsonData = array('page'=>$page,'total'=>$total,'rows'=>array());
 foreach($rows AS $row){
 	//If cell's elements have named keys, they must match column names
 	//Only cell's with named keys and matching columns are order independent.
-	$entry = array('IID'=>$row['ID'],
+	$entry = array('ID'=>$row['ID'],
 		'cell'=>array(
 			'ID'=>$row['ID'],
 			'NAME'=>$row['NAME'],
 			'USERNAME'=>$row['USERNAME'],
-			'PASSWORD'=>$row['PASSWORD']		),
+			'PASSWORD'=>$row['PASSWORD'],
+			'GENDER'=>$row['GENDER'],
+			'BIRTHDATE'=>$row['BIRTHDATE']
+			),
 	);
 	$jsonData['rows'][] = $entry;
 }
 echo json_encode($jsonData);
-*/

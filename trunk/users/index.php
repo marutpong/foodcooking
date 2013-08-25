@@ -20,7 +20,7 @@
 	<script type="text/javascript">
 		$(".flexme3").flexigrid({
 			url : 'post-xml.php',
-			dataType : 'xml',
+			dataType : 'json',
 			
 			colModel : [ 
 				{ display : 'ลำดับ', name : 'ID', width : 40, sortable : true, align : 'center' }, 
