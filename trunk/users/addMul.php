@@ -24,25 +24,37 @@ $(document).ready(function() {
 </head>
 <body>
 <?
-if (isset($_POST['name']) && isset($_POST['quantity']) && isset($_POST['unit']) && $_POST['confirm']==1){
+if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && $_POST['confirm']==1){
 	$name = $_POST['name'];
-	$quantity = $_POST['quantity'];
-	$unit = $_POST['unit'];
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	$gender = $_POST['gender'];
+	$birthdate = $_POST['birthdate'];
 	$count = 0;
 	$num = count($_POST['name']);
 	include 'connectDB.php'; 
-	for ($i=0;$i<$num;$i++){
-		if (is_numeric($_POST['quantity'][$i])){	
-			$sql = "INSERT INTO $table (NAME, QUANTITY, UNIT) VALUES ('$name[$i]','$quantity[$i]','$unit[$i]')";
+	
+	$chkname = 0;
+	if(isset($_POST['username'])){
+		$sql = "select * from iusers where name = '$username'";
+		$strSQL = $sql;
+		$objParse = oci_parse($objConnect, $strSQL);
+        $objExecute = oci_execute($objParse, OCI_DEFAULT);
+		$total = oci_fetch_all($objParse, $Result);
+	}
+	echo $total;
+	//for ($i=0;$i<$num;$i++){
+		if ($total == 0){	
+			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate) VALUES ('$name','$username','$password','$gender','$birthdate')";
 			$strSQL = $sql;
-			//echo $sql;
+			echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
-			$objExecute = oci_execute($objParse);
+			$objExecute = oci_execute($objParse, OCI_DEFAULT);
 			if($objExecute){
 				$count++;
 			}
 		}
-	}
+	//}
 	echo '<br><br><br><center><div class="textC1">';
 	if($objExecute){
 		echo 'Add Succesful '.$count.' items<P>';
@@ -72,7 +84,6 @@ if (isset($_POST['name']) && isset($_POST['quantity']) && isset($_POST['unit']) 
 		  <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2"></td>
         </tr>
     </table>
-	  <div class="button_addmore" id="addmore" tabindex="4" ><img src="css/images/add.png" width="16" height="16"> add more</div>
 </div>
 	<footer>
 	  <p>
