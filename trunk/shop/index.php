@@ -22,7 +22,7 @@
 			url : 'post-xml.php',
 			dataType : 'xml',
 			colModel : [ 
-				{ display : 'รหัสร้านค้า', name : 'SID', width : 40, sortable : true, align : 'center' }, 
+				{ display : 'รหัสร้านค้า', name : 'SID', width : 50, sortable : true, align : 'center' }, 
 				{ display : 'ชื่อร้านค้า', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
 				{ display : 'ละติจูด', name : 'LATITUDE', width : 120, sortable : true, align : 'left' }, 
 				{ display : 'ลองจิจูด', name : 'LONGITUDE', width : 130, sortable : true, align : 'left', } 
@@ -81,8 +81,8 @@
 				$.fancybox.open({
 					href : 'addMul.php',
 					type : 'iframe',
-					width  : 400,
-					height : 300,
+					width  : 600,
+					height : 400,
 					fitToView   : true,
 					autoSize    : false,
 					padding: 5,
@@ -115,8 +115,9 @@
 					openSpeed  : 150,
 					closeEffect : 'elastic',
 					closeSpeed  : 150,
-					width  : 500,
-					height : 1000,
+					width  : 455,
+					height : 400,
+					autoSize    : false,
 					afterClose : function() {
 						window.location.reload();
 					}

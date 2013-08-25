@@ -18,6 +18,9 @@ $(document).ready(function() {
         </tr>';
 			$('#dynamic_tb').append(htmlStr);
 		});
+		$('#button_sub').click(function () {
+			$('#googleMap').show();
+		});
 
 	});
 var checkNum = function(evt) {
@@ -25,6 +28,48 @@ var checkNum = function(evt) {
 			alert("No negative values"); this.value = ""; this.focus(); 
 		});
 }
+</script>
+<script
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
+</script>
+<script>
+var map;
+var myCenter=new google.maps.LatLng(18.769814809450903,98.96072387695312);
+var markers;
+var close =0;
+function initialize()
+{
+var mapProp = {
+  center:myCenter,
+  zoom:10,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+
+  map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+  google.maps.event.addListener(map, 'click', function(event) {
+	placeMarker(event.latLng);
+  });
+}
+
+function placeMarker(location) {
+	if(close==0){
+  //marker.setMap(null);
+  marker = new google.maps.Marker({
+    position: location,
+    map: map,
+  });
+  var infowindow = new google.maps.InfoWindow({
+    content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+  });
+  infowindow.open(map,marker);
+  $('#latitude').val(location.lat());
+  $('#longitude').val(location.lng());
+  close =1;
+  }
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 <body>
@@ -70,12 +115,13 @@ if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitu
         </tr>
 	    <tr>
 	  
-	      <td><input name="name[]" type="text"  required class="input number" id="name[]" tabindex="2" ></td>
-	      <td><input name="latitude[]" type="number" required class="input" id="latitude[]" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>
-		  <td><input name="longitude[]" type="number" required class="input" id="longitude[]" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>
+	      <td><input name="name[]" type="text"  required class="input number" id="name[]" tabindex="2"  > </td>
+	      <td><input name="latitude[]" type="number" required class="input" id="latitude" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>
+		  <td><input name="longitude[]" type="number" required class="input" id="longitude" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>
+		  <td><input type="button" id="button_sub" class="button_sub" value="เลือกพิกัด" tabindex="4" ></td>
         </tr>
     </table>
-	  <div class="button_addmore" id="addmore" tabindex="4" ><img src="css/images/add.png" width="16" height="16"> add more</div>
+	<div id="googleMap" style="width:300px;height:200px;display:none;"></div>
 </div>
 	<footer>
 	  <p>
