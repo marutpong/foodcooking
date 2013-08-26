@@ -70,9 +70,10 @@ function placeMarker(location) {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
 </script>
 </head>
-<body>
+<body onload="initialize();">
 <?
 if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitude']) && $_POST['confirm']==1){
 	$name = $_POST['name'];
@@ -121,14 +122,12 @@ if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitu
 		  <td><input type="button" id="button_sub" class="button_sub" value="เลือกพิกัด" tabindex="4" ></td>
         </tr>
     </table>
-	<div id="googleMap" style="width:300px;height:200px;display:none;"></div>
+	<div id="googleMap" style="width:400px;height:300px;display:none;"></div>
 </div>
 	<footer>
-	  <p>
 	    <input name="confirm" type="hidden" value="1">
 	    <br>
 <center><input type="submit" class="button_sub" value="เพิ่ม" tabindex="4"></center>
-      </p>
 </footer>
 </form>
 </div>

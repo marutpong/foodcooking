@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="./fancyapps/source/jquery.fancybox.css" media="screen" />
 </head>
 <body>
-<h2>Ingredient</h2>
+<h2>Contain</h2>
 <div class="fancybox2" style="display: none">ddddddddd</div>
 	<table class="flexme3" style="display: none"></table>
 	<script type="text/javascript">
@@ -23,7 +23,9 @@
 			dataType : 'xml',
 			colModel : [ 
 				{ display : 'ID อาหาร', name : 'FID', width : 130, sortable : true, align : 'center' }, 
-				{ display : 'ID เครื่องมือ', name : 'TID', width : 130, sortable : true, align : 'left', } 
+				{ display : 'ID ส่วนผสม', name : 'IID', width : 130, sortable : true, align : 'center' }, 
+				{ display : 'จำนวน', name : 'QUANTITY', width : 130, sortable : true, align : 'center' }, 
+				{ display : 'หน่วย', name : 'UNIT', width : 130, sortable : true, align : 'left', } 
 			],
 			buttons : [ 
 				{ name : 'Add', bclass : 'add', onpress : test}, 
@@ -32,13 +34,12 @@
 				{separator : true}
 			],
 			searchitems : [ 
-				{ display : 'ID อาหาร', name : 'FID', isdefault : true}, 
-				{ display : 'ID เครื่องมือ', name : 'TID'}
+				{ display : 'ID อาหาร', name : 'FID', isdefault : true}
 			],
 			sortname : "FID",
 			sortorder : "desc",
 			usepager : true,
-			title : 'USE',
+			title : 'Contain',
 			useRp : true,
 			rp : 10,
 			showTableToggleBtn : true,

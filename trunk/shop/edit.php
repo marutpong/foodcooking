@@ -6,64 +6,39 @@
 <link href="css/mystyle.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="js/jquery.numeric.js"></script>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#name').focus();
-	});
-	var checkNum = function(evt) {
-		$(evt).numeric({ negative: false }, function() { 
-			alert("No negative values"); this.value = ""; this.focus(); 
-		});
-		$('#button_sub').click(function () {
-			$('#googleMap').show();
-		});
-	}
-</script>
-</script>
-<script
-src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
-</script>
-<script>
-var map;
-var myCenter=new google.maps.LatLng(18.769814809450903,98.96072387695312);
-var markers;
-var close =0;
-function initialize()
-{
-var mapProp = {
-  center:myCenter,
-  zoom:10,
-  mapTypeId:google.maps.MapTypeId.ROADMAP
-  };
 
-  map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+function initialize ()
+   {
+   Gloucester = new google.maps.LatLng (42.6159285, -70.6619888);
 
-  google.maps.event.addListener(map, 'click', function(event) {
-	placeMarker(event.latLng);
-  });
-}
+   myOptions = 
+      {
+      zoom: 14,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      center: Gloucester,
+      streetViewControl: false
+      }
+   
+   map = new google.maps.Map (document.getElementById ("map_canvas"), myOptions);
 
-function placeMarker(location) {
-	if(close==0){
-  //marker.setMap(null);
-  marker = new google.maps.Marker({
-    position: location,
-    map: map,
-  });
-  var infowindow = new google.maps.InfoWindow({
-    content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
-  });
-  infowindow.open(map,marker);
-  $('#latitude').val(location.lat());
-  $('#longitude').val(location.lng());
-  close =1;
-  }
-}
+   marker = new google.maps.Marker ({position: Gloucester, title: "Gloucester, MA"});
+   marker.setMap (map);
+   marker.setDraggable (true);
 
-google.maps.event.addDomListener(window, 'load', initialize);
+   google.maps.event.addListener(marker, "dragend", function(event) {
+
+   var point = marker.getPosition();
+   map.panTo(point);
+
+    });
+   }
+
 </script>
 </head>
-<body>
+<body style="margin:0px; padding:0px;" onload="initialize();">
 <?
 	if (isset($_POST['sid']) && isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitude']) && $_POST['confirm']==2) {
 	$count = 0;
