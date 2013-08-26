@@ -1,9 +1,9 @@
-﻿<?php
+<?php
 include 'connectDB.php';
 
 $page = isset($_POST['page']) ? $_POST['page'] : 1;
 $rp = isset($_POST['rp']) ? $_POST['rp'] : 10;
-$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : 'id';
+$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : 'ID';
 $sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : 'desc';
 $query = isset($_POST['query']) ? $_POST['query'] : false;
 $qtype = isset($_POST['qtype']) ? $_POST['qtype'] : false;
@@ -15,7 +15,7 @@ $rp = $_POST['rp'];
 $sortname = $_POST['sortname'];
 $sortorder = $_POST['sortorder'];
 
-if (!$sortname) $sortname = 'id';
+if (!$sortname) $sortname = 'ID';
 if (!$sortorder) $sortorder = 'desc';
 
 $sort = "ORDER BY $sortname $sortorder";
@@ -50,45 +50,38 @@ $strSQL = "
     while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 		$rows[] = $row;
 }
-/*
 // Diasplay as XML
 header("Content-type: text/xml");
 $xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 $xml .= "<rows>";
 $xml .= "<page>$page</page>";
 $xml .= "<total>$total</total>";
-
 foreach($rows AS $row){
 	$xml .= "<row id='".$row['ID']."'>";
 	$xml .= "<cell><![CDATA[".$row['ID']."]]></cell>";
 	$xml .= "<cell><![CDATA[".$row['NAME']."]]></cell>";
 	$xml .= "<cell><![CDATA[".$row['USERNAME']."]]></cell>";
-	$xml .= "<cell><![CDATA[".$row['PASSWORD']."]]></cell>";
 	$xml .= "<cell><![CDATA[".$row['GENDER']."]]></cell>";
 	$xml .= "<cell><![CDATA[".$row['BIRTHDATE']."]]></cell>";
 	$xml .= "</row>";
 }
-
 $xml .= "</rows>";
 echo $xml;
-*/
-
+/*
 //Display as JSON
-//header("Content-type: application/json");
+header("Content-type: application/json");
 $jsonData = array('page'=>$page,'total'=>$total,'rows'=>array());
 foreach($rows AS $row){
 	//If cell's elements have named keys, they must match column names
 	//Only cell's with named keys and matching columns are order independent.
-	$entry = array('ID'=>$row['ID'],
+	$entry = array('IID'=>$row['IID'],
 		'cell'=>array(
-			'ID'=>$row['ID'],
+			'IID'=>$row['IID'],
 			'NAME'=>$row['NAME'],
-			'USERNAME'=>$row['USERNAME'],
-			'PASSWORD'=>$row['PASSWORD'],
-			'GENDER'=>$row['GENDER'],
-			'BIRTHDATE'=>$row['BIRTHDATE']
-			),
+			'QUANTITY'=>$row['QUANTITY'],
+			'UNIT'=>$row['UNIT']		),
 	);
 	$jsonData['rows'][] = $entry;
 }
 echo json_encode($jsonData);
+*/

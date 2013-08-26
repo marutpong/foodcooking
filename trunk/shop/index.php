@@ -98,6 +98,8 @@
 			} else if (com == 'Edit') {
 				if ($('.trSelected', grid).length==0){
 					alert("Please select any record to edit.");
+				} else if($('.trSelected', grid).length>1){
+					alert("Please select only 1 record to edit.");
 				} else if(confirm('Edit ' + $('.trSelected', grid).length + ' items?')){
 					//$.get('delete.php?id='+$('.trSelected', grid));
 					var items = $('.trSelected',grid);
@@ -116,7 +118,7 @@
 					closeEffect : 'elastic',
 					closeSpeed  : 150,
 					width  : 455,
-					height : 400,
+					height : 410,
 					autoSize    : false,
 					afterClose : function() {
 						window.location.reload();

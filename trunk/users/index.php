@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Users</title>
+	<title>Ingredient</title>
 	<link rel="stylesheet" href="css/style.css" /> 
 	<script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" src="js/flexigrid.js"></script>
@@ -14,19 +14,17 @@
     <link rel="stylesheet" type="text/css" href="./fancyapps/source/jquery.fancybox.css" media="screen" />
 </head>
 <body>
-<h2>Users</h2>
-<div class="fancybox2" style="display: none">ddddddddd</div>
+<h2>Ingredient</h2>
+<div class="fancybox2" style="display: none">Users</div>
 	<table class="flexme3" style="display: none"></table>
 	<script type="text/javascript">
 		$(".flexme3").flexigrid({
-			url : 'post-xml.php',
-			dataType : 'json',
-			
+			url : 'post-xml2.php',
+			dataType : 'xml',
 			colModel : [ 
 				{ display : 'ลำดับ', name : 'ID', width : 40, sortable : true, align : 'center' }, 
 				{ display : 'ชื่อ', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
 				{ display : 'Username', name : 'USERNAME', width : 120, sortable : true, align : 'left' }, 
-				{ display : 'Password', name : 'PASSWORD', width : 130, sortable : true, align : 'left', }, 
 				{ display : 'เพศ', name : 'GENDER', width : 130, sortable : true, align : 'left', }, 
 				{ display : 'วันเกิด', name : 'BIRTHDATE', width : 130, sortable : true, align : 'left', }
 			],
@@ -40,17 +38,16 @@
 				{ display : 'ลำดับ', name : 'ID'}, 
 				{ display : 'ชื่อ', name : 'NAME', isdefault : true},
 				{ display : 'Username', name : 'USERNAME'}, 
-				{ display : 'Password', name : 'PASSWORD'},
 				{ display : 'วันเกิด', name : 'BIRTHDATE'}
 			],
 			sortname : "ID",
 			sortorder : "desc",
 			usepager : true,
-			title : 'Users',
+			title : 'Ingredient',
 			useRp : true,
 			rp : 10,
 			showTableToggleBtn : true,
-			width : 800,
+			width : 700,
 			height : 300
 		});
 
@@ -85,8 +82,8 @@
 				$.fancybox.open({
 					href : 'addMul.php',
 					type : 'iframe',
-					width  : 700,
-					height : 350,
+					width  : 400,
+					height : 300,
 					fitToView   : true,
 					autoSize    : false,
 					padding: 5,
@@ -98,7 +95,6 @@
 						window.location.reload();
 					}
 				});
-				//window.location = "/food/foodcooking/users/addMul.php";
 
 			} else if (com == 'Edit') {
 				if ($('.trSelected', grid).length==0){

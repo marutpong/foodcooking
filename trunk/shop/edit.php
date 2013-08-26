@@ -1,3 +1,21 @@
+<?
+	$ids = $_GET['ids'];
+	$nameArray = split(",|and",$ids);
+	include 'connectDB.php'; 
+	foreach($nameArray as $id){
+	if ($id!=""){
+		$strSQL = "SELECT * FROM $table Where SID=$id";
+		$objParse = oci_parse($objConnect, $strSQL);
+		$objExecute = oci_execute($objParse, OCI_DEFAULT);
+		$rows = array();
+		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
+			$dId = $id;
+			$dName = $row['NAME'];
+			$dLat = $row['LATITUDE'];
+			$dLong = $row['LONGITUDE'];
+		}
+?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -12,7 +30,7 @@
 
 function initialize ()
    {
-   Gloucester = new google.maps.LatLng (42.6159285, -70.6619888);
+   Gloucester = new google.maps.LatLng (<? echo $dLat?>, <? echo $dLong?>);
 
    myOptions = 
       {
@@ -32,7 +50,8 @@ function initialize ()
 
    var point = marker.getPosition();
    map.panTo(point);
-
+		$('#lat').val(point.lat());
+  		$('#long').val(point.lng());
     });
    }
 
@@ -77,48 +96,37 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	      <td>ละติจูด :</td>
 	      <td>ลองจิจูด :</td>
         </tr>
-<?
-	$ids = $_GET['ids'];
-	$nameArray = split(",|and",$ids);
-	include 'connectDB.php'; 
-	foreach($nameArray as $id){
-	if ($id!=""){
-		$strSQL = "SELECT * FROM $table Where SID=$id";
-		$objParse = oci_parse($objConnect, $strSQL);
-		$objExecute = oci_execute($objParse, OCI_DEFAULT);
-		$rows = array();
-		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-?>
+
 	    <tr>
 			<td>
-          	<input name="sid[]" type="hidden" id="sid[]" value="<? echo $id?>">
-          	<input name="name[]" type="text"  required class="input" id="name[]" tabindex="1" value="<? echo $row['NAME']?>">
+          	<input name="sid[]" type="hidden" id="sid[]" value="<? echo $dId ?>">
+          	<input name="name[]" type="text"  required class="input" id="name[]" tabindex="1" value="<? echo $dName?>">
 			</td>
 	      	<td>
-            <input name="latitude[]" type="number" required class="input" id="latitude[]" tabindex="2" value="<? echo $row['LATITUDE']?> " size="10" onfocus="javascript:checkNum(this)">
+            <input name="latitude[]" type="number" required class="input" id="lat" tabindex="2" value="<? echo $dLat?>" size="10" onfocus="javascript:checkNum(this)">
             </td>
 	      	<td>
-            <input name="longitude[]" type="number" required class="input" id="longitude[]" tabindex="2" value="<? echo $row['LONGITUDE']?>" size="10" onfocus="javascript:checkNum(this)">
+            <input name="longitude[]" type="number" required class="input" id="long" tabindex="2" value="<? echo $dLong ?>" size="10" onfocus="javascript:checkNum(this)">
             </td>
-			<td>
-			<input type="button" id="button_sub" class="button_sub" value="เลือกพิกัด" tabindex="4" >
-			</td>
+			<td>&nbsp;</td>
         </tr>
 <?
-		}
-	}
-}
+
+
 ?>
 	
     </table>
-	<div id="googleMap" style="width:300px;height:200px;display:none;"></div>
-</div>
-	<footer>
+	<div id="map_canvas" style="float:left;width:400px; height:300px"></div>
+	<footer><center>
     	<input name="confirm" type="hidden" id="confirm" value="2">
 		<input type="submit" class="button_sub" value="แก้ไข" tabindex="4">
+        </center>
 	</footer>
 </form>
-<? }
+<? 
+		}
+	}
+	}
 } ?>
 </body>
 </html>

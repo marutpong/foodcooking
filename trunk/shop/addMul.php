@@ -97,7 +97,7 @@ if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitu
 	echo '<br><br><br><center><div class="textC1">';
 	if($objExecute){
 		echo 'Add Succesful '.$count.' items<P>';
-		echo '<a href="addMul.php"  class="button_addmore">Add more Ingredient</a>';
+		echo '<a href="addMul.php"  class="button_addmore">Add more Shop</a>';
 	} else {
 		echo 'Unsuccessful, some input are incorect.';
 	}
@@ -117,12 +117,12 @@ if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitu
 	    <tr>
 	  
 	      <td><input name="name[]" type="text"  required class="input number" id="name[]" tabindex="2"  > </td>
-	      <td><input name="latitude[]" type="number" required class="input" id="latitude" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>
-		  <td><input name="longitude[]" type="number" required class="input" id="longitude" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>
-		  <td><input type="button" id="button_sub" class="button_sub" value="เลือกพิกัด" tabindex="4" ></td>
+	      <td><input name="latitude[]" type="text" required class="input" id="latitude" tabindex="2" onfocus="javascript:checkNum(this)" size="10" readonly="readonly"></td>
+		  <td><input name="longitude[]" type="text" required class="input" id="longitude" tabindex="2" onfocus="javascript:checkNum(this)" size="10" readonly="readonly"></td>
+		  <td>&nbsp;</td>
         </tr>
     </table>
-	<div id="googleMap" style="width:400px;height:300px;display:none;"></div>
+	<div id="googleMap" style="width:400px;height:300px;"></div>
 </div>
 	<footer>
 	    <input name="confirm" type="hidden" value="1">

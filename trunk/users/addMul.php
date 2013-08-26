@@ -13,26 +13,38 @@
 	<script type="text/javascript" src="js/jquery-ui-1.7.2.custom.min.js"></script>
 	<script type="text/javascript" charset="UTF-8">
 $(document).ready(function() {
+		var checkUser = 1;
 		$("#birthdate").datepicker({dateFormat: 'dd-mm-yy'});
-		$("#chkusername").click(function(){
+		$("#addUser").submit(function(e) {
+			var rt = false;
 			var url = 'chkuser.php?username='+$("#username").val();
-			var chk = $.get(url,function(data){
-				if(data==1) {alert("Username นี้ถูกใช้ไปแล้ว");}
-				else alert("สามารถใช้ Username นี้ได้");
+			$.get(url,function(data){
+				if(data==0) {
+					rt = true;
+				} else {
+					alert("Username already used,Please try again.");
+				}
+				checkUser=data;
 			});
-			
-		});
+			if (checkUser==0){
+				return true;	
+			} else {
+				return false;
+			}
+        });
 	});
 //var checkNum = function(evt) {
 //		$(evt).numeric({ negative: false }, function() { 
 //			alert("No negative values"); this.value = ""; this.focus(); 
 //		});
 //}
+
 </script>
 </head>
 <body>
 <?
 if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && $_POST['confirm']==1){
+	include 'connectDB.php'; 
 	$name = $_POST['name'];
 	$username = $_POST['username'];
 	$password = $_POST['password'];
@@ -40,7 +52,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	$birthdate = $_POST['birthdate'];
 	$count = 0;
 	$num = count($_POST['name']);
-	include 'connectDB.php'; 
+
 	
 	$total = 0;
 	if(isset($_POST['username'])){
@@ -67,7 +79,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	echo '<br><br><br><center><div class="textC1">';
 	if($objExecute && $total==0){
 		echo 'Add Succesful '.$count.' items<P>';
-		echo '<a href="addMul.php"  class="button_addmore">Add more Ingredient</a>';
+		echo '<a href="addMul.php"  class="button_addmore">Add more User</a>';
 	} else {
 		echo 'Unsuccessful, some input are incorect.';
 	}
@@ -75,31 +87,32 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 } else {
 ?>
 <div style="width:400">
-<form action="" method="post">
+<form action="" method="post" id="addUser">
 <div>
-    <table id="dynamic_tb">
+    <table align="center" id="dynamic_tb">
 	    <tr class="labelF">
-	      <td>ชื่อ :</td>
-	      <td>Username :</td>
-	      <td>Password :</td>
-		  <td>เพศ :</td>
-		  <td>วันเกิด :</td>
+	      <td align="right" class="labelF">ชื่อ :</td>
+	      <td><input name="name" type="text"  required class="input" id="name" tabindex="1" ></td>
         </tr>
 	    <tr>
-	      <td><input name="name" type="text"  required class="input" id="name" tabindex="1" ></td>
+	      <td align="right" class="labelF">Username :</td>
 	      <td><input name="username" type="text"  required class="input number" id="username" tabindex="2"></td>
-	      <td><input name="password" type="password" required class="input" id="password" tabindex="2"></td>
-		  <td><select name="gender" id="gender"><option value="MALE">MALE</option><option value="FEMALE">FEMALE</option></td>
-		  <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2"></td>
         </tr>
-		<tr>
-			<td></td>
-			<td><input name="chkusername" type="button" id="chkusername" value="Check Username"></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-		<?// if(isset($_POST['chkusername']) && ($_POST['chkusername']==1)) {echo "<tr><td></td><td>Username is already exist</td><td></td><td></td><td></td></tr>";} ?>
+	    <tr>
+	      <td align="right" class="labelF">Password :</td>
+	      <td><input name="password" type="password" required class="input" id="password" tabindex="2"></td>
+        </tr>
+	    <tr>
+	      <td align="right" class="labelF">เพศ :</td>
+	      <td><select name="gender" id="gender">
+	        <option value="MALE">MALE</option>
+	        <option value="FEMALE">FEMALE</option>
+          </select></td>
+        </tr>
+	    <tr>
+	      <td align="right" class="labelF">วันเกิด :</td>
+	      <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2"></td>
+        </tr>
     </table>
 </div>
 	<footer>
