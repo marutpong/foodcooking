@@ -7,6 +7,9 @@ if (isset($_GET['username'])){
 	$objParse = oci_parse($objConnect, $strSQL);
 	oci_execute($objParse, OCI_DEFAULT);
 	$total = oci_fetch_all($objParse, $Result);
-	echo $total;
 }
+//echo $total;
+if ($total==0){ echo 'true';}
+else { echo 'false';}
+	
 ?>

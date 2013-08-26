@@ -7,8 +7,8 @@
 	<link href="../core/css/mystyle.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="../core/js/jquery-1.6.4.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../core/css/jquery-ui-1.10.3.css">
-	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="../core/js/jquery-1.9.1.js"></script>
+    <script src="../core/js/jquery-ui-1.10.3.js"></script>
 	<script type="text/javascript" src="../core/js/jquery.numeric.js"></script>
     <script src="../core/js/combobox.js"></script>
  	<?

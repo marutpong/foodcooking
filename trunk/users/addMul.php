@@ -6,22 +6,66 @@
 	<meta charset="UTF-8" />
 	<link href="../core/css/flexigrid2.css" rel="stylesheet" type="text/css">
 	<link href="../core/css/mystyle.css" rel="stylesheet" type="text/css">
-	<script type="text/javascript" src="../core/js/jquery-1.6.4.min.js"></script>
-	<script type="text/javascript" src="../core/js/jquery.numeric.js"></script>
-	<link rel="stylesheet" type="text/css" href="../core/css/jquery-ui-1.7.2.custom.css" />
-	<script type="text/javascript" src="../core/js/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="../core/js/jquery-ui-1.7.2.custom.min.js"></script>
-	<script type="text/javascript" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../core/css/jquery-ui-1.10.3.css">
+	<script src="../core/js/jquery-2.0.0.min.js"></script>
+<script src="../core/js/jquery-ui-1.10.3.js"></script>
+	<script src="../core/js/validate/jquery.validate.min.js"></script>
+	<script src="../core/js/validate/additional-methods.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="../core/css/tooltipster/reset.css">
+    <link rel="stylesheet" type="text/css" href="../core/css/tooltipster/style.css">
+    <link rel="stylesheet" type="text/css" href="../core/css/tooltipster/tooltipster.css">
+    <script src="../core/js/tooltipster/jquery.tooltipster.js"></script>
+    
+<script type="text/javascript" charset="UTF-8">
+var checkUser = 1;
 $(document).ready(function() {
-		var checkUser = 1;
-		$("#birthdate").datepicker({dateFormat: 'dd-mm-yy'});
-		$("#addUser").submit(function(e) {
-			var rt = false;
+		$("#birthdate").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			maxDate: "+0D",
+			dateFormat: 'dd/mm/yy'
+		});
+$('input').tooltipster({ 
+        trigger: 'custom', // default is 'hover' which is no good here
+        onlyOne: true,    // allow multiple tips to be open at a time
+        position: 'right'  // display the tips to the right of the element
+    });
+$( "#addUser" ).validate({
+	rules: {
+		username: {
+			required: true,
+			remote: {
+				url: "chkuser.php",
+				type: "get",
+				data: {
+					username: function() {
+						return $( "#username" ).val();
+					}
+				}
+			}
+		}
+	},
+	messages: {
+	//name: "Please specify your name",
+		username: {
+		//required: "We need your email address to contact you",
+		remote: "This Username already used."
+		}
+	},
+		 errorPlacement: function (error, element) {
+            $(element).tooltipster('update', $(error).text());
+            $(element).tooltipster('show');
+        },
+        success: function (label, element) {
+            // $(element).tooltipster('hide'); // normal validate behavior
+            $(element).tooltipster('update', 'accepted'); // as per OP
+        }
+});
+		/*$("#addUser").submit(function(e) {
 			var url = 'chkuser.php?username='+$("#username").val();
 			$.get(url,function(data){
-				if(data==0) {
-					rt = true;
-				} else {
+				if(data>0) {
 					alert("Username already used,Please try again.");
 				}
 				checkUser=data;
@@ -31,18 +75,14 @@ $(document).ready(function() {
 			} else {
 				return false;
 			}
-        });
+        });*/
 	});
-//var checkNum = function(evt) {
-//		$(evt).numeric({ negative: false }, function() { 
-//			alert("No negative values"); this.value = ""; this.focus(); 
-//		});
-//}
-
 </script>
 </head>
 <body>
-<?
+
+<p>
+  <?
 if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && $_POST['confirm']==1){
 	include 'connectDB.php'; 
 	$name = $_POST['name'];
@@ -52,16 +92,12 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	$birthdate = $_POST['birthdate'];
 	$count = 0;
 	$num = count($_POST['name']);
-
-	
 	$total = 0;
-	if(isset($_POST['username'])){
 		$sql = "select * from iusers where name = '$username'";
 		$strSQL = $sql;
 		$objParse = oci_parse($objConnect, $strSQL);
         $objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$total = oci_fetch_all($objParse, $Result);
-	}
 	//echo $total;
 	//for ($i=0;$i<$num;$i++){
 		if ($total == 0){	
@@ -86,39 +122,43 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	echo '</div></center>';
 } else {
 ?>
+</p>
 <div style="width:400">
-<form action="" method="post" id="addUser">
-<div>
-    <table align="center" id="dynamic_tb">
+  <form action="" method="post" id="addUser">
+<div align="center" >
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <table width="400" align="center" id="dynamic_tb">
 	    <tr class="labelF">
-	      <td align="right" class="labelF">ชื่อ :</td>
-	      <td><input name="name" type="text"  required class="input" id="name" tabindex="1" ></td>
+	      <td width="100" height="36" align="right" valign="middle" class="labelF">ชื่อ :</td>
+	      <td width="300" height="36" valign="middle" class="labelF"><input name="name" type="text"  required class="input" id="name" tabindex="1" ></td>
         </tr>
 	    <tr>
-	      <td align="right" class="labelF">Username :</td>
-	      <td><input name="username" type="text"  required class="input number" id="username" tabindex="2"></td>
+	      <td width="100" height="36" align="right" valign="middle" class="labelF">Username :</td>
+	      <td width="300" height="36" valign="middle" class="labelF"><input name="username" type="text"  required class="input" id="username" tabindex="2"></td>
         </tr>
 	    <tr>
-	      <td align="right" class="labelF">Password :</td>
-	      <td><input name="password" type="password" required class="input" id="password" tabindex="2"></td>
+	      <td width="100" height="36" align="right" valign="middle" class="labelF">Password :</td>
+	      <td width="300" height="36" valign="middle" class="labelF"><input name="password" type="password" required class="input" id="password" tabindex="2"></td>
         </tr>
 	    <tr>
-	      <td align="right" class="labelF">เพศ :</td>
-	      <td><select name="gender" id="gender">
+	      <td width="100" height="36" align="right" valign="middle" class="labelF">เพศ :</td>
+	      <td width="300" height="36" valign="middle" class="labelF">
+          
+          <select name="gender" id="gender">
 	        <option value="MALE">MALE</option>
 	        <option value="FEMALE">FEMALE</option>
           </select></td>
         </tr>
 	    <tr>
-	      <td align="right" class="labelF">วันเกิด :</td>
-	      <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2"></td>
+	      <td width="100" height="36" align="right" valign="middle" class="labelF">วันเกิด :</td>
+	      <td width="300" height="36" valign="middle" class="labelF"><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2"></td>
         </tr>
     </table>
 </div>
 	<footer>
 	  <p>
 	    <input name="confirm" type="hidden" value="1">
-		<input name="chk" type="hidden" value=<?if($total==0){echo 0;}else{echo 1;}?>>
 	    <br>
 <center><input type="submit" class="button_sub" value="เพิ่ม" tabindex="4"></center>
       </p>
