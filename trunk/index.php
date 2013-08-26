@@ -16,7 +16,7 @@
     });
     </script>
 </head>
-<body>
+<body> 
     <div id="tabs" style="height:630px;background:#333;">
         <ul>
         <? $a = array("Users", "Food", "Shop", "Ingredient","Tools","Use","contain"); 
