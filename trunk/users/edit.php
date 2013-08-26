@@ -70,15 +70,8 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 ?>
 <form action="" method="post">
 <div>
-	  <table>
-	    <tr class="labelF">
-	      <td>ชื่อ :</td>
-	      <td>Username :</td>
-	      <td>Password :</td>
-		  <td>เพศ :</td>
-		  <td>วันเกิด :</td>
-        </tr>
-<?
+	  <table align="center">
+      <?
 	$ids = $_GET['ids'];
 	$nameArray = split(",|and",$ids);
 	include 'connectDB.php'; 
@@ -90,23 +83,30 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 		$rows = array();
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 ?>
+	    <tr class="labelF">
+	      <td align="right" class="labelF">ชื่อ :</td>
+	      <td><input name="id" type="hidden" id="id" value="<?=$id?>">
+	        <input name="name" type="text"  required class="input" id="name" tabindex="1" value="<?=$row['NAME']?>"></td>
+        </tr>
+
 	    <tr>
-			<td>
-          	<input name="id" type="hidden" id="id" value="<?=$id?>">
-          	<input name="name" type="text"  required class="input" id="name" tabindex="1" value="<?=$row['NAME']?>">
-			</td>
-	      	<td>
-            <input name="username" type="number" readonly="readonly" required class="input number" id="username" tabindex="2" value="<?=$row['USERNAME']?>" >
-            </td>
-	      	<td>
-            <input name="password" type="text" required class="input" id="password" tabindex="2" value="<?=$row['PASSWORD']?>">
-            </td>
-			<td>
-            <select name="gender" id="gender"><option value="MALE">MALE</option><option value="FEMALE">FEMALE</option>
-            </td>
-			<td>
-            <input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2" value="<?=$row['BIRTHDATE']?>">
-            </td>
+	      <td align="right" class="labelF">Username :</td>
+	      <td><input name="username" type="number" readonly required class="input number" id="username" tabindex="2" value="<?=$row['USERNAME']?>" ></td>
+        </tr>
+	    <tr>
+	      <td align="right" class="labelF">Password :</td>
+	      <td><input name="password" type="text" required class="input" id="password" tabindex="2" value="<?=$row['PASSWORD']?>"></td>
+        </tr>
+	    <tr>
+	      <td align="right" class="labelF">เพศ :</td>
+	      <td><select name="gender" id="gender">
+	        <option value="MALE">MALE</option>
+	        <option value="FEMALE">FEMALE</option>
+          </select></td>
+        </tr>
+	    <tr>
+	      <td align="right" class="labelF">วันเกิด :</td>
+	      <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2" value="<?=$row['BIRTHDATE']?>"></td>
         </tr>
 <?
 		}
@@ -115,9 +115,10 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 ?>
     </table>
 </div>
-	<footer>
+	<footer><center>
     	<input name="confirm" type="hidden" id="confirm" value="2">
 		<input type="submit" class="button_sub" value="แก้ไข" tabindex="4">
+        </center>
 	</footer>
 </form>
 <? }

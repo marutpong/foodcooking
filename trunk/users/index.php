@@ -99,6 +99,8 @@
 			} else if (com == 'Edit') {
 				if ($('.trSelected', grid).length==0){
 					alert("Please select any record to edit.");
+				} else if($('.trSelected', grid).length>1){
+					alert("Please select only 1 record to edit.");
 				} else if(confirm('Edit ' + $('.trSelected', grid).length + ' items?')){
 					//$.get('delete.php?id='+$('.trSelected', grid));
 					var items = $('.trSelected',grid);
@@ -116,8 +118,9 @@
 					openSpeed  : 150,
 					closeEffect : 'elastic',
 					closeSpeed  : 150,
-					width  : 500,
-					height : 1000,
+					autoSize    : false,
+					width  : 400,
+					height : 300,
 					afterClose : function() {
 						window.location.reload();
 					}
