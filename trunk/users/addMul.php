@@ -14,6 +14,14 @@
 	<script type="text/javascript" charset="UTF-8">
 $(document).ready(function() {
 		$("#birthdate").datepicker({dateFormat: 'dd-mm-yy'});
+		$("#chkusername").click(function(){
+			var url = 'chkuser.php?username='+$("#username").val();
+			var chk = $.get(url,function(data){
+				if(data==1) {alert("Username นี้ถูกใช้ไปแล้ว");}
+				else alert("สามารถใช้ Username นี้ได้");
+			});
+			
+		});
 	});
 //var checkNum = function(evt) {
 //		$(evt).numeric({ negative: false }, function() { 
@@ -34,7 +42,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	$num = count($_POST['name']);
 	include 'connectDB.php'; 
 	
-	$chkname = 0;
+	$total = 0;
 	if(isset($_POST['username'])){
 		$sql = "select * from iusers where name = '$username'";
 		$strSQL = $sql;
@@ -42,21 +50,22 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
         $objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$total = oci_fetch_all($objParse, $Result);
 	}
-	echo $total;
+	//echo $total;
 	//for ($i=0;$i<$num;$i++){
 		if ($total == 0){	
-			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate) VALUES ('$name','$username','$password','$gender','$birthdate')";
+			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate) VALUES ('$name','$username','$password','$gender',to_date('" . $_POST['birthdate'] . "','dd/mm/yyyy'))";
 			$strSQL = $sql;
-			echo $sql;
+			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
 			$objExecute = oci_execute($objParse, OCI_DEFAULT);
 			if($objExecute){
+				oci_commit($objConnect);
 				$count++;
 			}
 		}
 	//}
 	echo '<br><br><br><center><div class="textC1">';
-	if($objExecute){
+	if($objExecute && $total==0){
 		echo 'Add Succesful '.$count.' items<P>';
 		echo '<a href="addMul.php"  class="button_addmore">Add more Ingredient</a>';
 	} else {
@@ -83,11 +92,20 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 		  <td><select name="gender" id="gender"><option value="MALE">MALE</option><option value="FEMALE">FEMALE</option></td>
 		  <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2"></td>
         </tr>
+		<tr>
+			<td></td>
+			<td><input name="chkusername" type="button" id="chkusername" value="Check Username"></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<?// if(isset($_POST['chkusername']) && ($_POST['chkusername']==1)) {echo "<tr><td></td><td>Username is already exist</td><td></td><td></td><td></td></tr>";} ?>
     </table>
 </div>
 	<footer>
 	  <p>
 	    <input name="confirm" type="hidden" value="1">
+		<input name="chk" type="hidden" value=<?if($total==0){echo 0;}else{echo 1;}?>>
 	    <br>
 <center><input type="submit" class="button_sub" value="เพิ่ม" tabindex="4"></center>
       </p>

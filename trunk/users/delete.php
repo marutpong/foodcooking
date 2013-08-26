@@ -22,7 +22,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	include 'connectDB.php'; 
 	foreach($nameArray as $id){
 		if ($id!=""){
-			$strSQL = "DELETE FROM $table WHERE IID = '" . $id. "' ";
+			$strSQL = "DELETE FROM $table WHERE ID = '" . $id. "' ";
 			$objParse = oci_parse($objConnect , $strSQL);
 			$objExecute = oci_execute($objParse);
 			if($objExecute){

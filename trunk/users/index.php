@@ -65,7 +65,7 @@
                     for(i=0;i<items.length;i++){
                         itemlist+= items[i].id.substr(3)+",";
                     }
-					//alert(itemlist);
+					alert(itemlist);
 					$.fancybox.open({
 					href : 'delete.php?confirm=1&ids='+itemlist,
 					type : 'iframe',
