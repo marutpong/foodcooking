@@ -88,7 +88,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	    <tr>
 	      <td><input name="name" type="text"  required class="input" id="name" tabindex="1" ></td>
 	      <td><input name="username" type="text"  required class="input number" id="username" tabindex="2"></td>
-	      <td><input name="password" type="text" required class="input" id="password" tabindex="2"></td>
+	      <td><input name="password" type="password" required class="input" id="password" tabindex="2"></td>
 		  <td><select name="gender" id="gender"><option value="MALE">MALE</option><option value="FEMALE">FEMALE</option></td>
 		  <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2"></td>
         </tr>
