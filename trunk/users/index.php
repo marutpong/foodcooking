@@ -14,12 +14,12 @@
     <link rel="stylesheet" type="text/css" href="./fancyapps/source/jquery.fancybox.css" media="screen" />
 </head>
 <body>
-<h2>Ingredient</h2>
+<h2>Users</h2>
 <div class="fancybox2" style="display: none">Users</div>
 	<table class="flexme3" style="display: none"></table>
 	<script type="text/javascript">
 		$(".flexme3").flexigrid({
-			url : 'post-xml2.php',
+			url : 'post-xml.php',
 			dataType : 'xml',
 			colModel : [ 
 				{ display : 'ลำดับ', name : 'ID', width : 40, sortable : true, align : 'center' }, 
