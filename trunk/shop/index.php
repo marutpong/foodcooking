@@ -6,7 +6,8 @@
 	<link rel="stylesheet" href="../core/css/style.css" /> 
 	<script type="text/javascript" src="../core/js/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" src="../core/js/flexigrid.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../core/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../core/js/jquery.min-1.8.3.js"></script>
     <script type="text/javascript" src="../core/js/flexigrid.pack.js"></script>
     <link href="../core/css/flexigrid2.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="../core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>
