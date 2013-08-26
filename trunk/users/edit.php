@@ -44,7 +44,6 @@
 		if (total==0){
 			$strSQL = "UPDATE $table SET ";
 			$strSQL .="NAME = '".$_POST["name"]."'";
-			$strSQL .=", username = '".$_POST["username"]."' ";
 			$strSQL .=", password = '".$_POST["password"]."' ";
 			$strSQL .=", gender = '".$_POST["gender"]."' ";
 			$strSQL .=", birthdate = to_date('".$_POST["birthdate"]."','dd/mm/yyyy') ";
@@ -91,11 +90,11 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 
 	    <tr>
 	      <td align="right" class="labelF">Username :</td>
-	      <td><input name="username" type="number" readonly required class="input number" id="username" tabindex="2" value="<?=$row['USERNAME']?>" ></td>
+	      <td><input name="username" type="text" readonly required class="input number" id="username" tabindex="2" value="<?=$row['USERNAME']?>" ></td>
         </tr>
 	    <tr>
 	      <td align="right" class="labelF">Password :</td>
-	      <td><input name="password" type="text" required class="input" id="password" tabindex="2" value="<?=$row['PASSWORD']?>"></td>
+	      <td><input name="password" type="password" required class="input" id="password" tabindex="2" value="<?=$row['PASSWORD']?>"></td>
         </tr>
 	    <tr>
 	      <td align="right" class="labelF">เพศ :</td>

@@ -23,7 +23,7 @@
 			dataType : 'xml',
 			colModel : [ 
 				{ display : 'ลำดับ', name : 'FID', width : 40, sortable : true, align : 'center' }, 
-				{ display : 'ชื่อส่วนผสม', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
+				{ display : 'ชื่ออาหาร', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
 				{ display : 'รูปภาพ', name : 'PICTURE', width : 120, sortable : true, align : 'left' }, 
 				{ display : 'วิธีทำ', name : 'METHOD', width : 130, sortable : true, align : 'left', }, 
 				{ display : 'จำนวนคนดู', name : 'VIEW', width : 130, sortable : true, align : 'left', } 
