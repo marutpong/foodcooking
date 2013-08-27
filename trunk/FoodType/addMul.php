@@ -11,9 +11,9 @@
 		$('#name[0]').focus();
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
-				 <td><input name="typename[]" type="text"  required class="input" id="typename[]" tabindex="1" ></td>\
-				<td><input name="description[]" type="text" required class="input" id="description[]" tabindex="2"></td>\
-				</tr>';
+	      <td><input name="typename[]" type="text"  required class="input" id="typename[]" tabindex="1" ></td>\
+	      <td><input name="description[]" type="text" required class="input" id="description[]" tabindex="2"></td>\
+        </tr>';
 			$('#dynamic_tb').append(htmlStr);
 		});
 
