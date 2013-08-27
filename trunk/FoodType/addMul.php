@@ -11,9 +11,8 @@
 		$('#name[0]').focus();
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
-				<td><input name="name[]" type="text" required  class="input" id="name[]" tabindex="1" onfocus="javascript:checkNum(this)"></td>\
-				<td><input name="quantity[]" type="number" required class="input number" id="quantity[]" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>\
-				<td><input name="unit[]" type="text" required class="input" id="unit[]" tabindex="2"></td>\
+				 <td><input name="typename[]" type="text"  required class="input" id="typename[]" tabindex="1" ></td>\
+				<td><input name="description[]" type="text" required class="input" id="description[]" tabindex="2"></td>\
 				</tr>';
 			$('#dynamic_tb').append(htmlStr);
 		});

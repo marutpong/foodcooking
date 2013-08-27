@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Add Ingredient</title>
+<title>Add FoodType</title>
 <meta charset="UTF-8" />
 <link href="../core/css/mystyle.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../core/js/jquery-1.6.4.min.js"></script>
