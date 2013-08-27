@@ -8,9 +8,9 @@
 	<link href="../core/css/mystyle.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="../core/js/jquery-1.6.4.min.js"></script>
 	<script type="text/javascript" src="../core/js/jquery.numeric.js"></script>
-	<link rel="stylesheet" type="text/css" href="../core/css/jquery-ui-1.7.2.custom.css" />
-	<script type="text/javascript" src="../core/js/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="../core/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../core/css/jquery-ui-1.10.3.css">
+	<script src="../core/js/jquery-2.0.0.min.js"></script>
+	<script src="../core/js/jquery-ui-1.10.3.js"></script>
 	<script type="text/javascript" charset="UTF-8">
 	$(document).ready(function() {
 		$("#birthdate").datepicker({dateFormat: 'dd-mm-yy'});

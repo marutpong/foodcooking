@@ -8,7 +8,7 @@
 	<link href="../core/css/mystyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="../core/css/jquery-ui-1.10.3.css">
 	<script src="../core/js/jquery-2.0.0.min.js"></script>
-<script src="../core/js/jquery-ui-1.10.3.js"></script>
+	<script src="../core/js/jquery-ui-1.10.3.js"></script>
 	<script src="../core/js/validate/jquery.validate.min.js"></script>
 	<script src="../core/js/validate/additional-methods.min.js"></script>
     

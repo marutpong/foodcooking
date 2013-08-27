@@ -19,7 +19,7 @@
 <body> 
     <div id="tabs" style="height:630px;background:#333;">
         <ul>
-        <? $a = array("Users", "Food", "Shop", "Ingredient","Tools","Use","contain"); 
+        <? $a = array("Users", "Food", "Shop", "Ingredient","Tools","Use","contain","have","Favorite","Comment"); 
         
         for ($i =0 ;$i < count($a);$i++){
         ?>
