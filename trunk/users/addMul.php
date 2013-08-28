@@ -44,6 +44,18 @@ $( "#addUser" ).validate({
 					}
 				}
 			}
+		},
+		email: {
+			required: true,
+			remote: {
+				url: "chkemail.php",
+				type: "get",
+				data: {
+					email: function() {
+						return $( "#email" ).val();
+					}
+				}
+			}
 		}
 	},
 	messages: {
@@ -51,6 +63,10 @@ $( "#addUser" ).validate({
 		username: {
 		//required: "We need your email address to contact you",
 		remote: "This Username already used."
+		},
+		email: {
+		//required: "We need your email address to contact you",
+		remote: "This E-mail already used."
 		}
 	},
 		 errorPlacement: function (error, element) {
@@ -62,20 +78,6 @@ $( "#addUser" ).validate({
             $(element).tooltipster('update', 'accepted'); // as per OP
         }
 });
-		/*$("#addUser").submit(function(e) {
-			var url = 'chkuser.php?username='+$("#username").val();
-			$.get(url,function(data){
-				if(data>0) {
-					alert("Username already used,Please try again.");
-				}
-				checkUser=data;
-			});
-			if (checkUser==0){
-				return true;	
-			} else {
-				return false;
-			}
-        });*/
 	});
 </script>
 </head>
@@ -83,13 +85,14 @@ $( "#addUser" ).validate({
 
 <p>
   <?
-if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && $_POST['confirm']==1){
+if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email']) && $_POST['confirm']==1){
 	include 'connectDB.php'; 
 	$name = $_POST['name'];
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	$gender = $_POST['gender'];
 	$birthdate = $_POST['birthdate'];
+	$email = $_POST['email'];
 	$count = 0;
 	$num = count($_POST['name']);
 	$total = 0;
@@ -101,7 +104,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	//echo $total;
 	//for ($i=0;$i<$num;$i++){
 		if ($total == 0){	
-			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate) VALUES ('$name','$username','$password','$gender',to_date('" . $_POST['birthdate'] . "','dd/mm/yyyy'))";
+			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" . $_POST['birthdate'] . "','dd/mm/yyyy'),'$email')";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
@@ -153,6 +156,10 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	    <tr>
 	      <td width="100" height="36" align="right" valign="middle" class="labelF">วันเกิด :</td>
 	      <td width="300" height="36" valign="middle" class="labelF"><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2"></td>
+        </tr>
+	    <tr>
+	      <td height="36" align="right" valign="middle" class="labelF">E-mail :</td>
+	      <td height="36" valign="middle" class="labelF"><input name="email" type="email"  required class="input" id="email" tabindex="2"></td>
         </tr>
     </table>
 </div>

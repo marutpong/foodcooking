@@ -1,9 +1,21 @@
 <?php
 include 'connectDB.php';
+//Get Collum Name
+	$qstrSQL = " Select COLUMN_NAME from user_tab_columns where table_name='$table'";
+	$qobjParse = oci_parse($objConnect, $qstrSQL);
+    $qobjExecute = oci_execute($qobjParse, OCI_DEFAULT);
+	$qcolumn = array();
+    while ($row = oci_fetch_array($qobjParse, OCI_BOTH)) {
+		$qcolumn[] = $row['COLUMN_NAME'];
+	}
+	$noDisplay = array("PASSWORD");
+	$qcolumn = array_diff($qcolumn, $noDisplay);
+	//print_r($qcolumn);
+$dfSortname = $qcolumn[0];//id
 
 $page = isset($_POST['page']) ? $_POST['page'] : 1;
 $rp = isset($_POST['rp']) ? $_POST['rp'] : 10;
-$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : 'ID';
+$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : $dfSortname;
 $sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : 'desc';
 $query = isset($_POST['query']) ? $_POST['query'] : false;
 $qtype = isset($_POST['qtype']) ? $_POST['qtype'] : false;
@@ -15,7 +27,7 @@ $rp = $_POST['rp'];
 $sortname = $_POST['sortname'];
 $sortorder = $_POST['sortorder'];
 
-if (!$sortname) $sortname = 'ID';
+if (!$sortname) $sortname = $dfSortname;
 if (!$sortorder) $sortorder = 'desc';
 
 $sort = "ORDER BY $sortname $sortorder";
@@ -57,12 +69,10 @@ $xml .= "<rows>";
 $xml .= "<page>$page</page>";
 $xml .= "<total>$total</total>";
 foreach($rows AS $row){
-	$xml .= "<row id='".$row['ID']."'>";
-	$xml .= "<cell><![CDATA[".$row['ID']."]]></cell>";
-	$xml .= "<cell><![CDATA[".$row['NAME']."]]></cell>";
-	$xml .= "<cell><![CDATA[".$row['USERNAME']."]]></cell>";
-	$xml .= "<cell><![CDATA[".$row['GENDER']."]]></cell>";
-	$xml .= "<cell><![CDATA[".$row['BIRTHDATE']."]]></cell>";
+	$xml .= "<row id='".$row[$qcolumn[0]]."'>";
+	for ($i=0;$i<count($qcolumn);$i++){
+		$xml .= "<cell><![CDATA[".$row[$qcolumn[$i]]."]]></cell>";
+	}
 	$xml .= "</row>";
 }
 $xml .= "</rows>";

@@ -1,9 +1,21 @@
 <?php
 include 'connectDB.php';
+//Get Collum Name
+	$qstrSQL = " Select COLUMN_NAME from user_tab_columns where table_name='$table'";
+	$qobjParse = oci_parse($objConnect, $qstrSQL);
+    $qobjExecute = oci_execute($qobjParse, OCI_DEFAULT);
+	$qcolumn = array();
+    while ($row = oci_fetch_array($qobjParse, OCI_BOTH)) {
+		$qcolumn[] = $row['COLUMN_NAME'];
+	}
+	for ($i=0;$i<count($qcolumn);$i++){
+		//echo $qcolumn[$i]."<br>";
+	}
+$dfSortname = $qcolumn[0];//id
 
 $page = isset($_POST['page']) ? $_POST['page'] : 1;
 $rp = isset($_POST['rp']) ? $_POST['rp'] : 10;
-$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : 'SID';
+$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : $dfSortname;
 $sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : 'desc';
 $query = isset($_POST['query']) ? $_POST['query'] : false;
 $qtype = isset($_POST['qtype']) ? $_POST['qtype'] : false;
@@ -15,7 +27,7 @@ $rp = $_POST['rp'];
 $sortname = $_POST['sortname'];
 $sortorder = $_POST['sortorder'];
 
-if (!$sortname) $sortname = 'SID';
+if (!$sortname) $sortname = $dfSortname;
 if (!$sortorder) $sortorder = 'desc';
 
 $sort = "ORDER BY $sortname $sortorder";
@@ -26,10 +38,8 @@ if (!$rp) $rp = 10;
 $start = (($page-1) * $rp);
 
 $where = '';
-
-if ($qtype=='IID'){
-	$qtype='a.'.$qtype;
-}
+//$query = $_GET['q'];
+//$qtype = $_GET['t'];
 if ($query) $where = " WHERE $qtype LIKE '%".mysql_real_escape_string($query)."%' ";
 
 $paging = "WHERE ROWNUM <= ".($start+$rp);
@@ -41,7 +51,7 @@ $total = oci_fetch_all($objParse, $Result);
 $strSQL = "
 	SELECT * FROM 
 		( SELECT x.* , ROWNUM r FROM 
-		   ( SELECT * FROM $table a JOIN IINGREDIENT b ON a.IID=b.IID $where $sort) x
+		   ( SELECT * FROM $table $where $sort) x
 		 $paging )
 	WHERE r > $start
 ";
@@ -59,10 +69,10 @@ $xml .= "<rows>";
 $xml .= "<page>$page</page>";
 $xml .= "<total>$total</total>";
 foreach($rows AS $row){
-	$xml .= "<row id='".$row['SID']."'>";
-	$xml .= "<cell><![CDATA[".$row['SID']."]]></cell>";
-	$xml .= "<cell><![CDATA[".$row['IID']."]]></cell>";
-	$xml .= "<cell><![CDATA[".$row['PRICE']."]]></cell>";
+	$xml .= "<row id='".$row[$qcolumn[0]]."'>";
+	for ($i=0;$i<count($qcolumn);$i++){
+		$xml .= "<cell><![CDATA[".$row[$qcolumn[$i]]."]]></cell>";
+	}
 	$xml .= "</row>";
 }
 $xml .= "</rows>";

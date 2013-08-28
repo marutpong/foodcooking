@@ -23,11 +23,13 @@
 			url : 'post-xml.php',
 			dataType : 'xml',
 			colModel : [ 
-				{ display : 'ลำดับ', name : 'ID', width : 40, sortable : true, align : 'center' }, 
-				{ display : 'ชื่อ', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
+				{ display : 'ลำดับ', name : 'UIDS', width : 40, sortable : true, align : 'center' }, 
+				{ display : 'ชื่อ', name : 'NAME', width : 120, sortable : true, align : 'left' }, 
 				{ display : 'Username', name : 'USERNAME', width : 120, sortable : true, align : 'left' }, 
-				{ display : 'เพศ', name : 'GENDER', width : 130, sortable : true, align : 'left', }, 
-				{ display : 'วันเกิด', name : 'BIRTHDATE', width : 130, sortable : true, align : 'left', }
+				{ display : 'เพศ', name : 'GENDER', width : 50, sortable : true, align : 'left', }, 
+				{ display : 'วันเกิด', name : 'BIRTHDATE', width : 130, sortable : true, align : 'left', },
+				{ display : 'E-mail', name : 'EMAIL', width : 130, sortable : true, align : 'left', }
+
 			],
 			buttons : [ 
 				{ name : 'Add', bclass : 'add', onpress : test}, 
@@ -36,12 +38,13 @@
 				{separator : true}
 			],
 			searchitems : [ 
-				{ display : 'ลำดับ', name : 'ID'}, 
+				{ display : 'ลำดับ', name : 'UIDS'}, 
 				{ display : 'ชื่อ', name : 'NAME', isdefault : true},
 				{ display : 'Username', name : 'USERNAME'}, 
-				{ display : 'วันเกิด', name : 'BIRTHDATE'}
+				{ display : 'วันเกิด', name : 'BIRTHDATE'},
+				{ display : 'E-mail', name : 'EMAIL'}
 			],
-			sortname : "ID",
+			sortname : "UIDS",
 			sortorder : "desc",
 			usepager : true,
 			title : 'Ingredient',
@@ -84,7 +87,7 @@
 					href : 'addMul.php',
 					type : 'iframe',
 					width  : 410,
-					height : 320,
+					height : 350,
 					fitToView   : false,
 					autoSize    : false,
 					padding: 5,

@@ -27,34 +27,24 @@
 </head>
 <body>
 <?
-	if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && $_POST['confirm']==2) {
+	if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email']) && $_POST['confirm']==2) {
 	$count = 0;
-	$num = count($_POST['id']);
 	include 'connectDB.php'; 
-	
-		$total = 0;
-		if(isset($_POST['username'])){
-			$sql = "select * from iusers where name = '$username'";
-			$strSQL = $sql;
-			$objParse = oci_parse($objConnect, $strSQL);
-			$objExecute = oci_execute($objParse, OCI_DEFAULT);
-			$total = oci_fetch_all($objParse, $Result);
-		}
-	//for ($i=0;$i<$num;$i++){
-		if (total==0){
+	$id = $_POST['id'];
 			$strSQL = "UPDATE $table SET ";
 			$strSQL .="NAME = '".$_POST["name"]."'";
 			$strSQL .=", password = '".$_POST["password"]."' ";
 			$strSQL .=", gender = '".$_POST["gender"]."' ";
 			$strSQL .=", birthdate = to_date('".$_POST["birthdate"]."','dd/mm/yyyy') ";
-			$strSQL .=" WHERE ID = ".$_POST["id"]." ";
+			$strSQL .=", email = '".$_POST["email"]."' ";
+			$strSQL .=" WHERE UIDS = ".$_POST["id"]." ";
 			//echo $strSQL;
 			$objParse = oci_parse($objConnect, $strSQL);
 			$objExecute = oci_execute($objParse);
 			if($objExecute){
 				$count++;
 			}
-		}
+		
 	//}
 	echo '<br><center><div class="textC1">';
 	if($count){
@@ -76,7 +66,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	include 'connectDB.php'; 
 	foreach($nameArray as $id){
 	if ($id!=""){
-		$strSQL = "SELECT * FROM $table Where ID=$id";
+		$strSQL = "SELECT * FROM $table Where UIDS=$id";
 		$objParse = oci_parse($objConnect, $strSQL);
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rows = array();
@@ -106,6 +96,10 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	    <tr>
 	      <td align="right" class="labelF">วันเกิด :</td>
 	      <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2" value="<?=$row['BIRTHDATE']?>"></td>
+        </tr>
+	    <tr>
+	      <td height="36" align="right" valign="middle" class="labelF">E-mail :</td>
+	      <td height="36" valign="middle" class="labelF"><input name="email" type="email"  required class="input" id="email" tabindex="2" value="<?=$row['EMAIL']?>"></td>
         </tr>
 <?
 		}

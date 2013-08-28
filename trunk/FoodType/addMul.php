@@ -48,7 +48,7 @@ if (isset($_POST['typename']) && isset($_POST['description']) && $_POST['confirm
 	echo '<br><br><br><center><div class="textC1">';
 	if($objExecute){
 		echo 'Add Succesful '.$count.' items<P>';
-		echo '<a href="addMul.php"  class="button_addmore">Add more Ingredient</a>';
+		echo '<a href="addMul.php"  class="button_addmore">Add more.</a>';
 	} else {
 		echo 'Unsuccessful, some input are incorect.';
 	}

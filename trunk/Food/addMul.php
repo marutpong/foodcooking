@@ -18,7 +18,7 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rows="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rows.= '<option value="'.$row['IID'].'">'.$row['NAME'].'</option>';
+			$rows.= '<option value="'.$row['IID'].'">'.$row['INNAME'].'</option>';
 		}
 		
 		$strSQL = "SELECT * FROM ITOOLS";
@@ -26,11 +26,12 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rowsTools="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rowsTools.= '<option value="'.$row['TID'].'">'.$row['NAME'].'</option>';
+			$rowsTools.= '<option value="'.$row['TID'].'">'.$row['TOOLNAME'].'</option>';
 		}
 	?>
 <script type="text/javascript">
 $(document).ready(function() {
+		$('#name').focus();
 		//$( "#combobox" ).combobox();
 		$('#addmore').click(function () {
 			var htmlStr = '<table border="0">\
@@ -104,7 +105,7 @@ if (isset($_POST['name']) && isset($_POST['picture']) && isset($_POST['method'])
 	$views = $_POST['views'];
 	include 'connectDB.php'; 
 	if (is_numeric($_POST['views'])){	
-			$sql = "INSERT INTO $table (NAME, PICTURE, METHOD, VIEWS) VALUES ('$name','$picture','$method','$views')";
+			$sql = "INSERT INTO $table (FOODNAME, PICTURE, METHOD, VIEWS) VALUES ('$name','$picture','$method','$views')";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
@@ -165,7 +166,7 @@ if (isset($_POST['name']) && isset($_POST['picture']) && isset($_POST['method'])
     <table id="dynamic_tb">
 	    <tr class="labelF">
 	      <td align="right" valign="top">ชื่ออาหาร :</td>
-	      <td><input name="name" type="text"  required class="input" id="name" tabindex="1" size="50"></td>
+	      <td><input name="name" type="text"  required autofocus autocomplete="on" class="input" id="name" tabindex="1" size="50"></td>
         </tr>
 	    <tr>
 	      <td align="right" valign="top"><span class="labelF">รูปภาพ :</span></td>
@@ -190,7 +191,7 @@ if (isset($_POST['name']) && isset($_POST['picture']) && isset($_POST['method'])
                 <? echo $rows;?>
               </select></td>
               <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" tabindex="1" size="10" 
-            onFocus="checkNum(this)"></td>
+            onFocus="checkNum(this)" min="0"></td>
               <td><input name="unit[]" type="text"  required disabled class="input unit" id="unit[]" tabindex="1" size="10"></td>
             </tr>
           </table>
@@ -206,9 +207,21 @@ if (isset($_POST['name']) && isset($_POST['picture']) && isset($_POST['method'])
         <td><div id="addTool">
           <table border="0">
             <tr>
-              <td><select class="labelF" id="combobox" name="tool[]"  required>
+              <td>
+              <input list="browsers" class="labelF" id="combobox" name="tool[]" required>
+<!--
+  <option value="Internet Explorer">
+  <option value="Firefox">
+  <option value="Chrome">
+  <option value="Opera">
+  <option value="Safari">
+
+              <select class="labelF" id="combobox" name="tool[]"  required>!-->
+              <datalist id="browsers">
+
                 <option value=""></option>
                 <? echo $rowsTools;?>
+                </datalist> 
               </select></td>
               </tr>
           </table>
@@ -227,6 +240,10 @@ if (isset($_POST['name']) && isset($_POST['picture']) && isset($_POST['method'])
 </form>
 </div>
 <? } ?>
-
+<label>Email: <input type="email" list="emails"/></label>
+<datalist id="emails">
+<option label="Barbara Johnson" value="bjohnson@example.com">
+<option label="Lisa Johnson" value="ljohnson@example.com">
+</datalist>
 </body>
 </html>
