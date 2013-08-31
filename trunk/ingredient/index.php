@@ -24,8 +24,7 @@
 			dataType : 'xml',
 			colModel : [ 
 				{ display : 'ลำดับ', name : 'IID', width : 40, sortable : true, align : 'center' }, 
-				{ display : 'ชื่อส่วนผสม', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
-				{ display : 'จำนวน', name : 'QUANTITY', width : 120, sortable : true, align : 'left' }, 
+				{ display : 'ชื่อส่วนผสม', name : 'INNAME', width : 180, sortable : true, align : 'left' },
 				{ display : 'หน่วย', name : 'UNIT', width : 130, sortable : true, align : 'left', } 
 			],
 			buttons : [ 
@@ -36,8 +35,7 @@
 			],
 			searchitems : [ 
 				{ display : 'ลำดับ', name : 'IID'}, 
-				{ display : 'ชื่อส่วนผสม', name : 'NAME', isdefault : true},
-				{ display : 'จำนวน', name : 'QUANTITY'}, 
+				{ display : 'ชื่อส่วนผสม', name : 'INNAME', isdefault : true},
 				{ display : 'หน่วย', name : 'UNIT'} 
 			],
 			sortname : "IID",

@@ -13,7 +13,7 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rows="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rows.= '<option value="'.$row['FID'].'">'.$row['NAME'].'</option>';
+			$rows.= '<option value="'.$row['FID'].'">'.$row['FOODNAME'].'</option>';
 		}
 		
 		$strSQL = "SELECT * FROM ITOOLS";
@@ -21,7 +21,7 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rowsTools="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rowsTools.= '<option value="'.$row['TID'].'">'.$row['NAME'].'</option>';
+			$rowsTools.= '<option value="'.$row['TID'].'">'.$row['TOOLNAME'].'</option>';
 		}
 	?>
     
@@ -34,7 +34,7 @@ $(document).ready(function() {
 			var htmlStr = '<tr><td><select class="labelF" id="combobox" name="food[]" required>\
                 <option value=""></option>\
                 <? echo $rows;?></select></td>\
-	      <td><select class="labelF" id="combobox" name="ingredient[]" required>\
+	      <td><select class="labelF" id="combobox" name="tool[]" required>\
 	        <option value=""></option>\
 	        <? echo $rowsTools;?></select></td></tr>';
 			$('#dynamic_tb').append(htmlStr);

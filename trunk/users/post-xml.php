@@ -1,16 +1,16 @@
 <?php
 include 'connectDB.php';
 //Get Collum Name
-	$qstrSQL = " Select COLUMN_NAME from user_tab_columns where table_name='$table'";
-	$qobjParse = oci_parse($objConnect, $qstrSQL);
-    $qobjExecute = oci_execute($qobjParse, OCI_DEFAULT);
-	$qcolumn = array();
-    while ($row = oci_fetch_array($qobjParse, OCI_BOTH)) {
-		$qcolumn[] = $row['COLUMN_NAME'];
-	}
-	$noDisplay = array("PASSWORD");
-	$qcolumn = array_diff($qcolumn, $noDisplay);
-	//print_r($qcolumn);
+$qstrSQL = " Select COLUMN_NAME from user_tab_columns where table_name='$table'";
+$qobjParse = oci_parse($objConnect, $qstrSQL);
+$qobjExecute = oci_execute($qobjParse, OCI_DEFAULT);
+$qcolumn = array();
+while ($row = oci_fetch_array($qobjParse, OCI_BOTH)) {
+	$qcolumn[] = $row['COLUMN_NAME'];
+}
+//$qcolumn = array_intersect($qcolumn, array("PASSWORD"));// Show Only
+$qcolumn = array_diff($qcolumn,array("PASSWORD"));//Not display
+//	print_r($qcolumn);
 $dfSortname = $qcolumn[0];//id
 
 $page = isset($_POST['page']) ? $_POST['page'] : 1;
@@ -68,10 +68,10 @@ $xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 $xml .= "<rows>";
 $xml .= "<page>$page</page>";
 $xml .= "<total>$total</total>";
-foreach($rows AS $row){
+foreach($rows as $row){
 	$xml .= "<row id='".$row[$qcolumn[0]]."'>";
-	for ($i=0;$i<count($qcolumn);$i++){
-		$xml .= "<cell><![CDATA[".$row[$qcolumn[$i]]."]]></cell>";
+	foreach ($qcolumn as $qc){
+		$xml .= "<cell><![CDATA[".$row[$qc]."]]>$qcolumn[$i]</cell>";
 	}
 	$xml .= "</row>";
 }

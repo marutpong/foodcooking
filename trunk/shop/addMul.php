@@ -84,7 +84,7 @@ if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitu
 	include 'connectDB.php'; 
 	for ($i=0;$i<$num;$i++){
 		if (is_numeric($_POST['latitude'][$i]) && is_numeric($_POST['longitude'][$i])){	
-			$sql = "INSERT INTO $table (NAME, LATITUDE, LONGITUDE) VALUES ('$name[$i]','$latitude[$i]','$longitude[$i]')";
+			$sql = "INSERT INTO $table (SHOPNAME, LATITUDE, LONGITUDE) VALUES ('$name[$i]','$latitude[$i]','$longitude[$i]')";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);

@@ -34,12 +34,24 @@
             this._trigger( "select", event, {
               item: ui.item.option
             });
+			// manual/////////////////////////////////
+				var theSel = $(this.element.children( ":selected" ));
+				var url = 'getunit.php?id='+theSel.val();
+				$.get(url, function(data) {	
+					$(ui.item.option).parent().parent().next().next().find("input").val(data);
+
+				});
+				
+				//$(this.element.children( ":selected" )).parent().children(1).val(data);
+				$("#div1").load("demo_test.txt");
           },
  
           autocompletechange: "_removeIfInvalid"
         });
       },
- 
+ 	_getOb: function() {
+		return $(this.element.children( ":selected" ));
+	},
       _createShowAllButton: function() {
         var input = this.input,
           wasOpen = false;

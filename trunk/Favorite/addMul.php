@@ -13,7 +13,7 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rows="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rows.= '<option value="'.$row['ID'].'">'.$row['NAME'].'</option>';
+			$rows.= '<option value="'.$row['UIDS'].'">'.$row['NAME'].'</option>';
 		}
 		
 		$strSQL = "SELECT * FROM IFOODS";
@@ -21,7 +21,7 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rowsTools="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rowsTools.= '<option value="'.$row['FID'].'">'.$row['NAME'].'</option>';
+			$rowsTools.= '<option value="'.$row['FID'].'">'.$row['FOODNAME'].'</option>';
 		}
 	?>
     

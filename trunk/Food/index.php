@@ -23,11 +23,13 @@
 			url : 'post-xml.php',
 			dataType : 'xml',
 			colModel : [ 
-				{ display : 'ลำดับ', name : 'FID', width : 40, sortable : true, align : 'center' }, 
-				{ display : 'ชื่ออาหาร', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
+				{ display : 'ลำดับ', name : 'FID', width : 30, sortable : true, align : 'center' }, 
+				{ display : 'ชื่ออาหาร', name : 'FOODNAME', width : 120, sortable : true, align : 'left' }, 
 				{ display : 'รูปภาพ', name : 'PICTURE', width : 120, sortable : true, align : 'left' }, 
 				{ display : 'วิธีทำ', name : 'METHOD', width : 130, sortable : true, align : 'left', }, 
-				{ display : 'จำนวนคนดู', name : 'VIEW', width : 130, sortable : true, align : 'left', } 
+				{ display : 'จำนวนคนดู', name : 'VIEW', width : 50, sortable : true, align : 'left', }, 
+				{ display : 'เจ้าของ', name : 'UIDS', width : 100, sortable : true, align : 'left', }, 
+				{ display : 'ประเภท', name : 'TYPEID', width : 100, sortable : true, align : 'left', }
 			],
 			buttons : [ 
 				{ name : 'Add', bclass : 'add', onpress : test}, 
@@ -37,7 +39,7 @@
 			],
 			searchitems : [ 
 				{ display : 'ลำดับ', name : 'FID'}, 
-				{ display : 'ชื่ออาหาร', name : 'NAME', isdefault : true},
+				{ display : 'ชื่ออาหาร', name : 'FOODNAME', isdefault : true},
 				
 			],
 			sortname : "FID",
@@ -82,8 +84,8 @@
 				$.fancybox.open({
 					href : 'addMul.php',
 					type : 'iframe',
-					width  : 420,
-					height : 500,
+					width  : 450,
+					height : 650,
 					fitToView   : true,
 					autoSize    : false,
 					padding: 5,
@@ -99,6 +101,8 @@
 			} else if (com == 'Edit') {
 				if ($('.trSelected', grid).length==0){
 					alert("Please select any record to edit.");
+				} else if($('.trSelected', grid).length>1){
+					alert("Please select only 1 record to edit.");
 				} else if(confirm('Edit ' + $('.trSelected', grid).length + ' items?')){
 					//$.get('delete.php?id='+$('.trSelected', grid));
 					var items = $('.trSelected',grid);

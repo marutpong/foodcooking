@@ -13,7 +13,6 @@ $(document).ready(function() {
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
 				<td><input name="name[]" type="text" required  class="input" id="name[]" tabindex="1"></td>\
-				<td><input name="quantity[]" type="number" required class="input number" id="quantity[]" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>\
 				<td><input name="unit[]" type="text" required class="input" id="unit[]" tabindex="2"></td>\
 				</tr>';
 			$('#dynamic_tb').append(htmlStr);
@@ -29,16 +28,14 @@ var checkNum = function(evt) {
 </head>
 <body>
 <?
-if (isset($_POST['name']) && isset($_POST['quantity']) && isset($_POST['unit']) && $_POST['confirm']==1){
+if (isset($_POST['name']) && isset($_POST['unit']) && $_POST['confirm']==1){
 	$name = $_POST['name'];
-	$quantity = $_POST['quantity'];
 	$unit = $_POST['unit'];
 	$count = 0;
 	$num = count($_POST['name']);
 	include 'connectDB.php'; 
 	for ($i=0;$i<$num;$i++){
-		if (is_numeric($_POST['quantity'][$i])){	
-			$sql = "INSERT INTO $table (NAME, QUANTITY, UNIT) VALUES ('$name[$i]','$quantity[$i]','$unit[$i]')";
+			$sql = "INSERT INTO $table (INNAME, UNIT) VALUES ('$name[$i]','$unit[$i]')";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
@@ -46,7 +43,6 @@ if (isset($_POST['name']) && isset($_POST['quantity']) && isset($_POST['unit']) 
 			if($objExecute){
 				$count++;
 			}
-		}
 	}
 	echo '<br><br><br><center><div class="textC1">';
 	if($objExecute){
@@ -64,12 +60,10 @@ if (isset($_POST['name']) && isset($_POST['quantity']) && isset($_POST['unit']) 
     <table id="dynamic_tb">
 	    <tr class="labelF">
 	      <td>ชื่อส่วนผสม :</td>
-	      <td>จำนวน :</td>
 	      <td>หน่วย :</td>
         </tr>
 	    <tr>
 	      <td><input name="name[]" type="text"  required class="input" id="name[]" tabindex="1" ></td>
-	      <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>
 	      <td><input name="unit[]" type="text" required class="input" id="unit[]" tabindex="2"></td>
         </tr>
     </table>

@@ -26,7 +26,7 @@
 	for ($i=0;$i<$num;$i++){
 		
 			$strSQL = "UPDATE $table SET ";
-			$strSQL .="NAME = '".$_POST["name"][$i]."'";			
+			$strSQL .="TOOLNAME = '".$_POST["name"][$i]."'";			
 			$strSQL .=" WHERE TID = '".$_POST["tid"][$i]."' ";
 			$objParse = oci_parse($objConnect, $strSQL);
 			$objExecute = oci_execute($objParse);
@@ -68,7 +68,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	    <tr>
 			<td>
           	<input name="tid[]" type="hidden" id="tid[]" value="<?=$id?>">
-          	<input name="name[]" type="text"  required class="input" id="name[]" tabindex="1" value="<?=$row['NAME']?>">
+          	<input name="name[]" type="text"  required class="input" id="name[]" tabindex="1" value="<?=$row['TOOLNAME']?>">
 			</td>
 	    </tr>
 <?

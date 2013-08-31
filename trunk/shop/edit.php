@@ -10,7 +10,7 @@
 		$rows = array();
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 			$dId = $id;
-			$dName = $row['NAME'];
+			$dName = $row['SHOPNAME'];
 			$dLat = $row['LATITUDE'];
 			$dLong = $row['LONGITUDE'];
 		}
@@ -42,7 +42,7 @@ function initialize ()
    
    map = new google.maps.Map (document.getElementById ("map_canvas"), myOptions);
 
-   marker = new google.maps.Marker ({position: Gloucester, title: "Gloucester, MA"});
+   marker = new google.maps.Marker ({position: Gloucester, title: ""});
    marker.setMap (map);
    marker.setDraggable (true);
 
@@ -66,7 +66,7 @@ function initialize ()
 	for ($i=0;$i<$num;$i++){
 		if (is_numeric($_POST['latitude'][$i]) && is_numeric($_POST['longitude'][$i])){
 			$strSQL = "UPDATE $table SET ";
-			$strSQL .="NAME = '".$_POST["name"][$i]."'";
+			$strSQL .="SHOPNAME = '".$_POST["name"][$i]."'";
 			$strSQL .=", LATITUDE = '".$_POST["latitude"][$i]."' ";
 			$strSQL .=", LONGITUDE = '".$_POST["longitude"][$i]."' ";
 			$strSQL .=" WHERE SID = '".$_POST["sid"][$i]."' ";

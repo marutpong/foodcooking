@@ -24,7 +24,7 @@
 			dataType : 'xml',
 			colModel : [ 
 				{ display : 'รหัสร้านค้า', name : 'SID', width : 50, sortable : true, align : 'center' }, 
-				{ display : 'ชื่อร้านค้า', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
+				{ display : 'ชื่อร้านค้า', name : 'SHOPNAME', width : 180, sortable : true, align : 'left' }, 
 				{ display : 'ละติจูด', name : 'LATITUDE', width : 120, sortable : true, align : 'left' }, 
 				{ display : 'ลองจิจูด', name : 'LONGITUDE', width : 130, sortable : true, align : 'left', } 
 			],
@@ -36,7 +36,7 @@
 			],
 			searchitems : [ 
 				{ display : 'รหัสร้านค้า', name : 'SID'}, 
-				{ display : 'ชื่อร้านค้า', name : 'NAME', isdefault : true},
+				{ display : 'ชื่อร้านค้า', name : 'SHOPNAME', isdefault : true},
 				{ display : 'ละติจูด', name : 'LATITUDE'}, 
 				{ display : 'ลองจิจูด', name : 'LONGITUDE'} 
 			],

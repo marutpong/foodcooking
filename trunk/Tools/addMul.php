@@ -34,7 +34,7 @@ if (isset($_POST['name']) && $_POST['confirm']==1){
 	include 'connectDB.php'; 
 	for ($i=0;$i<$num;$i++){
 			
-			$sql = "INSERT INTO $table (NAME) VALUES ('$name[$i]')";
+			$sql = "INSERT INTO $table (TOOLNAME) VALUES ('$name[$i]')";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);

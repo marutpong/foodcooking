@@ -24,7 +24,7 @@
 			dataType : 'xml',
 			colModel : [ 
 				{ display : 'ลำดับ', name : 'TID', width : 40, sortable : true, align : 'center' }, 
-				{ display : 'ชื่ออุปกรณ์', name : 'NAME', width : 180, sortable : true, align : 'left' }, 
+				{ display : 'ชื่ออุปกรณ์', name : 'TOOLNAME', width : 180, sortable : true, align : 'left' }, 
 			],
 			buttons : [ 
 				{ name : 'Add', bclass : 'add', onpress : test}, 
@@ -34,7 +34,7 @@
 			],
 			searchitems : [ 
 				{ display : 'ลำดับ', name : 'TID'}, 
-				{ display : 'ชื่ออุปกรณ์', name : 'NAME', isdefault : true},
+				{ display : 'ชื่ออุปกรณ์', name : 'TOOLNAME', isdefault : true},
 			
 			],
 			sortname : "TID",

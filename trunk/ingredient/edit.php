@@ -19,15 +19,13 @@
 </head>
 <body>
 <?
-	if (isset($_POST['iid']) && isset($_POST['name']) && isset($_POST['quantity']) && isset($_POST['unit']) && $_POST['confirm']==2) {
+	if (isset($_POST['iid']) && isset($_POST['name']) && isset($_POST['unit']) && $_POST['confirm']==2) {
 	$count = 0;
 	$num = count($_POST['iid']);
 	include 'connectDB.php'; 
 	for ($i=0;$i<$num;$i++){
-		if (is_numeric($_POST['quantity'][$i])){
 			$strSQL = "UPDATE $table SET ";
-			$strSQL .="NAME = '".$_POST["name"][$i]."'";
-			$strSQL .=", QUANTITY = '".$_POST["quantity"][$i]."' ";
+			$strSQL .="INNAME = '".$_POST["name"][$i]."'";
 			$strSQL .=", UNIT = '".$_POST["unit"][$i]."' ";
 			$strSQL .=" WHERE IID = '".$_POST["iid"][$i]."' ";
 			$objParse = oci_parse($objConnect, $strSQL);
@@ -35,7 +33,6 @@
 			if($objExecute){
 				$count++;
 			}
-		}
 	}
 	echo '<br><center><div class="textC1">';
 	if($count){
@@ -53,7 +50,6 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	  <table>
 	    <tr class="labelF">
 	      <td>ชื่อส่วนผสม :</td>
-	      <td>จำนวน :</td>
 	      <td>หน่วย :</td>
         </tr>
 <?
@@ -71,11 +67,8 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	    <tr>
 			<td>
           	<input name="iid[]" type="hidden" id="iid[]" value="<?=$id?>">
-          	<input name="name[]" type="text"  required class="input" id="name[]" tabindex="1" value="<?=$row['NAME']?>">
+          	<input name="name[]" type="text"  required class="input" id="name[]" tabindex="1" value="<?=$row['INNAME']?>">
 			</td>
-	      	<td>
-            <input name="quantity[]" type="number" required class="input number" id="quantity[]" tabindex="2" value="<?=$row['QUANTITY']?>" size="10" onfocus="javascript:checkNum(this)">
-            </td>
 	      	<td>
             <input name="unit[]" type="text" required class="input" id="unit[]" tabindex="2" value="<?=$row['UNIT']?>">
             </td>

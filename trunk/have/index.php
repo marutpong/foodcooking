@@ -24,8 +24,7 @@
 			dataType : 'xml',
 			colModel : [ 
 				{ display : 'ID ร้านค้า', name : 'SID', width : 130, sortable : true, align : 'center' }, 
-				{ display : 'ID ส่วนผสม', name : 'IID', width : 130, sortable : true, align : 'center' }, 
-				{ display : 'ราคา', name : 'PRICE', width : 130, sortable : true, align : 'center' }
+				{ display : 'ID ส่วนผสม', name : 'IID', width : 130, sortable : true, align : 'center' }
 			],
 			buttons : [ 
 				{ name : 'Add', bclass : 'add', onpress : test}, 

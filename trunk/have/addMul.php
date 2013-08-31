@@ -13,7 +13,7 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rows="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rows.= '<option value="'.$row['SID'].'">'.$row['NAME'].'</option>';
+			$rows.= '<option value="'.$row['SID'].'">'.$row['SHOPNAME'].'</option>';
 		}
 		
 		$strSQL = "SELECT * FROM IINGREDIENT";
@@ -21,7 +21,7 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rowsIngre="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rowsIngre.= '<option value="'.$row['IID'].'">'.$row['NAME'].'</option>';
+			$rowsIngre.= '<option value="'.$row['IID'].'">'.$row['INNAME'].'</option>';
 		}
 	?>
     
@@ -36,9 +36,6 @@ $(document).ready(function() {
             <td><select class="labelF" id="combobox" name="ingredient[]" onChange="getUnit(this)" required>\
               <option value=""></option>\
               <? echo $rowsIngre;?></select></td>\
-            <td><input name="price[]" type="number"  required class="input number" id="quantity[]" tabindex="1" size="10" \
-            onFocus="checkNum(this)"></td>\
-            <td class="labelF">บาท/หน่วย</td>\
           </tr>\
         </table>';
 			$('#addIngre').append(htmlStr);
@@ -62,7 +59,7 @@ $(document).ready(function() {
 </head>
 <body>
 <?
-if (isset($_POST['sid']) && isset($_POST['ingredient']) && isset($_POST['price']) && $_POST['confirm']==1){
+if (isset($_POST['sid']) && isset($_POST['ingredient']) && $_POST['confirm']==1){
 	$sid = $_POST['sid'];
 	$ingredient = $_POST['ingredient'];
 	$price = $_POST['price'];
@@ -70,8 +67,8 @@ if (isset($_POST['sid']) && isset($_POST['ingredient']) && isset($_POST['price']
 	$num = count($_POST['ingredient']);
 	include 'connectDB.php'; 
 	for ($i=0;$i<$num;$i++){
-		if (is_numeric($_POST['sid']) && is_numeric($_POST['ingredient'][$i]) && is_numeric($_POST['price'][$i]) ){	
-			$sql = "INSERT INTO $table (SID, IID, PRICE) VALUES ('$sid','$ingredient[$i]','$price[$i]')";
+		if (is_numeric($_POST['sid']) && is_numeric($_POST['ingredient'][$i])){	
+			$sql = "INSERT INTO $table (SID, IID) VALUES ('$sid','$ingredient[$i]')";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
@@ -110,10 +107,7 @@ if (isset($_POST['sid']) && isset($_POST['ingredient']) && isset($_POST['price']
               <option value=""></option>
               <? echo $rowsIngre;?>
             </select></td>
-            <td><input name="price[]" type="number"  required class="input number" id="price[]" tabindex="1" size="10" 
-            onFocus="checkNum(this)"></td>
-            <td class="labelF">บาท/หน่วย</td>
-          </tr>
+            </tr>
         </table>
       </div></td>
     </tr>

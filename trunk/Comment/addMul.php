@@ -13,7 +13,7 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rows="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rows.= '<option value="'.$row['ID'].'">'.$row['NAME'].'</option>';
+			$rows.= '<option value="'.$row['UIDS'].'">'.$row['NAME'].'</option>';
 		}
 		
 		$strSQL = "SELECT * FROM IFOODS";
@@ -21,7 +21,7 @@
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rowsTools="";
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			$rowsTools.= '<option value="'.$row['FID'].'">'.$row['NAME'].'</option>';
+			$rowsTools.= '<option value="'.$row['FID'].'">'.$row['FOODNAME'].'</option>';
 		}
 	?>
     
@@ -60,7 +60,7 @@ if (isset($_POST['user']) && isset($_POST['food']) && isset($_POST['message']) &
 	$num = count($_POST['user']);
 	include 'connectDB.php'; 
 		if (is_numeric($_POST['user']) && is_numeric($_POST['food']) ){	
-			$sql = "INSERT INTO $table (UIDS, FID, MESSAGE, STIME) VALUES ('$user','$food','$message',SYSTIMESTAMP )";
+			$sql = "INSERT INTO $table (UIDS, FID, MESSAGE, STIME) VALUES ('$user','$food','$message',TO_CHAR(sysdate, 'dd/mm/yyyy hh24:mi:ss') )";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
