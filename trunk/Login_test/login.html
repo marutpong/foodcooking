@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Login</title>
+
+<script src="script/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#warningU,#warningP").hide();
+		$("#button").click(function (e) {
+			var Username = $("#text1").val();
+			document.getElementById("warningT").innerHTML = "";
+			if(Username.length<4 || Username.length>20){
+				$("#warningU").show('slow');
+				e.preventDefault();
+			}else{
+				$("#warningU").hide();
+			}
+			});
+			
+		$("#button").click(function (e) {
+			var Password = $("#text2").val();
+			document.getElementById("warningT").innerHTML = "";
+			if(Password.length<5 || Password.length>20){
+				$("#warningP").show('slow');
+				e.preventDefault();
+			}else{
+				$("#warningP").hide();
+			}
+			});
+	});
+	function showWarning(result){
+							if(result==0){
+								document.getElementById("warningT").innerHTML = "Username or Password not found !!";
+							}
+						} 
+</script>
+</head>
+
+<body>
+	
+    	<div id="divmiddle">
+        	<div id="logo">
+            	Login  
+            </div>
+            <div id="form">
+            	<form action="check_user.php" method="post" target="iframe_target">
+                <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px ;"></iframe>
+           	  		<input type="text" id="text1" name="username" placeholder="Username"></input></br>
+              		<input type="password" id="text2" name="password" placeholder="Password"></input>
+                    <div id="warningU">Invalid Username</div>
+                    <div id="warningP">Invalid Password</div>
+                    <center><div id="warningT"></div></center>
+                    <input type="submit" id="button" value="Login"></input>
+                </form>
+                <a href="singup.html">Sign up for a new account</a>
+            </div>
+    	</div>
+   
+    
+</body>
+</html>
