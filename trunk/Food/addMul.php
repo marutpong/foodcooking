@@ -15,9 +15,8 @@
 		include('../FoodFunction.php');
 		$rows = optionIngredient("");
 		$rowsTool = optionTool("");
-		$rowsUser=optionUser("");
-		$rowsFoodtype=optionFoodType("");
-		
+		$rowsUser = optionUser("");
+		$rowsFoodtype = optionFoodType("");
 	?>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -65,17 +64,15 @@ var removeOb = function(e) {
 </head>
 <body>
 <?
-	$foodtypeID = "";
+/// Upload picture ///
+	$picture = uploadImage("files/",$_FILES["picture"]);
+// Food Type ///
 	if ( isset($_POST['foodtype']) && !empty($_POST['foodtype']) ) {
 		$foodtypeID = $_POST['foodtype'];
 	} else if ( isset($_POST['newfoodtype']) && !empty($_POST['newfoodtype']) ){
-		if(insertFoodType($_POST['newfoodtype'],'')){   	
-			$foodtypeID = getTypeIdByName($_POST['newfoodtype']);
-		}
+		$foodtypeID = insertFoodType($_POST['newfoodtype'],'');
 	}
-	
 if (isset($_POST['name']) 
-	&& isset($_POST['picture']) 
 	&& isset($_POST['method']) 
 	&& isset($_POST['views']) 
 	&& isset($_POST['owner']) 
@@ -83,18 +80,12 @@ if (isset($_POST['name'])
 	&& $_POST['confirm']==1){
 		
 	$name = $_POST['name'];
-	$picture = $_POST['picture'];
 	$method = $_POST['method'];
 	$views = $_POST['views'];
 	$owner = $_POST['owner'];
-
-	include 'connectDB.php'; 
-	
-	if(insertFood($name,$picture,$method,$views,$owner,$foodtypeID)){
-		$count++;
-	}
-	if($count){  	
-		$fid =  getFoodIdByName($name);
+///// Insert Food ////
+	if($fid = insertFood($name,$picture,$method,$views,$owner,$foodtypeID)){
+		$count=1;	
 /////// Add INGREDIENT  ////////
 		if ( isset($_POST['ingredient']) && isset($_POST['quantity']) && isset($_POST['newingredient']) && (is_numeric($fid)) ){
 			$ingredient = $_POST['ingredient'];
@@ -105,9 +96,7 @@ if (isset($_POST['name'])
 				if (is_numeric($_POST['quantity'][$i])){	
 					$theIngreID = "";
 					if ( empty($ingredient[$i]) && !empty($newIG[$i]) ) {			
-						if(insertIngredient($newIG[$i],$_POST['unit'][$i])) {
-							$theIngreID =  getIngeIdByName($newIG[$i]);
-						}
+						$theIngreID = insertIngredient($newIG[$i],$_POST['unit'][$i]);
 					} else if (!empty($ingredient[$i])){
 						$theIngreID = $ingredient[$i];
 					}
@@ -123,9 +112,7 @@ if (isset($_POST['name'])
 			for ($i=0;$i<$num;$i++){
 				$theToolID = "";
 				if ( empty($tool[$i]) && !empty($newtool[$i]) ) {
-					if(insertTool($newtool[$i])){   	
-						$theToolID =  getToolIdByName($newtool[$i]);
-					}
+					$theToolID =  insertTool($newtool[$i]);
 				} else if (!empty($tool[$i])){
 					$theToolID = $tool[$i];
 				}
@@ -138,11 +125,11 @@ if (isset($_POST['name'])
 	} else {
 		$message =  'Unsuccessful, some input are incorect.';
 	}
-	echo '<br><br><br><center><div class="textC1">$message</div></center>';
+	echo '<br><br><br><center><div class="textC1">'.$message.'</div></center>';
 } else {
 ?>
 <div style="width:400">
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
 <div>
     <table id="dynamic_tb">
 	    <tr class="labelF">
@@ -152,7 +139,7 @@ if (isset($_POST['name'])
 	    <tr>
 	      <td align="right" valign="top"><span class="labelF">รูปภาพ :</span></td>
 	      <td><span class="labelF">
-	        <input name="picture" type="text"  required class="input" id="picture" tabindex="2" size="50">
+	        <input name="picture" type="file"  class="input" id="picture" tabindex="2" size="50" >
 	      </span></td>
         </tr>
 	    <tr>

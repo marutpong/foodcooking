@@ -15,9 +15,8 @@
 		include('../FoodFunction.php');
 		$rows = optionIngredient("");
 		$rowsTool = optionTool("");
-		$rowsUser=optionUser("");
-		$rowsFoodtype=optionFoodType("");
-		
+		$rowsUser = optionUser("");
+		$rowsFoodtype = optionFoodType("");
 	?>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -65,8 +64,11 @@ var removeOb = function(e) {
 </head>
 <body>
 <?
+	print_r ($_POST['newfoodtype']);
+	$picture = uploadImage("files/",$_FILES["picture"]);
+
 	if (isset($_POST['name']) 
-	&& isset($_POST['picture']) 
+	&& isset($_POST['fid']) 
 	&& isset($_POST['method']) 
 	&& isset($_POST['views']) 
 	&& isset($_POST['owner']) 
@@ -74,11 +76,13 @@ var removeOb = function(e) {
 	&& $_POST['confirm']==2){
 
 	include 'connectDB.php'; 
-
+/*
 		if (is_numeric($_POST['views'])){
 			$strSQL = "UPDATE $table SET ";
 			$strSQL .="FOODNAME = '".$_POST["name"]."'";
-			$strSQL .=", PICTURE = '".$_POST["picture"]."' ";
+			if (!empty($picture)){
+				$strSQL .=", PICTURE = '".$_POST["picture"]."' ";
+			}
 			$strSQL .=", METHOD = '".$_POST["method"]."' ";
 			$strSQL .=", VIEWS = '".$_POST["views"]."' ";
 			$strSQL .=", UIDS = '".$_POST["owner"]."' ";
@@ -90,7 +94,7 @@ var removeOb = function(e) {
 				$count++;
 			}
 		}
-
+*/
 	echo '<br><center><div class="textC1">';
 	if($count){
 		echo 'Edited '.$count.' items.';
@@ -165,11 +169,15 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
               <option value=""></option>
               <? echo optionIngredient($rowContain['IID']);?>
             </select>
-              <input name="newingredient[]" type="hidden" id="newingredient[]"></td>
+              <input name="newingredient[]" type="hidden" id="newingredient[]">
+            </td>
             <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" 
-            onFocus="checkNum(this)" size="10" placeholder="จำนวน" value="<? echo $rowContain['QUANTITY']; ?>"></td>
-            <td><input name="unit[]" type="text" disabled  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย" value="<? echo $rowContain['UNIT']; ?>"></td>
-            <td><div class="remove" onClick="removeOb(this)"><img src="../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>
+            onFocus="checkNum(this)" size="10" placeholder="จำนวน" value="<? echo $rowContain['QUANTITY']; ?>">
+            </td>
+            <td><input name="unit[]" type="text" disabled  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย" value="<? echo $rowContain['UNIT']; ?>">
+            </td>
+            <td><div class="remove" onClick="removeOb(this)" id="<? echo $rowContain['IID']; ?>"><img src="../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div>
+            </td>
           </tr>
           <? }
 		  ?>
@@ -183,23 +191,26 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
   <tr>
     <td valign="top" class="labelF">อุปกรณ์ :</td>
     <td><table id="addTool">
+        <?
+		$strSQL = "SELECT * FROM IUSE Where FID=".$row['FID'];
+		$objParse = oci_parse($objConnect, $strSQL);
+		$objExecute = oci_execute($objParse, OCI_DEFAULT);
+		while ($rowTool = oci_fetch_array($objParse, OCI_BOTH)) {
+		?>
       <tr>
         <td width="260"><select class="labelF combobox" id="tool[]" name="tool[]" >
           <option value=""></option>
-          <? echo $rowsTool;?>
+          <? echo optionTool($rowTool['TID']);?>
         </select>
           <input name="newtool[]" type="hidden" id="newtool[]"></td>
         <td><div class="remove" onClick="removeOb(this)"><img src="../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>
       </tr>
+      <? } ?>
     </table></td>
   </tr>
 </table>
 <div class="button_addmore" id="addToolMore" tabindex="4" ><img src="../core/css/images/add.png" width="16" height="16">เพิ่มอุปกรณ์</div>
-<footer>
-  <p>
-    <input name="confirm2" type="hidden" value="1">
-  </p>
-</footer>
+<footer></footer>
 <?
 		}
 	}
@@ -207,6 +218,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 ?>
 </div>
 	<footer><center>
+	  <input name="fid" type="hidden" id="fid" value="<? echo $row['FID']; ?>">
     	<input name="confirm" type="hidden" id="confirm" value="2">
 		<input type="submit" class="button_sub" value="แก้ไข" tabindex="4">
         </center>
