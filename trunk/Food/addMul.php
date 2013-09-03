@@ -26,7 +26,8 @@
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
               <td width="263"><select class="labelF combobox" id="combobox" name="ingredient[]">\
-                <option value=""></option><? echo $rows;?></select></td>\
+                <option value=""></option><? echo $rows;?></select>\
+                <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
               <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" \
             onFocus="checkNum(this)" size="10" placeholder="จำนวน"></td>\
               <td><input name="unit[]" type="text" disabled  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย"></td>\
