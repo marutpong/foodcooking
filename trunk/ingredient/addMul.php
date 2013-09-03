@@ -35,8 +35,7 @@ if (isset($_POST['name']) && isset($_POST['unit']) && $_POST['confirm']==1){
 	$num = count($_POST['name']);
 	include 'connectDB.php'; 
 	for ($i=0;$i<$num;$i++){
-			$sql = "INSERT INTO $table (INNAME, UNIT) VALUES ('$name[$i]','$unit[$i]')";
-			$strSQL = $sql;
+			$strSQL = "INSERT INTO $table (INNAME, UNIT) VALUES ('$name[$i]','$unit[$i]')";
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
 			$objExecute = oci_execute($objParse);

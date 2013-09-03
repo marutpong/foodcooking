@@ -39,11 +39,11 @@
 				var url = 'getunit.php?id='+theSel.val();
 				$.get(url, function(data) {	
 					$(ui.item.option).parent().parent().next().next().find("input").val(data);
-
+//					$(ui.item.option).parent().parent().next().next().find("input").attr('disabled', 'disabled').val('');
 				});
-				
+				$(ui.item.option).parent().parent().next().next().find("input").attr('disabled', 'disabled').val('');
 				//$(this.element.children( ":selected" )).parent().children(1).val(data);
-				$("#div1").load("demo_test.txt");
+				
           },
  
           autocompletechange: "_removeIfInvalid"
@@ -122,7 +122,16 @@
         }
  
         // Remove invalid value
-        this.input
+		///////////////////////////////////
+		//alert($(this.input).val());
+		//$(this.input).parent().val($(this.input).val());
+		$(this.input).parent().next().val($(this.input).val());
+	//	alert($(this.input).parent().val());
+		
+		$(this.input).parent().parent().next().next().find("input").removeAttr('disabled');
+		$(this.input).parent().parent().next().next().find("input").val('');
+        /*
+		this.input
           .val( "" )
           .attr( "title", value + " didn't match any item" )
           .tooltip( "open" );
@@ -130,7 +139,7 @@
         this._delay(function() {
           this.input.tooltip( "close" ).attr( "title", "" );
         }, 2500 );
-        this.input.data( "ui-autocomplete" ).term = "";
+        this.input.data( "ui-autocomplete" ).term = "";*/
       },
  
       _destroy: function() {

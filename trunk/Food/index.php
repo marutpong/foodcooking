@@ -84,8 +84,8 @@
 				$.fancybox.open({
 					href : 'addMul.php',
 					type : 'iframe',
-					width  : 450,
-					height : 650,
+					width  : 600,
+					height : 700,
 					fitToView   : true,
 					autoSize    : false,
 					padding: 5,
