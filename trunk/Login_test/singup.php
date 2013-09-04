@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>สมัคร</title>
+	<title>Add User</title>
 	<meta charset="UTF-8" />
 	<link href="../core/css/flexigrid2.css" rel="stylesheet" type="text/css">
 	<link href="../core/css/mystyle.css" rel="stylesheet" type="text/css">
@@ -104,9 +104,9 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	//echo $total;
 	//for ($i=0;$i<$num;$i++){
 		if ($total == 0){	
-			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" . $_POST['birthdate'] . "','dd/mm/yyyy'),'$email')";
+			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" . $_POST['birthdate'] . "','mm/dd/yyyy'),'$email')";
 			$strSQL = $sql;
-			//echo $sql;
+			echo $strSQL;
 			$objParse = oci_parse($objConnect , $strSQL);
 			$objExecute = oci_execute($objParse, OCI_DEFAULT);
 			if($objExecute){
@@ -115,7 +115,15 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 			}
 		}
 	//}
-	
+	echo '<br><br><br><center><div class="textC1">';
+	if($objExecute && $total==0){
+		echo 'Add Succesful '.$count.' items<P>';
+		echo '<a href="addMul.php"  class="button_addmore">Add more User</a>';
+	} else {
+		echo 'Unsuccessful, some input are incorect.';
+	}
+
+	echo '</div></center>';
 } else {
 ?>
 </p>
@@ -160,7 +168,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	  <p>
 	    <input name="confirm" type="hidden" value="1">
 	    <br>
-<center><input type="submit" class="button_sub" value="เพิ่ม" tabindex="4"></center>
+<center><input type="submit" class="button_sub" value="สมัครสมาชิก" tabindex="4"></center>
       </p>
 </footer>
 </form>
