@@ -41,7 +41,7 @@
 					$(ui.item.option).parent().parent().next().next().find("input").val(data);
 //					$(ui.item.option).parent().parent().next().next().find("input").attr('disabled', 'disabled').val('');
 				});
-				$(ui.item.option).parent().parent().next().next().find("input").attr('disabled', 'disabled').val('');
+				$(ui.item.option).parent().parent().next().next().find("input").attr('readonly', 'readonly').val('');
 				//$(this.element.children( ":selected" )).parent().children(1).val(data);
 				
           },
@@ -102,7 +102,8 @@
  
         // Selected an item, nothing to do
         if ( ui.item ) {
-          return;
+			$(this.input).parent().next().val("");
+          	return;
         }
  
         // Search for a match (case-insensitive)
@@ -126,9 +127,9 @@
 		//alert($(this.input).val());
 		//$(this.input).parent().val($(this.input).val());
 		$(this.input).parent().next().val($(this.input).val());
-	//	alert($(this.input).parent().val());
+		//alert($(this.input).parent().next().val());
 		
-		$(this.input).parent().parent().next().next().find("input").removeAttr('disabled');
+		$(this.input).parent().parent().next().next().find("input").removeAttr('readonly');
 		$(this.input).parent().parent().next().next().find("input").val('');
         /*
 		this.input

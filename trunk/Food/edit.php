@@ -26,10 +26,11 @@
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
               <td width="263"><select class="labelF combobox" id="combobox" name="ingredient[]">\
-                <option value=""></option><? echo $rows;?></select></td>\
+                <option value=""></option><? echo $rows;?></select>\
+                <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
               <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" \
             onFocus="checkNum(this)" size="10" placeholder="จำนวน"></td>\
-              <td><input name="unit[]" type="text" disabled  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย"></td>\
+              <td><input name="unit[]" type="text" readonly  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย"></td>\
               <td><div class="remove" onClick="removeOb(this)"><img src="../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>\
             </tr>';
 			$('#addIngre').append(htmlStr);
@@ -64,39 +65,83 @@ var removeOb = function(e) {
 </head>
 <body>
 <?
-	print_r ($_POST['newfoodtype']);
-	$picture = uploadImage("files/",$_FILES["picture"]);
-
+	$picture = "";
+	if (isset($_FILES["picture"])){
+		$picture = uploadImage("files/",$_FILES["picture"]);
+	}
+	if ( isset($_POST['newfoodtype']) && !empty($_POST['newfoodtype']) ){
+		$foodtypeID = insertFoodType($_POST['newfoodtype'],'');
+	} else if ( isset($_POST['foodtype']) && !empty($_POST['foodtype']) ) {
+		$foodtypeID = $_POST['foodtype'];
+	}
+	
 	if (isset($_POST['name']) 
 	&& isset($_POST['fid']) 
 	&& isset($_POST['method']) 
 	&& isset($_POST['views']) 
 	&& isset($_POST['owner']) 
-	&& isset($_POST['foodtype']) 
 	&& $_POST['confirm']==2){
-
+	$fid = $_POST['fid'];
 	include 'connectDB.php'; 
-/*
+
 		if (is_numeric($_POST['views'])){
 			$strSQL = "UPDATE $table SET ";
 			$strSQL .="FOODNAME = '".$_POST["name"]."'";
-			if (!empty($picture)){
-				$strSQL .=", PICTURE = '".$_POST["picture"]."' ";
-			}
+			if (!empty($picture)){ $strSQL .=", PICTURE = '".$picture."' "; }
 			$strSQL .=", METHOD = '".$_POST["method"]."' ";
 			$strSQL .=", VIEWS = '".$_POST["views"]."' ";
 			$strSQL .=", UIDS = '".$_POST["owner"]."' ";
-			$strSQL .=", TYPEID = '".$_POST["foodtype"]."' ";
+			if (!empty($foodtypeID)){ $strSQL .=", TYPEID = '".$foodtypeID."' "; }
 			$strSQL .=" WHERE FID = '".$_POST["fid"]."' ";
+			//echo $strSQL;
 			$objParse = oci_parse($objConnect, $strSQL);
 			$objExecute = oci_execute($objParse);
 			if($objExecute){
 				$count++;
 			}
 		}
-*/
+
 	echo '<br><center><div class="textC1">';
 	if($count){
+		$strSQL = "DELETE FROM ICONTAIN WHERE FID = $fid";
+		if(myExe($strSQL)){
+			/////// Add INGREDIENT  ////////
+			if ( isset($_POST['ingredient']) && isset($_POST['quantity']) && isset($_POST['newingredient'])){
+				$ingredient = $_POST['ingredient'];
+				$newIG = $_POST['newingredient'];
+				$quantity = $_POST['quantity'];
+				$num = count($_POST['ingredient']);
+				for ($i=0;$i<$num;$i++){
+					if (is_numeric($_POST['quantity'][$i])){
+						$theIngreID = "";
+						if ( !empty($newIG[$i]) ) {			
+							$theIngreID = insertIngredient($newIG[$i],$_POST['unit'][$i]);
+						} else if (!empty($ingredient[$i])){
+							$theIngreID = $ingredient[$i];
+						}
+						if(is_numeric($theIngreID)) {insertContain($fid,$theIngreID,$quantity[$i]); }
+					}
+				}
+			}
+		}
+		$strSQL = "DELETE FROM IUSE WHERE FID = $fid";
+		if(myExe($strSQL)){
+			/////// Add Tool ////////
+			if ( isset($_POST['tool']) &&  isset($_POST['newtool'])){
+				$tool = $_POST['tool'];
+				$newtool = $_POST['newtool'];
+				$num = count($_POST['tool']);
+				for ($i=0;$i<$num;$i++){
+					$theToolID = "";
+					if (!empty($newtool[$i]) ) {
+						$theToolID =  insertTool($newtool[$i]);
+					} else if (!empty($tool[$i])){
+						$theToolID = $tool[$i];
+					}
+					if (is_numeric($theToolID)){ insertUse($fid,$theToolID); }
+				}
+			}
+		}
 		echo 'Edited '.$count.' items.';
 	} else {
 		echo 'Edit Unsuccessful, some input are incorect.';
@@ -106,7 +151,7 @@ var removeOb = function(e) {
 	
 if (isset($_GET['ids']) && $_GET['confirm']==1) {
 ?>
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
 <div>
 <?
 	$ids = $_GET['ids'];
@@ -128,9 +173,11 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
     </tr>
     <tr>
       <td align="right" valign="top"><span class="labelF">รูปภาพ :</span></td>
-      <td><span class="labelF">
-        <input name="picture" type="text"  required class="input" id="picture" tabindex="2" value="<? echo $row['PICTURE']; ?>" size="50">
-      </span></td>
+      <td><p class="labelF"><img src="files/_<? echo $row['PICTURE']; ?>">
+        </p>
+        <p class="labelF">
+          <input name="picture" type="file"  class="input" id="picture" tabindex="2" size="50" >เลือกรูปหากต้องการเปลี่ยน
+        </p></td>
     </tr>
     <tr>
       <td align="right" valign="top" class="labelF">วิธีทำ :</td>
@@ -174,7 +221,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
             <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" 
             onFocus="checkNum(this)" size="10" placeholder="จำนวน" value="<? echo $rowContain['QUANTITY']; ?>">
             </td>
-            <td><input name="unit[]" type="text" disabled  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย" value="<? echo $rowContain['UNIT']; ?>">
+            <td><input name="unit[]" type="text" readonly  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย" value="<? echo $rowContain['UNIT']; ?>">
             </td>
             <td><div class="remove" onClick="removeOb(this)" id="<? echo $rowContain['IID']; ?>"><img src="../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div>
             </td>
@@ -212,9 +259,9 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 <div class="button_addmore" id="addToolMore" tabindex="4" ><img src="../core/css/images/add.png" width="16" height="16">เพิ่มอุปกรณ์</div>
 <footer></footer>
 <?
-		}
-	}
-}
+		
+
+
 ?>
 </div>
 	<footer><center>
@@ -224,7 +271,8 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
         </center>
 	</footer>
 </form>
-<? }
+<? } } } 
+}
 } ?>
 </body>
 </html>

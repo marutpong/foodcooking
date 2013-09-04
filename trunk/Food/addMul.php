@@ -30,7 +30,7 @@
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
               <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" \
             onFocus="checkNum(this)" size="10" placeholder="จำนวน"></td>\
-              <td><input name="unit[]" type="text" disabled  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย"></td>\
+              <td><input name="unit[]" type="text" readonly  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย"></td>\
               <td><div class="remove" onClick="removeOb(this)"><img src="../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>\
             </tr>';
 			$('#addIngre').append(htmlStr);
@@ -175,7 +175,7 @@ if (isset($_POST['name'])
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>
               <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" 
             onFocus="checkNum(this)" size="10" placeholder="จำนวน"></td>
-              <td><input name="unit[]" type="text" disabled  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย"></td>
+              <td><input name="unit[]" type="text"  required class="input unit" id="unit[]" placeholder="หน่วย" tabindex="1" size="10" readonly ></td>
               <td><div class="remove" onClick="removeOb(this)"><img src="../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>
             </tr>
           </table>
