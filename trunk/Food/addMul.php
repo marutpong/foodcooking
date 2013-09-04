@@ -25,7 +25,7 @@
 		$( "#foodtype" ).combobox();
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
-              <td width="263"><select class="labelF combobox" id="combobox" name="ingredient[]">\
+              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]">\
                 <option value=""></option><? echo $rows;?></select>\
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
               <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" \
@@ -38,7 +38,7 @@
 		});
 		$('#addToolMore').click(function () {
 			var htmlStr = '<tr>\
-            <td width="260"><select class="labelF combobox" id="tool[]" name="tool[]" >\
+            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" >\
               <option value=""></option>\
               <? echo $rowsTool;?></select>\
               <input name="newtool[]" type="hidden" id="newtool[]"></td>\
@@ -169,7 +169,7 @@ if (isset($_POST['name'])
         <td><div>
           <table border="0" id="addIngre">
             <tr>
-              <td width="263"><select class="labelF combobox" id="combobox" name="ingredient[]">
+              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]">
                 <option value=""></option><? echo $rows;?>
               </select>
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>
@@ -190,7 +190,7 @@ if (isset($_POST['name'])
         <td valign="top" class="labelF">อุปกรณ์ :</td>
         <td><table id="addTool">
           <tr>
-            <td width="260"><select class="labelF combobox" id="tool[]" name="tool[]" >
+            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" >
               <option value=""></option>
               <? echo $rowsTool;?></select>
               <input name="newtool[]" type="hidden" id="newtool[]"></td>

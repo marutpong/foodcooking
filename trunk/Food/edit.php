@@ -25,7 +25,7 @@
 		$( "#foodtype" ).combobox();
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
-              <td width="263"><select class="labelF combobox" id="combobox" name="ingredient[]">\
+              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]">\
                 <option value=""></option><? echo $rows;?></select>\
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
               <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" \
@@ -38,7 +38,7 @@
 		});
 		$('#addToolMore').click(function () {
 			var htmlStr = '<tr>\
-            <td width="260"><select class="labelF combobox" id="tool[]" name="tool[]" >\
+            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" >\
               <option value=""></option>\
               <? echo $rowsTool;?></select>\
               <input name="newtool[]" type="hidden" id="newtool[]"></td>\
@@ -212,7 +212,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 		while ($rowContain = oci_fetch_array($objParse, OCI_BOTH)) {
 		?>
           <tr>
-            <td width="263"><select class="labelF combobox" id="combobox" name="ingredient[]" >
+            <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]" >
               <option value=""></option>
               <? echo optionIngredient($rowContain['IID']);?>
             </select>
@@ -245,7 +245,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 		while ($rowTool = oci_fetch_array($objParse, OCI_BOTH)) {
 		?>
       <tr>
-        <td width="260"><select class="labelF combobox" id="tool[]" name="tool[]" >
+        <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" >
           <option value=""></option>
           <? echo optionTool($rowTool['TID']);?>
         </select>
