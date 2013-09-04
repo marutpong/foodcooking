@@ -259,10 +259,10 @@ function sendmail($email,$msgheader,$msgcontent){
 	$mail->AddAddress("$email"); 
 	if ( $mail->Send() )
 	{ 
-		echo "true"; 
+		return (true); 
 	}else
 	{
-		echo "false";
+		echo (false);
 	}
 }
 ?>
