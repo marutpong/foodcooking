@@ -104,9 +104,9 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	//echo $total;
 	//for ($i=0;$i<$num;$i++){
 		if ($total == 0){	
-			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" . $_POST['birthdate'] . "','mm/dd/yyyy'),'$email')";
+			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" . $_POST['birthdate'] . "','dd/mm/yyyy'),'$email')";
 			$strSQL = $sql;
-			echo $strSQL;
+			
 			$objParse = oci_parse($objConnect , $strSQL);
 			$objExecute = oci_execute($objParse, OCI_DEFAULT);
 			if($objExecute){
@@ -117,8 +117,8 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	//}
 	echo '<br><br><br><center><div class="textC1">';
 	if($objExecute && $total==0){
-		echo 'Add Succesful '.$count.' items<P>';
-		echo '<a href="addMul.php"  class="button_addmore">Add more User</a>';
+		echo 'Register Succesful <P>';
+		
 	} else {
 		echo 'Unsuccessful, some input are incorect.';
 	}
