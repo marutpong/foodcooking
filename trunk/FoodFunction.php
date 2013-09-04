@@ -239,4 +239,30 @@ function uploadImage($path,$files){
 		}
 	}
 }
+
+function sendmail($email,$msgheader,$msgcontent){
+	require("PHPMailer_5.2.4/class.phpmailer.php");
+	$htmlbody = "<b>$msgcontent</b>";
+	$mail = new PHPMailer();
+	$mail->IsSMTP(); 
+	$mail->SMTPDebug = 0;
+	$mail->IsHTML(true);
+	$mail->CharSet = "UTF-8"; 
+	$mail->SMTPAuth = true;
+	$mail->Host = "smtp.mail.yahoo.com"; 
+	$mail->Username = "foodcooking_g10@yahoo.com"; 
+	$mail->Password = "Emailg10"; 
+	$mail->SetFrom("foodcooking_g10@yahoo.com", "Webmaster"); 
+	$mail->Subject = "$msgheader"; 
+	$mail->AltBody = "$msgcontent"; 
+	$mail->Body = $htmlbody;
+	$mail->AddAddress("$email"); 
+	if ( $mail->Send() )
+	{ 
+		echo "true"; 
+	}else
+	{
+		echo "false";
+	}
+}
 ?>
