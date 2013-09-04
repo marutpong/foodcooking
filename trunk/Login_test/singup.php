@@ -86,7 +86,8 @@ $( "#addUser" ).validate({
 <p>
   <?
 if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email']) && $_POST['confirm']==1){
-	include 'connectDB.php'; 
+	include 'connectDB.php';
+	include("../FoodFunction.php");
 	$name = $_POST['name'];
 	$username = $_POST['username'];
 	$password = $_POST['password'];
@@ -118,7 +119,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	echo '<br><br><br><center><div class="textC1">';
 	if($objExecute && $total==0){
 		echo 'Register Succesful <P>';
-		
+		sendmail($email,"Register www.foodcooking.com","Register is complete");
 	} else {
 		echo 'Unsuccessful, some input are incorect.';
 	}
