@@ -37,7 +37,7 @@ session_start();
 	 
 	$ids = $_SESSION['user'];
 	$nameArray = split(",|and",$ids);
-	include 'connectDB.php'; 
+	include 'connectdb.php'; 
 	foreach($nameArray as $id){
 	if ($id!=""){
 		$strSQL = "SELECT * FROM iusers Where UIDS=$id";

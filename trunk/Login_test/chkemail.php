@@ -1,7 +1,7 @@
 <?php
 $total = 0;
 if (isset($_GET['email'])){
-	include 'connectDB.php';
+	include 'connectdb.php';
 	$email=$_GET['email'];
 	$strSQL = "SELECT * FROM IUSERS WHERE EMAIL='$email'";
 	$objParse = oci_parse($objConnect, $strSQL);

@@ -1,7 +1,7 @@
 <?php
 $total = 0;
 if (isset($_GET['username'])){
-	include 'connectDB.php';
+	include 'connectdb.php';
 	$username=$_GET['username'];
 	$strSQL = "SELECT * FROM IUSERS WHERE username='$username'";
 	$objParse = oci_parse($objConnect, $strSQL);

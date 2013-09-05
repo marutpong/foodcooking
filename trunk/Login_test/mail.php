@@ -1,6 +1,6 @@
 ﻿<?
 include("../FoodFunction.php");
-include("connectDB.php");
+include("connectdb.php");
 $email = $_POST['email'];
 $length=10;
 $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

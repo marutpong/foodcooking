@@ -29,7 +29,7 @@
 <?
 	if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email']) && $_POST['confirm']==2) {
 	$count = 0;
-	include 'connectDB.php'; 
+	include 'connectdb.php'; 
 	$id = $_POST['id'];
 			$strSQL = "UPDATE $table SET ";
 			$strSQL .="NAME = '".$_POST["name"]."'";
@@ -63,7 +63,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
       <?
 	$ids = $_GET['ids'];
 	$nameArray = split(",|and",$ids);
-	include 'connectDB.php'; 
+	include 'connectdb.php'; 
 	foreach($nameArray as $id){
 	if ($id!=""){
 		$strSQL = "SELECT * FROM $table Where UIDS=$id";

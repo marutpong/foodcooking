@@ -86,7 +86,7 @@ $( "#addUser" ).validate({
 <p>
   <?
 if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email']) && $_POST['confirm']==1){
-	include 'connectDB.php';
+	include 'connectdb.php';
 	include("../FoodFunction.php");
 	$name = $_POST['name'];
 	$username = $_POST['username'];
