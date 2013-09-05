@@ -107,7 +107,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	//echo $total;
 	//for ($i=0;$i<$num;$i++){
 		if ($total == 0){	
-			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" . $_POST['birthdate'] . "','dd/mm/yyyy'),'$email')";
+			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" .$birthdate. "','dd/mm/yyyy'),'$email')";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);

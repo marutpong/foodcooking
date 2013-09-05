@@ -1,6 +1,6 @@
 <?php
 include 'connectdb.php';
-$username = strtoupper($_POST["username"]);
+$username = $_POST["username"];
 $password = $_POST["password"];
 $strSql = "SELECT * FROM FEED_USER WHERE USERNAME = '".$username."' AND PASSWORD = '".$password."'";
 $objParse = oci_parse($objConnect, $strSql);

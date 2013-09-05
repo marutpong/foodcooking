@@ -73,9 +73,9 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 ?>
 	    <tr class="labelF">
-	      <td align="right" class="labelF">ชื่อ :</td>
-	      <td><input name="id" type="hidden" id="id" value="<?=$id?>">
-	        <input name="name" type="text"  required class="input" id="name" tabindex="1" value="<?=$row['NAME']?>"></td>
+	      <td align="right" class="labelF"><input name="id" type="hidden" id="id" value="<?=$id?>">
+          ชื่อ :</td>
+	      <td><input name="name" type="text"  required class="input" id="name" tabindex="1" value="<?=$row['NAME']?>"></td>
         </tr>
 
 	    <tr>

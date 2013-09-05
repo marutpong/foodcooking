@@ -1,5 +1,12 @@
-﻿<?
-session_start();
+<?
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+include '../FoodFunction.php';
+if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser($_SESSION['UIDS'],$_SESSION['USERNAME'])) ) {
+	header ("Location: login.php");
+}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -34,8 +41,7 @@ session_start();
 <div>
 	  <table align="center">
       <?
-	 
-	$ids = $_SESSION['user'];
+	$ids = $_SESSION['UIDS'];
 	$nameArray = split(",|and",$ids);
 	include 'connectdb.php'; 
 	foreach($nameArray as $id){

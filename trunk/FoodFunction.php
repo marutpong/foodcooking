@@ -140,6 +140,17 @@ function optionFoodType($id){
 	return($rows);
 }
 
+function authenIdUser($id,$user){
+	include 'connectDB.php';
+	$strSql = "SELECT * FROM IUSERS WHERE UIDS = '".$id."' AND USERNAME = '".$user."'";
+	$objParse = oci_parse($objConnect, $strSql);
+	oci_execute($objParse, OCI_DEFAULT);
+	if($row = oci_fetch_array($objParse, OCI_BOTH)){
+		return (true);
+	}else{
+		return (false);
+	}
+}
 
 /**
 * ฟังก์ชั่นตรวจสอบว่าเป็นไฟล์รูปภาพหรือไม่

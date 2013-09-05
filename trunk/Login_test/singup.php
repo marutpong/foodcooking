@@ -36,7 +36,7 @@ $( "#addUser" ).validate({
 		username: {
 			required: true,
 			remote: {
-				url: "chkuser.php",
+				url: "../users/chkuser.php",
 				type: "get",
 				data: {
 					username: function() {
@@ -48,7 +48,7 @@ $( "#addUser" ).validate({
 		email: {
 			required: true,
 			remote: {
-				url: "chkemail.php",
+				url: "../users/chkemail.php",
 				type: "get",
 				data: {
 					email: function() {
@@ -105,9 +105,9 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	//echo $total;
 	//for ($i=0;$i<$num;$i++){
 		if ($total == 0){	
-			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" . $_POST['birthdate'] . "','dd/mm/yyyy'),'$email')";
+			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" .$birthdate. "','dd/mm/yyyy'),'$email')";
 			$strSQL = $sql;
-			
+			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
 			$objExecute = oci_execute($objParse, OCI_DEFAULT);
 			if($objExecute){
@@ -157,7 +157,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
         </tr>
 	    <tr>
 	      <td width="100" height="36" align="right" valign="middle" class="labelF">วันเกิด :</td>
-	      <td width="300" height="36" valign="middle" class="labelF"><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2"></td>
+	      <td width="300" height="36" valign="middle" class="labelF"><input name="birthdate" type="text" required class="input" id="birthdate" tabindex="2"></td>
         </tr>
 	    <tr>
 	      <td height="36" align="right" valign="middle" class="labelF">E-mail :</td>
