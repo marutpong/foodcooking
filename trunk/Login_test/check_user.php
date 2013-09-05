@@ -2,7 +2,7 @@
 ?>
 <?php
 
-include 'connectdb.php';
+include 'connectDB.php';
 if(isset($_POST["username"]) && isset($_POST["password"])){
 $username = $_POST["username"];
 $password = $_POST["password"];
