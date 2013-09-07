@@ -1,6 +1,5 @@
-﻿<?
-if (!isset($_SESSION)) {
-  session_start();
+<? if (!isset($_SESSION)) { 
+ session_start();
 }
 
 include '../FoodFunction.php';
@@ -37,13 +36,13 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
 </head>
 <body>
 <?
-	if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email'])) {
+	if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['username'])  && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email'])) {
 	$count = 0;
 	include 'connectDB.php'; 
 	$id = $_POST['id'];
 			$strSQL = "UPDATE $table SET ";
 			$strSQL .="NAME = '".$_POST["name"]."'";
-			$strSQL .=", password = '".$_POST["password"]."' ";
+			
 			$strSQL .=", gender = '".$_POST["gender"]."' ";
 			$strSQL .=", birthdate = to_date('".$_POST["birthdate"]."','dd/mm/yyyy') ";
 			$strSQL .=", email = '".$_POST["email"]."' ";
@@ -65,9 +64,9 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
 	echo '</div></center>';
 } else {
 	
-if (isset($_GET['ids']) && $_GET['confirm']==1) {
+//if (isset($_GET['ids']) && $_GET['confirm']==1) {
 ?>
-<form action="" method="post">
+
 <form action="" method="post">
 <div>
 	  <table align="center">
@@ -94,9 +93,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	      <td><input name="username" type="text" readonly required class="input number" id="username" tabindex="2" value="<?=$row['USERNAME']?>" ></td>
         </tr>
 	    <tr>
-	      <td align="right" class="labelF">Password :</td>
-	      <td><input name="password" type="password" required class="input" id="password" tabindex="2" value="<?=$row['PASSWORD']?>"></td>
-        </tr>
+	      
 	    <tr>
 	      <td align="right" class="labelF">เพศ :</td>
 	      <td><select name="gender" id="gender">
@@ -126,6 +123,6 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	</footer>
 </form>
 <? }
-} ?>
+//} ?>
 </body>
 </html>
