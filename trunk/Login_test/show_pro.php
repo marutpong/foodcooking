@@ -7,6 +7,10 @@ include '../FoodFunction.php';
 if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser($_SESSION['UIDS'],$_SESSION['USERNAME'])) ) {
 	header ("Location: login.php");
 }
+$_SESSION["USERNAME"] = $_SESSION["USERNAME"];
+$_SESSION["UIDS"] = $_SESSION["UIDS"];
+
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -95,7 +99,7 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
 </div>
 	<footer><center>
         <input type="button" value="Edit Profile" onclick="location.href='edit.php'">
-        <input type="button" value="Change Password" onclick="location.href='edit.php'">
+        <input type="button" value="Change Password" onclick="location.href='edit_pass.php'">
         </center>
 	</footer>
 </form>

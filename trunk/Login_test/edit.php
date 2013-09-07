@@ -8,8 +8,6 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
 	header ("Location: login.php");
 }
 ?>
-
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -39,7 +37,7 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
 </head>
 <body>
 <?
-	if (isset($_SESSION['id']) && isset($_SESSION['name']) && isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['gender']) && isset($_SESSION['birthdate']) && isset($_SESSION['email'])) {
+	if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email'])) {
 	$count = 0;
 	include 'connectDB.php'; 
 	$id = $_POST['id'];
@@ -70,15 +68,16 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
 if (isset($_GET['ids']) && $_GET['confirm']==1) {
 ?>
 <form action="" method="post">
+<form action="" method="post">
 <div>
 	  <table align="center">
       <?
-	$ids = $_GET['ids'];
+	$ids = $_SESSION['UIDS'];
 	$nameArray = split(",|and",$ids);
-	include 'connectDB.php'; 
+	include 'connectdb.php'; 
 	foreach($nameArray as $id){
 	if ($id!=""){
-		$strSQL = "SELECT * FROM $table Where UIDS=$id";
+		$strSQL = "SELECT * FROM iusers Where UIDS=$id";
 		$objParse = oci_parse($objConnect, $strSQL);
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		$rows = array();
