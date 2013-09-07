@@ -54,32 +54,37 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
 ?>
 	    <tr class="labelF">
 	      <td align="right" class="labelF">ชื่อ :</td>
-	      <td><input name="id" type="hidden" id="id" value="<?=$id?>">
-	        <input name="name" type="text"  required class="input" id="name" tabindex="1" value="<?=$row['NAME']?>"></td>
+	      <td><input name="" type="hidden" id="id" value="<?=$id?>">
+	        <?
+            echo $row['NAME'];
+			?></td>
+        	
         </tr>
 
 	    <tr>
 	      <td align="right" class="labelF">Username :</td>
-	      <td><input name="username" type="text" readonly required class="input number" id="username" tabindex="2" value="<?=$row['USERNAME']?>" ></td>
+	      <td><?
+            echo $row['USERNAME'];
+			?></td>
         </tr>
-	    <tr>
-	      <td align="right" class="labelF">Password :</td>
-	      <td><input name="password" type="password" required class="input" id="password" tabindex="2" value="<?=$row['PASSWORD']?>"></td>
-        </tr>
+	    
 	    <tr>
 	      <td align="right" class="labelF">เพศ :</td>
-	      <td><select name="gender" id="gender">
-	        <option value="MALE">MALE</option>
-	        <option value="FEMALE">FEMALE</option>
-          </select></td>
+	      <td><?
+            echo $row['GENDER'];
+			?></td>
         </tr>
 	    <tr>
 	      <td align="right" class="labelF">วันเกิด :</td>
-	      <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2" value="<?=$row['BIRTHDATE']?>"></td>
+	      <td><?
+            echo $row['BIRTHDATE'];
+			?></td>
         </tr>
 	    <tr>
 	      <td height="36" align="right" valign="middle" class="labelF">E-mail :</td>
-	      <td height="36" valign="middle" class="labelF"><input name="email" type="email"  required class="input" id="email" tabindex="2" value="<?=$row['EMAIL']?>"></td>
+	      <td height="36" valign="middle" class="labelF"><?
+            echo $row['EMAIL'];
+			?></td>
         </tr>
 <?
 		}
@@ -89,8 +94,8 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
     </table>
 </div>
 	<footer><center>
-    	<input name="confirm" type="hidden" id="confirm" value="2">
-		<input type="submit" class="button_sub" value="แก้ไข" tabindex="4">
+        <input type="button" value="Edit Profile" onclick="location.href='edit.php'">
+        <input type="button" value="Change Password" onclick="location.href='edit.php'">
         </center>
 	</footer>
 </form>

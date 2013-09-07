@@ -1,4 +1,16 @@
-﻿<!DOCTYPE HTML>
+﻿<?
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+include '../FoodFunction.php';
+if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser($_SESSION['UIDS'],$_SESSION['USERNAME'])) ) {
+	header ("Location: login.php");
+}
+?>
+
+
+<!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,9 +39,9 @@
 </head>
 <body>
 <?
-	if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email']) && $_POST['confirm']==2) {
+	if (isset($_SESSION['id']) && isset($_SESSION['name']) && isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['gender']) && isset($_SESSION['birthdate']) && isset($_SESSION['email'])) {
 	$count = 0;
-	include 'connectdb.php'; 
+	include 'connectDB.php'; 
 	$id = $_POST['id'];
 			$strSQL = "UPDATE $table SET ";
 			$strSQL .="NAME = '".$_POST["name"]."'";
@@ -63,7 +75,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
       <?
 	$ids = $_GET['ids'];
 	$nameArray = split(",|and",$ids);
-	include 'connectdb.php'; 
+	include 'connectDB.php'; 
 	foreach($nameArray as $id){
 	if ($id!=""){
 		$strSQL = "SELECT * FROM $table Where UIDS=$id";
@@ -73,9 +85,9 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 ?>
 	    <tr class="labelF">
-	      <td align="right" class="labelF"><input name="id" type="hidden" id="id" value="<?=$id?>">
-          ชื่อ :</td>
-	      <td><input name="name" type="text"  required class="input" id="name" tabindex="1" value="<?=$row['NAME']?>"></td>
+	      <td align="right" class="labelF">ชื่อ :</td>
+	      <td><input name="id" type="hidden" id="id" value="<?=$id?>">
+	        <input name="name" type="text"  required class="input" id="name" tabindex="1" value="<?=$row['NAME']?>"></td>
         </tr>
 
 	    <tr>

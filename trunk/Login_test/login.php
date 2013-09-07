@@ -11,9 +11,15 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
 	oci_execute($objParse, OCI_DEFAULT);
 	if($row = oci_fetch_array($objParse, OCI_BOTH)){
 		$_SESSION["UIDS"] = $row["UIDS"];
+		$_SESSION["NAME"] = $row["NAME"];
 		$_SESSION["USERNAME"] = $row["USERNAME"];
+		$_SESSION["PASSWORD"] = $row["PASSWORD"];
+		$_SESSION["GENDER"] = $row["GENDER"];
+		$_SESSION["BIRTHDATE"] = $row["BIRTHDATE"];
+		$_SESSION["EMAIL"] = $row["EMAIL"];
 		session_write_close();
 		header( "location: show_pro.php" );
+		header( "location: edit.php" );
 		//echo '<meta http-equiv="refresh" content="0;url=show_pro.php"> ';
 	}else{
 		echo '<meta http-equiv="refresh" content="0;url=login.php?msg=Wrong Username or Password"> ';
@@ -75,7 +81,12 @@ $(document).ready(function() {
 	<footer><center>
 	  <? if(isset($_GET['msg'])) {echo $_GET['msg'];} ?><br>
 <input type="submit" class="button_sub" value="Login" tabindex="4">
+<br>
 <a href="singup.php">Sign up for a new account</a>
+</br>
+<br>
+<a href="forget_password.html">Forgot password</a>
+</br>
 	</center>
       </p>
 </footer>
