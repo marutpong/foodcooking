@@ -1,5 +1,5 @@
 <?php
-
+	include 'connectDB.php'; 
 function myExe($strSQL){
 	include 'connectDB.php'; 
 	$objParse = oci_parse($objConnect , $strSQL);

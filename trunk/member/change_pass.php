@@ -1,10 +1,10 @@
-<? if (!isset($_SESSION)) { 
- session_start();
+<?
+if (!isset($_SESSION)) {
+  session_start();
 }
-
 include '../FoodFunction.php';
 if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser($_SESSION['UIDS'],$_SESSION['USERNAME'])) ) {
-	header ("Location: login.php");
+	header ("Location: ../login.php?ref=".$_SERVER['PHP_SELF']);
 }
 ?>
 <!doctype html>
@@ -17,14 +17,13 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
 
 <body>
 <?
-	
 	if (isset($_POST['password_old']) && isset($_POST['password1']) && isset($_POST['password2'])  && ($_POST['password2'] == $_POST['password1'])) {
 		$count = 0;
-		include 'connectDB.php'; 
+		include '../connecwtdb.php'; 
 		$id = $_POST['id'];
 		
 		//echo $_POST["id"];
-			$strSQL = "UPDATE $table SET ";
+			$strSQL = "UPDATE IUSERS SET ";
 			$strSQL .="password = '".$_POST["password2"]."'";			
 			$strSQL .=" WHERE UIDS = ".$_SESSION['UIDS']." ";
 			//echo $strSQL;

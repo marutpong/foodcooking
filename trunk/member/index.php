@@ -2,10 +2,9 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-
 include '../FoodFunction.php';
 if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser($_SESSION['UIDS'],$_SESSION['USERNAME'])) ) {
-	header ("Location: login.php");
+	header ("Location: ../login.php?ref=".$_SERVER['PHP_SELF']);
 }
 ?>
 <!DOCTYPE HTML>
@@ -39,15 +38,16 @@ if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser
 
 <form action="" method="post">
 <div>
-	 <center> <span class="textC1">Welcome User</span></center>
+	 <center> <span class="textC1">Welcome User : <?=$_SESSION['USERNAME']?></span>
+	 </center>
 </div>
 	<footer><center>
     	<br>
-        <input type="button" value="ข้อมูลส่วนตัว" onclick="location.href='show_pro.php'">
+        <input type="button" value="ข้อมูลส่วนตัว" onclick="location.href='show_profile.php'">
         </br><br>
         <input type="button" value="เพิ่มอาหาร" onclick="">
         </br><br>
-        <input type="button" value="Logout" onclick="logout.php">
+        <input type="button" value="Logout" onclick="location.href='../logout.php'">
         </br>
         </center>
 	</footer>

@@ -38,7 +38,9 @@
 	$id = $_POST['id'];
 			$strSQL = "UPDATE $table SET ";
 			$strSQL .="NAME = '".$_POST["name"]."'";
-			$strSQL .=", password = '".$_POST["password"]."' ";
+			if (!empty($_POST["password"])){
+				$strSQL .=", password = '".sha1($_POST["password"])."' ";
+			}
 			$strSQL .=", gender = '".$_POST["gender"]."' ";
 			$strSQL .=", birthdate = to_date('".$_POST["birthdate"]."','dd/mm/yyyy') ";
 			$strSQL .=", email = '".$_POST["email"]."' ";
@@ -90,7 +92,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
         </tr>
 	    <tr>
 	      <td align="right" class="labelF">Password :</td>
-	      <td><input name="password" type="password" required class="input" id="password" tabindex="2" value="<?=$row['PASSWORD']?>"></td>
+	      <td><input name="password" type="password" class="input" id="password" tabindex="2" placeholder="Enter when want to change!"></td>
         </tr>
 	    <tr>
 	      <td align="right" class="labelF">เพศ :</td>

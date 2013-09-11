@@ -2,10 +2,15 @@
 if (!isset($_SESSION)) {
   session_start();
 }
+include 'FoodFunction.php';
+if ( (isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser($_SESSION['UIDS'],$_SESSION['USERNAME'])) ) {
+	header ("Location: member/");
+}
+
 if(isset($_POST["username"]) && isset($_POST["password"])){
-	include '../connectdb.php';
+	include 'connectdb.php';
 	$username = $_POST["username"];
-	$password = $_POST["password"];
+	$password = sha1($_POST["password"]);
 	$strSql = "SELECT * FROM IUSERS WHERE USERNAME = '".$username."' AND PASSWORD = '".$password."'";
 	$objParse = oci_parse($objConnect, $strSql);
 	oci_execute($objParse, OCI_DEFAULT);
@@ -18,10 +23,15 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
 		//$_SESSION["BIRTHDATE"] = $row["BIRTHDATE"];
 		//$_SESSION["EMAIL"] = $row["EMAIL"];
 		session_write_close();
-		header( "location: welcome_user.php" );
+		if (!empty($_GET['ref'])){
+			header( "location: {$_GET['ref']}" );	
+		}else{
+			header( "location: member/index.php" );
+		}
 		//echo '<meta http-equiv="refresh" content="0;url=show_pro.php"> ';
 	}else{
-		echo '<meta http-equiv="refresh" content="0;url=login.php?msg=Wrong Username or Password"> ';
+		header( "location: login.php?msg=Wrong Username or Password" );
+		//echo '<meta http-equiv="refresh" content="0;url=login.php?msg=Wrong Username or Password"> ';
 	}
 } else {
 ?>
@@ -31,18 +41,18 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Login</title>
 	<meta charset="UTF-8" />
-	<link href="../core/css/flexigrid2.css" rel="stylesheet" type="text/css">
-	<link href="../core/css/mystyle.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="../core/css/jquery-ui-1.10.3.css">
-	<script src="../core/js/jquery-2.0.0.min.js"></script>
-	<script src="../core/js/jquery-ui-1.10.3.js"></script>
-	<script src="../core/js/validate/jquery.validate.min.js"></script>
-	<script src="../core/js/validate/additional-methods.min.js"></script>
+	<link href="core/css/flexigrid2.css" rel="stylesheet" type="text/css">
+	<link href="core/css/mystyle.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="core/css/jquery-ui-1.10.3.css">
+	<script src="core/js/jquery-2.0.0.min.js"></script>
+	<script src="core/js/jquery-ui-1.10.3.js"></script>
+	<script src="core/js/validate/jquery.validate.min.js"></script>
+	<script src="core/js/validate/additional-methods.min.js"></script>
     
-    <link rel="stylesheet" type="text/css" href="../core/css/tooltipster/reset.css">
-    <link rel="stylesheet" type="text/css" href="../core/css/tooltipster/style.css">
-    <link rel="stylesheet" type="text/css" href="../core/css/tooltipster/tooltipster.css">
-    <script src="../core/js/tooltipster/jquery.tooltipster.js"></script>
+    <link rel="stylesheet" type="text/css" href="core/css/tooltipster/reset.css">
+    <link rel="stylesheet" type="text/css" href="core/css/tooltipster/style.css">
+    <link rel="stylesheet" type="text/css" href="core/css/tooltipster/tooltipster.css">
+    <script src="core/js/tooltipster/jquery.tooltipster.js"></script>
     
 <script type="text/javascript" charset="UTF-8">
 var checkUser = 1;
@@ -78,13 +88,10 @@ $(document).ready(function() {
     </table>
 </div>
 	<footer><center>
-   
-<a href="forget_password.html">Forgot password</a>
-
 	  <? if(isset($_GET['msg'])) {echo $_GET['msg'];} ?><br>
 <input type="submit" class="button_sub" value="Login" tabindex="4">
 <br>
-<a href="singup.php">Sign up for a new account</a>
+<a href="member/forget_password.php">Forgot password</a> <a href="member/singup.php">Sign up for a new account</a>
 </br>
 
 	</center>

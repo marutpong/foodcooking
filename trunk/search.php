@@ -73,7 +73,7 @@ var removeOb = function(e) {
     <table id="dynamic_tb">
 	    <tr class="labelF">
 	      <td align="right" valign="top">ชื่ออาหาร :</td>
-	      <td><input name="name" type="text"  autofocus class="input" id="name" tabindex="1" autocomplete="on" value="<?=$_POST['name']?>" size="50" ></td>
+	      <td><input name="name" type="text"  autofocus class="input" id="name" tabindex="1" autocomplete="on" value="<?=$_POST['name']?>" size="32" ></td>
         </tr>
 	    <tr>
 	      <td align="right" valign="top" class="labelF">ประเภท :</td>

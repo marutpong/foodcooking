@@ -36,7 +36,7 @@ $( "#addUser" ).validate({
 		username: {
 			required: true,
 			remote: {
-				url: "../users/chkuser.php",
+				url: "../admin/users/chkuser.php",
 				type: "get",
 				data: {
 					username: function() {
@@ -48,7 +48,7 @@ $( "#addUser" ).validate({
 		email: {
 			required: true,
 			remote: {
-				url: "../users/chkemail.php",
+				url: "../admin/users/chkemail.php",
 				type: "get",
 				data: {
 					email: function() {
@@ -86,11 +86,11 @@ $( "#addUser" ).validate({
 <p>
   <?
 if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['gender']) && isset($_POST['birthdate']) && isset($_POST['email']) && $_POST['confirm']==1){
-	include 'connectdb.php';
+	include '../connectDB.php';
 	include("../FoodFunction.php");
 	$name = $_POST['name'];
 	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$password = sha1($_POST['password']);
 	$gender = $_POST['gender'];
 	$birthdate = $_POST['birthdate'];
 	$email = $_POST['email'];

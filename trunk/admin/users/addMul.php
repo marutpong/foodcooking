@@ -92,7 +92,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	include 'connectDB.php'; 
 	$name = $_POST['name'];
 	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$password = sha1($_POST['password']);
 	$gender = $_POST['gender'];
 	$birthdate = $_POST['birthdate'];
 	$email = $_POST['email'];
