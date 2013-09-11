@@ -96,6 +96,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	$gender = $_POST['gender'];
 	$birthdate = $_POST['birthdate'];
 	$email = $_POST['email'];
+	$user_level = $_POST['user_level'];
 	$count = 0;
 	$num = count($_POST['name']);
 	$total = 0;
@@ -107,7 +108,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	//echo $total;
 	//for ($i=0;$i<$num;$i++){
 		if ($total == 0){	
-			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" .$birthdate. "','dd/mm/yyyy'),'$email')";
+			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email, user_level) VALUES ('$name','$username','$password','$gender',to_date('" .$birthdate. "','dd/mm/yyyy'),'$email','$user_level')";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
@@ -163,6 +164,14 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	    <tr>
 	      <td height="36" align="right" valign="middle" class="labelF">E-mail :</td>
 	      <td height="36" valign="middle" class="labelF"><input name="email" type="email"  required class="input" id="email" tabindex="2"></td>
+        </tr>
+	    <tr>
+	      <td height="36" align="right" valign="middle" class="labelF">User Level</td>
+	      <td height="36" valign="middle" class="labelF"><select name="user_level" id="user_level">
+	        <option value=""></option>
+	        <option value="1">Admin</option>
+	        <option value="2">User</option>
+          </select></td>
         </tr>
     </table>
 </div>

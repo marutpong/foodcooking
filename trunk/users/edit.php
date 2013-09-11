@@ -37,6 +37,7 @@
 			$strSQL .=", gender = '".$_POST["gender"]."' ";
 			$strSQL .=", birthdate = to_date('".$_POST["birthdate"]."','dd/mm/yyyy') ";
 			$strSQL .=", email = '".$_POST["email"]."' ";
+			$strSQL .=", user_level = '".$_POST["user_level"]."' ";
 			$strSQL .=" WHERE UIDS = ".$_POST["id"]." ";
 			//echo $strSQL;
 			$objParse = oci_parse($objConnect, $strSQL);
@@ -100,6 +101,14 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 	    <tr>
 	      <td height="36" align="right" valign="middle" class="labelF">E-mail :</td>
 	      <td height="36" valign="middle" class="labelF"><input name="email" type="email"  required class="input" id="email" tabindex="2" value="<?=$row['EMAIL']?>"></td>
+        </tr>
+	    <tr>
+	      <td height="36" align="right" valign="middle" class="labelF">User Level</td>
+	      <td height="36" valign="middle" class="labelF"><select name="user_level" id="user_level">
+	        <option value=""></option>
+	        <option value="1" <?php if (!(strcmp(1, $row['USER_LEVEL']))) {echo "selected=\"selected\"";} ?>>Admin</option>
+	        <option value="2" <?php if (!(strcmp(2, $row['USER_LEVEL']))) {echo "selected=\"selected\"";} ?>>User</option>
+	        </select></td>
         </tr>
 <?
 		}

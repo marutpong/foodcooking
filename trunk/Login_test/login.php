@@ -66,14 +66,14 @@ $(document).ready(function() {
 <div align="center" >
     <p>&nbsp;</p>
     <span class="textC1">    Log In</span>
-<table width="400" align="center" id="dynamic_tb">
+<table align="center" id="dynamic_tb">
 	    <tr>
-	      <td width="100" height="36" align="right" valign="middle" class="labelF">Username :</td>
-	      <td width="300" height="36" valign="middle" class="labelF"><input name="username" type="text"  required class="input" id="username" tabindex="2"></td>
+	      <td height="36" align="right" valign="middle" class="labelF">Username :</td>
+	      <td height="36" valign="middle" class="labelF"><input name="username" type="text"  required class="input" id="username" tabindex="2"></td>
         </tr>
 	    <tr>
-	      <td width="100" height="36" align="right" valign="middle" class="labelF">Password :</td>
-	      <td width="300" height="36" valign="middle" class="labelF"><input name="password" type="password" required class="input" id="password" tabindex="2"></td>
+	      <td height="36" align="right" valign="middle" class="labelF">Password :</td>
+	      <td height="36" valign="middle" class="labelF"><input name="password" type="password" required class="input" id="password" tabindex="2"></td>
         </tr>
     </table>
 </div>

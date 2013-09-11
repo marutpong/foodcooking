@@ -182,7 +182,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
     <tr>
       <td align="right" valign="top" class="labelF">วิธีทำ :</td>
       <td><textarea name="method" cols="50" rows="10" required class="input" id="method" tabindex="2"><? echo $row['METHOD']; ?></textarea>
-        <input name="views" type="hidden" required class="input number" id="views" tabindex="2" value="0"></td>
+        <input name="views" type="hidden" required class="input number" id="views" tabindex="2" value="<? echo $row['VIEWS']; ?>"></td>
     </tr>
     <tr>
       <td align="right" valign="top" class="labelF">เจ้าของ :</td>

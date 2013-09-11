@@ -1,7 +1,12 @@
+<?
+if (!isset($_SESSION)) {
+  session_start();
+}
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Add Food</title>
+	<title>Search Food</title>
 	<meta charset="UTF-8" />
 	<script type="text/javascript" src="../core/js/jquery-1.6.4.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../core/css/jquery-ui.css">
@@ -107,7 +112,8 @@ var removeOb = function(e) {
 <footer>
   <p>
     <center>
-      <input type="submit" class="button_sub" value="ค้นหา" tabindex="4"></center>
+      <input type="submit" class="button_sub" value="ค้นหา" tabindex="4">
+    </center>
       </p>
 </footer>
 </form>
@@ -138,32 +144,44 @@ for ($i=0 ; $i<count($keyword) ; $i++){
 		$where .= $keyword[$i]['attr']." = '".$keyword[$i]['value']."'";
 	}
 }
-$input = array();
+$input = array();//ที่กรอกมา
 for ($i=0 ; $i<count($_POST['ingredient']) ; $i++){
 	$input[$_POST['ingredient'][$i]]=$_POST['quantity'][$i];
 }
+$_SESSION["INPUT"] = $input;
 
 $strSQL = " Select * from IFOODS NATURAL JOIN IFOODTYPE $where ";
 //echo $strSQL;
 $objParse = oci_parse($objConnect, $strSQL);
 $objExecute = oci_execute($objParse, OCI_DEFAULT);
-
+$searchOB = array();
 while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-	$qstrSQL = " Select * from ICONTAIN where fid=".$row['FID'];
+	$subSearchOB = array();
+	$subSearchOB['FID']=$row['FID'];
+	$subSearchOB['FOODNAME']=$row['FOODNAME'];
+	$subSearchOB['TYPENAME']=$row['TYPENAME'];
+	$subSearchOB['MUSTUSE']=array();
+	$qstrSQL = " Select * from ICONTAIN NATURAL JOIN IINGREDIENT where fid=".$row['FID'];
 	$qobjParse = oci_parse($objConnect, $qstrSQL);
 	$qobjExecute = oci_execute($qobjParse, OCI_DEFAULT);
-	$column = array();
+	$column = array();//ที่ต้องใช้
 	while ($qrow = oci_fetch_array($qobjParse, OCI_BOTH)) {
 		$column[$qrow['IID']]=$qrow['QUANTITY'];
+		$tmp2 = array();
+		$tmp2['IID']=$qrow['IID'];
+		$tmp2['INNAME']=$qrow['INNAME'];
+		$tmp2['QUANTITY']=$qrow['QUANTITY'];
+		$tmp2['UNIT']=$qrow['UNIT'];
+		array_push($subSearchOB['MUSTUSE'],$tmp2);
 	}
-	$inputIn = array_intersect_key($input, $column);
+	$inputIn = array_intersect_key($input, $column);//ส่วนที่เหมือนกัน
 	$haveIn = array_intersect_key($column, $input);
 	$percentHave = 0;
 	if (count($column)!=0){
-		$percentHave = (float)count($inputIn)/(float)count($column);
+		$percentHave = (float)count($inputIn)/(float)count($column);// % ที่มี
 	}
-	$numHave = (float)count($inputIn);
-	$percentSim = 0;
+	$numHave = (float)count($inputIn);//จำนวนวัตถุดิบที่เจอ
+	$percentSim = 0;//% ความใกล้เคียง
 	foreach (array_keys($inputIn ) as $key){
 		if ($inputIn[$key]>$haveIn[$key]){
 			$percentSim += 1*$percentHave/$numHave;
@@ -171,9 +189,48 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 			$percentSim += ($inputIn[$key]/$haveIn[$key])*$percentHave/$numHave;
 		}
 	}
-	echo $row['FOODNAME']."------".$row['TYPENAME']."";
-	echo "\t\t ใกล้เคียง ".($percentSim*100)." % <br>";
+	$subSearchOB['PERCENT']=$percentSim*100;
+	$searchOB[$row['FID']]=$subSearchOB;
+	//array_push($searchOB,$subSearchOB);
 }
+
+	function cmp($a, $b) {
+		if ($a['PERCENT'] == $b['PERCENT']) {
+			return 0;
+		}
+		return ($a['PERCENT'] > $b['PERCENT']) ? -1 : 1;
+	}
+	uasort($searchOB, 'cmp');
+	$_SESSION["RESULT"] = $searchOB;
+	//print_r($searchOB);
 ?>
+<table>
+  <tr>
+    <td>ชื่อ</td>
+    <td>ประเภท</td>
+    <td>ใกล้เคียง</td>
+    <td>Ingredient</td>
+  </tr>
+  <?
+  
+  	foreach ($searchOB as $ob){
+		
+
+	
+	
+	?>
+  <tr>
+    <td valign="top"><? echo $ob['FOODNAME']; ?></td>
+    <td valign="top"><? echo $ob['TYPENAME']; ?></td>
+    <td valign="top"><? echo "\t\t ใกล้เคียง ".$ob['PERCENT']." %"; ?></td>
+    <td valign="top"><? foreach ($ob['MUSTUSE'] as $ig){
+			echo $ig['INNAME']."\t".$ig['QUANTITY']."\t".$ig['UNIT']."<br>";
+			}
+	?></td>
+  </tr>
+  <?
+	}
+	?>
+</table>
 </body>
 </html>

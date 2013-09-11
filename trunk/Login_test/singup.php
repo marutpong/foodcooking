@@ -105,7 +105,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 	//echo $total;
 	//for ($i=0;$i<$num;$i++){
 		if ($total == 0){	
-			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email) VALUES ('$name','$username','$password','$gender',to_date('" .$birthdate. "','dd/mm/yyyy'),'$email')";
+			$sql = "INSERT INTO $table (NAME, username, password, gender, birthdate, email, USER_LEVEL) VALUES ('$name','$username','$password','$gender',to_date('" .$birthdate. "','dd/mm/yyyy'),'$email',2)";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);
@@ -135,20 +135,20 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
     <p>&nbsp;</p>
     <table width="400" align="center" id="dynamic_tb">
 	    <tr class="labelF">
-	      <td width="100" height="36" align="right" valign="middle" class="labelF">ชื่อ :</td>
-	      <td width="300" height="36" valign="middle" class="labelF"><input name="name" type="text"  required class="input" id="name" tabindex="1" ></td>
+	      <td width="150" height="36" align="right" valign="middle" class="labelF">ชื่อ :</td>
+	      <td width="250" height="36" valign="middle" class="labelF"><input name="name" type="text"  required class="input" id="name" tabindex="1" ></td>
         </tr>
 	    <tr>
-	      <td width="100" height="36" align="right" valign="middle" class="labelF">Username :</td>
-	      <td width="300" height="36" valign="middle" class="labelF"><input name="username" type="text"  required class="input" id="username" tabindex="2"></td>
+	      <td width="150" height="36" align="right" valign="middle" class="labelF">Username :</td>
+	      <td width="250" height="36" valign="middle" class="labelF"><input name="username" type="text"  required class="input" id="username" tabindex="2"></td>
         </tr>
 	    <tr>
-	      <td width="100" height="36" align="right" valign="middle" class="labelF">Password :</td>
-	      <td width="300" height="36" valign="middle" class="labelF"><input name="password" type="password" required class="input" id="password" tabindex="2"></td>
+	      <td width="150" height="36" align="right" valign="middle" class="labelF">Password :</td>
+	      <td width="250" height="36" valign="middle" class="labelF"><input name="password" type="password" required class="input" id="password" tabindex="2"></td>
         </tr>
 	    <tr>
-	      <td width="100" height="36" align="right" valign="middle" class="labelF">เพศ :</td>
-	      <td width="300" height="36" valign="middle" class="labelF">
+	      <td width="150" height="36" align="right" valign="middle" class="labelF">เพศ :</td>
+	      <td width="250" height="36" valign="middle" class="labelF">
           
           <select name="gender" id="gender">
 	        <option value="MALE">MALE</option>
@@ -156,12 +156,12 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
           </select></td>
         </tr>
 	    <tr>
-	      <td width="100" height="36" align="right" valign="middle" class="labelF">วันเกิด :</td>
-	      <td width="300" height="36" valign="middle" class="labelF"><input name="birthdate" type="text" required class="input" id="birthdate" tabindex="2"></td>
+	      <td width="150" height="36" align="right" valign="middle" class="labelF">วันเกิด :</td>
+	      <td width="250" height="36" valign="middle" class="labelF"><input name="birthdate" type="text" required class="input" id="birthdate" tabindex="2"></td>
         </tr>
 	    <tr>
-	      <td height="36" align="right" valign="middle" class="labelF">E-mail :</td>
-	      <td height="36" valign="middle" class="labelF"><input name="email" type="email"  required class="input" id="email" tabindex="2"></td>
+	      <td width="150" height="36" align="right" valign="middle" class="labelF">E-mail :</td>
+	      <td width="250" height="36" valign="middle" class="labelF"><input name="email" type="email"  required class="input" id="email" tabindex="2"></td>
         </tr>
     </table>
 </div>

@@ -28,7 +28,8 @@
 				{ display : 'Username', name : 'USERNAME', width : 120, sortable : true, align : 'left' }, 
 				{ display : 'เพศ', name : 'GENDER', width : 50, sortable : true, align : 'left', }, 
 				{ display : 'วันเกิด', name : 'BIRTHDATE', width : 130, sortable : true, align : 'left', },
-				{ display : 'E-mail', name : 'EMAIL', width : 130, sortable : true, align : 'left', }
+				{ display : 'E-mail', name : 'EMAIL', width : 130, sortable : true, align : 'left', },
+				{ display : 'Level', name : 'USER_LEVEL', width : 20, sortable : true, align : 'left', }
 
 			],
 			buttons : [ 
