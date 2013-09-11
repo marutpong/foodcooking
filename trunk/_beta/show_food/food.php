@@ -6,7 +6,7 @@
 </head>
 <body>
 	<?
-		include("../../../connectDB.php");
+		include("../../connectDB.php");
     	if(isset($_GET['id'])){
 			$id=$_GET['id'];
 			$strSQL = "select * from IFOODS where FID = $id";

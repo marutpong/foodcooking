@@ -252,7 +252,7 @@ function uploadImage($path,$files){
 }
 
 function sendmail($email,$msgheader,$msgcontent){
-	require("PHPMailer_5.2.4/class.phpmailer.php");
+	require("core/PHPMailer_5.2.4/class.phpmailer.php");
 	$htmlbody = "<b>$msgcontent</b>";
 	$mail = new PHPMailer();
 	$mail->IsSMTP(); 
