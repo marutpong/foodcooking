@@ -213,6 +213,7 @@ function uploadResizeTo($file_obj, $save_path,$entername, $ww=200, $hh=200){
 		case "image/jpeg" :
 		case "image/jpg" :
 		ImageJPEG($images_fin, $save ,90); // image quality = 90
+		
 		break;
 		case "image/gif":
 		ImageGIF($images_fin,$save);
@@ -226,11 +227,21 @@ function uploadResizeTo($file_obj, $save_path,$entername, $ww=200, $hh=200){
 		default:
 		return(false);
 	}
+	postToServer($save);
 	ImageDestroy($images_orig);
 	ImageDestroy($images_fin);
 	return($newfilename);
 }
-
+function postToServer($save){
+	$file_path = realpath($save);
+	$post = array('filUpload'=>'@'.$file_path);
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_URL, 'http://10.10.188.254/group10/upload.php');
+	curl_setopt($curl, CURLOPT_POST, true);
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
+	$result = curl_exec ($curl);
+	curl_close ($curl); 
+}
 function uploadImage($path,$files){
 	$SAVE_PATH = $path;//$_SERVER['DOCUMENT_ROOT']."/foodcooking/TestUploadPic/MyResize"; //พาสที่ต้องการนำไฟล์ไปเก็บไว้
 	if(isset($files)){

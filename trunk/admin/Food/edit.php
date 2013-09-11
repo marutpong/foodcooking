@@ -173,7 +173,14 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
     </tr>
     <tr>
       <td align="right" valign="top"><span class="labelF">รูปภาพ :</span></td>
-      <td><p class="labelF"><img src="files/_<? echo $row['PICTURE']; ?>">
+      <td><p class="labelF">
+      <? if (file_exists('files/_'.$row['PICTURE'])) {
+		  
+	  ?>
+      <img src="files/_<? echo $row['PICTURE']; ?>"><?
+	  } else {?>
+      <img src="http://10.10.188.254/group10/files/_<? echo $row['PICTURE']; ?>">
+      <? } ?>
         </p>
         <p class="labelF">
           <input name="picture" type="file"  class="input" id="picture" tabindex="2" size="50" >เลือกรูปหากต้องการเปลี่ยน
