@@ -158,6 +158,7 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 	$subSearchOB['FOODNAME']=$row['FOODNAME'];
 	$subSearchOB['TYPENAME']=$row['TYPENAME'];
 	$subSearchOB['MUSTUSE']=array();
+	$subSearchOB['LACK']=array();//ที่ไม่พอ
 	$qstrSQL = " Select * from ICONTAIN NATURAL JOIN IINGREDIENT where fid=".$row['FID'];
 	$qobjParse = oci_parse($objConnect, $qstrSQL);
 	$qobjExecute = oci_execute($qobjParse, OCI_DEFAULT);
@@ -169,7 +170,7 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 		$tmp2['INNAME']=$qrow['INNAME'];
 		$tmp2['QUANTITY']=$qrow['QUANTITY'];
 		$tmp2['UNIT']=$qrow['UNIT'];
-		array_push($subSearchOB['MUSTUSE'],$tmp2);
+		$subSearchOB['MUSTUSE'][$qrow['IID']]=$tmp2;
 	}
 	$inputIn = array_intersect_key($input, $column);//ส่วนที่เหมือนกัน
 	$haveIn = array_intersect_key($column, $input);
@@ -184,6 +185,17 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 			$percentSim += 1*$percentHave/$numHave;
 		} else {
 			$percentSim += ($inputIn[$key]/$haveIn[$key])*$percentHave/$numHave;
+		}
+	}
+	
+	foreach (array_keys($column ) as $key){
+		if ($column[$key]>$inputIn[$key]){
+			$tmp2 = array();
+			$tmp2['IID']=$key;
+			$tmp2['INNAME']=$subSearchOB['MUSTUSE'][$key]['INNAME'];
+			$tmp2['QUANTITY']=$column[$key]-$inputIn[$key];
+			$tmp2['UNIT']=$subSearchOB['MUSTUSE'][$key]['UNIT'];
+			$subSearchOB['LACK'][$key]=$tmp2;
 		}
 	}
 	$subSearchOB['PERCENT']=$percentSim*100;
@@ -207,6 +219,7 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
     <td>ประเภท</td>
     <td>ใกล้เคียง</td>
     <td>Ingredient</td>
+    <td>Lack</td>
   </tr>
   <?
   
@@ -221,6 +234,10 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
     <td valign="top"><? echo $ob['TYPENAME']; ?></td>
     <td valign="top"><? echo "\t\t ใกล้เคียง ".$ob['PERCENT']." %"; ?></td>
     <td valign="top"><? foreach ($ob['MUSTUSE'] as $ig){
+			echo $ig['INNAME']."\t".$ig['QUANTITY']."\t".$ig['UNIT']."<br>";
+			}
+	?></td>
+    <td valign="top"><? foreach ($ob['LACK'] as $ig){
 			echo $ig['INNAME']."\t".$ig['QUANTITY']."\t".$ig['UNIT']."<br>";
 			}
 	?></td>

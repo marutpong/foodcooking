@@ -53,8 +53,16 @@ function getFoodIdByName($name){
 }
 
 function insertIngredient($inname, $unit){
-	$strSQL = "INSERT INTO IINGREDIENT (INNAME, UNIT) VALUES ('$inname','$unit') returning IID into :ID";
-	return(myExeAndReturnID($strSQL));
+	include 'connectDB.php'; 
+	$strSQL = "SELECT IID FROM IINGREDIENT WHERE INNAME = '$inname'";
+	$objParse = oci_parse($objConnect, $strSQL);
+	$objExecute = oci_execute($objParse, OCI_DEFAULT);
+	if ($row = oci_fetch_array($objParse, OCI_BOTH)){
+		return($row['IID']);
+	} else {
+		$strSQL = "INSERT INTO IINGREDIENT (INNAME, UNIT) VALUES ('$inname','$unit') returning IID into :ID";
+		return(myExeAndReturnID($strSQL));
+	}
 }
 
 function insertTool($name){
