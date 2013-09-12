@@ -199,7 +199,9 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 		}
 	}
 	$subSearchOB['PERCENT']=$percentSim*100;
-	$searchOB[$row['FID']]=$subSearchOB;
+	if ($percentSim!=0){
+		$searchOB[$row['FID']]=$subSearchOB;
+	}
 	//array_push($searchOB,$subSearchOB);
 }
 

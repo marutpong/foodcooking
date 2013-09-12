@@ -19,7 +19,7 @@ function myExeAndReturnID($strSQL){
 
 function getIngeIdByName($inname){
 	include 'connectDB.php'; 
-	$strSQL = "SELECT * FROM IINGREDIENT WHERE INNAME = '$inname'";
+	$strSQL = "SELECT IID FROM IINGREDIENT WHERE INNAME = '$inname'";
 	$objParse = oci_parse($objConnect, $strSQL);
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$row = oci_fetch_array($objParse, OCI_BOTH);		
@@ -28,7 +28,7 @@ function getIngeIdByName($inname){
 
 function getTypeIdByName($typename){
 	include 'connectDB.php'; 
-	$strSQL = "SELECT * FROM IFOODTYPE WHERE TYPENAME = '$typename'";
+	$strSQL = "SELECT TYPEID FROM IFOODTYPE WHERE TYPENAME = '$typename'";
 	$objParse = oci_parse($objConnect , $strSQL);
 	$objExecute = oci_execute($objParse);   
 	$row = oci_fetch_array($objParse, OCI_BOTH);	
@@ -37,7 +37,7 @@ function getTypeIdByName($typename){
 
 function getToolIdByName($name){
 	include 'connectDB.php'; 
-	$strSQL = "SELECT * FROM ITOOLS WHERE TOOLNAME = '$name'";
+	$strSQL = "SELECT TID FROM ITOOLS WHERE TOOLNAME = '$name'";
 	$objParse = oci_parse($objConnect, $strSQL);
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$row = oci_fetch_array($objParse, OCI_BOTH);	   	
@@ -45,7 +45,7 @@ function getToolIdByName($name){
 }
 function getFoodIdByName($name){
 	include 'connectDB.php'; 
-	$strSQL = "SELECT * FROM IFOODS WHERE FOODNAME = '$name'";
+	$strSQL = "SELECT FID FROM IFOODS WHERE FOODNAME = '$name'";
 	$objParse = oci_parse($objConnect, $strSQL);
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$row = oci_fetch_array($objParse, OCI_BOTH);	   	
@@ -59,18 +59,31 @@ function insertIngredient($inname, $unit){
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	if ($row = oci_fetch_array($objParse, OCI_BOTH)){
 		return($row['IID']);
-	} else {
-		$strSQL = "INSERT INTO IINGREDIENT (INNAME, UNIT) VALUES ('$inname','$unit') returning IID into :ID";
-		return(myExeAndReturnID($strSQL));
 	}
+	$strSQL = "INSERT INTO IINGREDIENT (INNAME, UNIT) VALUES ('$inname','$unit') returning IID into :ID";
+	return(myExeAndReturnID($strSQL));
 }
 
 function insertTool($name){
+	include 'connectDB.php'; 
+	$strSQL = "SELECT TID FROM ITOOLS WHERE TOOLNAME = '$name'";
+	$objParse = oci_parse($objConnect, $strSQL);
+	$objExecute = oci_execute($objParse, OCI_DEFAULT);
+	if ($row = oci_fetch_array($objParse, OCI_BOTH)){
+		return($row['TID']);
+	}
 	$strSQL = "INSERT INTO ITOOLS (TOOLNAME) VALUES ('$name') returning TID into :ID";
 	return(myExeAndReturnID($strSQL));
 }
 
 function insertFoodType($name,$des){
+	include 'connectDB.php'; 
+	$strSQL = "SELECT TYPEID FROM IFOODTYPE WHERE TYPENAME = '$name'";
+	$objParse = oci_parse($objConnect, $strSQL);
+	$objExecute = oci_execute($objParse, OCI_DEFAULT);
+	if ($row = oci_fetch_array($objParse, OCI_BOTH)){
+		return($row['TYPEID']);
+	}
 	$strSQL = "INSERT INTO IFOODTYPE (TYPENAME, DESCRIPTION) VALUES ('$name','$des') returning TYPEID into :ID";
 	return(myExeAndReturnID($strSQL));
 }
@@ -89,7 +102,7 @@ function insertFood($name,$picture,$method,$views,$owner,$foodtypeID){
 }
 function optionIngredient($id){
 	include 'connectDB.php';
-	$strSQL = "SELECT * FROM IINGREDIENT ORDER BY INNAME";
+	$strSQL = "SELECT IID,INNAME FROM IINGREDIENT ORDER BY INNAME";
 	$objParse = oci_parse($objConnect, $strSQL);
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$rows="";
@@ -104,7 +117,7 @@ function optionIngredient($id){
 }
 function optionTool($id){
 	include 'connectDB.php';
-	$strSQL = "SELECT * FROM ITOOLS ORDER BY TOOLNAME";
+	$strSQL = "SELECT TID,TOOLNAME FROM ITOOLS ORDER BY TOOLNAME";
 	$objParse = oci_parse($objConnect, $strSQL);
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$rows="";
@@ -119,7 +132,7 @@ function optionTool($id){
 }
 function optionUser($id){
 	include 'connectDB.php';
-	$strSQL = "SELECT * FROM IUSERS ORDER BY NAME";
+	$strSQL = "SELECT UIDS,NAME FROM IUSERS ORDER BY NAME";
 	$objParse = oci_parse($objConnect, $strSQL);
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$rows="";
@@ -134,7 +147,7 @@ function optionUser($id){
 }
 function optionFoodType($id){
 	include 'connectDB.php';
-	$strSQL = "SELECT * FROM IFOODTYPE ORDER BY TYPENAME";
+	$strSQL = "SELECT TYPEID,TYPENAME FROM IFOODTYPE ORDER BY TYPENAME";
 	$objParse = oci_parse($objConnect, $strSQL);
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$rows="";
