@@ -1,0 +1,146 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*--------------- greenhome start here---------------*/
+.homered #header {
+	background:url(../images/red-menu-bg.png) repeat-x bottom;
+}
+.homered .nav .current,
+.homered .readmorebtn,
+.homered .pagination li a.prev,
+.homered .pagination li a.next,
+.homered .dropcap.color,
+.homered .button,
+.homered #toggle-view li h3.color,
+.homered .meter > span,
+.homered .nav ul li:hover,
+.homered .nav ul li.active
+{
+	background:#743939 !important;
+}
+.homered .testimonialcon strong,
+.homered .TabbedPanelsTabSelected,
+.homered .date,
+.homered .tabs .current,
+.homered .price,
+.homered .copy-right p a,
+.homered .c-link,
+.homered .banner-bottom
+{
+	color:#632323 !important;
+}
+.homered .bannerbtn {
+	background:url(../images/red-banner-btn.jpg) repeat-x;
+}
+.homered .button:hover,
+.homered #toggle-view li h3.color:hover
+{
+	background:#461817 !important;
+	text-decoration:none;
+}
+.homered .readmorebtn:hover,
+.homered .pagination li a.prev:hover,
+.homered .pagination li a.next:hover
+{
+	background:#652423 !important;
+}
+.homered .ui-datepicker-calendar .ui-state-active {
+	background:url("../images/date-dot.png") no-repeat center 28px #632323;
+}
+.homered .meter {
+    background: none repeat scroll 0 0 #461817;
+}
+.homered .button:hover{
+	background:#461817;
+}
+/*--------------- green home ended here---------------*/
+
+/*--------------- homeorange start here---------------*/
+.homeorange #header {
+	background:url(../images/orange-menu-bg.png) repeat-x bottom;
+}
+.homeorange .bannerbtn {
+	background:url(../images/orange-banner-btn.jpg) repeat-x;
+}
+.homeorange .nav .current,
+.homeorange .readmorebtn,
+.homeorange .pagination li a.prev,
+.homeorange .pagination li a.next,
+.homeorange .dropcap.color,
+.homeorange .button,
+.homeorange #toggle-view li h3.color,
+.homeorange .meter > span,
+.homeorange .nav ul li:hover,
+.homeorange .nav ul li.active
+{
+	background:#fd8d56 !important;
+}
+.homeorange .readmorebtn:hover,
+.homeorange .pagination li a.prev:hover,
+.homeorange .pagination li a.next:hover,
+.homeorange #toggle-view li h3.color:hover,
+.homeorange .meter
+{
+	background:#f06421 !important;
+}
+.homeorange .testimonialcon strong,
+.homeorange .TabbedPanelsTabSelected,
+.homeorange .date,
+.homeorange .tabs .current,
+.homeorange .price,
+.homeorange .copy-right p a,
+.homeorange .c-link,
+.homeorange .banner-bottom
+{
+	color:#fb6f2b !important;
+}
+.homeorange .ui-datepicker-calendar .ui-state-active {
+	background:url("../images/date-dot.png") no-repeat center 28px #fb6f2b;
+}
+/*--------------- homeorange ended here---------------*/
+
+/*--------------- homered start here---------------*/
+.homegreen #header {
+	background:url(../images/green-menu-bg.png) repeat-x bottom;
+}
+.homegreen .bannerbtn {
+	background:url(../images/green-banner-btn.jpg) repeat-x;
+}
+.homegreen .nav .current,
+.homegreen .readmorebtn,
+.homegreen .pagination li a.prev,
+.homegreen .pagination li a.next,
+.homegreen .dropcap.color,
+.homegreen .button,
+.homegreen #toggle-view li h3.color,
+.homegreen .meter > span,
+.homegreen .nav ul li:hover,
+.homegreen .nav ul li.active
+{
+	background:#667a64 !important;
+}
+.homegreen .readmorebtn:hover,
+.homegreen .pagination li a.prev:hover,
+.homegreen .pagination li a.next:hover,
+.homegreen #toggle-view li h3.color:hover,
+.homegreen .meter
+{
+	background:#425a3e !important;
+}
+.homegreen .testimonialcon strong,
+.homegreen .TabbedPanelsTabSelected,
+.homegreen .date,
+.homegreen .tabs .current,
+.homegreen .price,
+.homegreen .copy-right p a,
+.homegreen .c-link,
+.homegreen .banner-bottom
+{
+	color:#244121 !important;
+}
+.homegreen .ui-datepicker-calendar .ui-state-active {
+	background:url("../images/date-dot.png") no-repeat center 28px #425a3e;
+	
+}
+/*--------------- homered ended here---------------*/
