@@ -70,7 +70,7 @@ var removeOb = function(e) {
 <body>
 <?
 /// Upload picture ///
-	$picture = uploadImage("files/",$_FILES["picture"]);
+	$picture = uploadImage("../../files/",$_FILES["picture"]);
 // Food Type ///
 	if ( isset($_POST['foodtype']) && !empty($_POST['foodtype']) ) {
 		$foodtypeID = $_POST['foodtype'];

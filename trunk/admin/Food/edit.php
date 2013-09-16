@@ -67,7 +67,7 @@ var removeOb = function(e) {
 <?
 	$picture = "";
 	if (isset($_FILES["picture"])){
-		$picture = uploadImage("files/",$_FILES["picture"]);
+		$picture = uploadImage("../../files/",$_FILES["picture"]);
 	}
 	if ( isset($_POST['newfoodtype']) && !empty($_POST['newfoodtype']) ){
 		$foodtypeID = insertFoodType($_POST['newfoodtype'],'');
@@ -174,7 +174,7 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
     <tr>
       <td align="right" valign="top"><span class="labelF">รูปภาพ :</span></td>
       <td><p class="labelF">
-      <? if (file_exists('files/_'.$row['PICTURE'])) {
+      <? if (file_exists('../../files/_'.$row['PICTURE'])) {
 		  
 	  ?>
       <img src="files/_<? echo $row['PICTURE']; ?>"><?

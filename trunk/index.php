@@ -34,7 +34,8 @@ include 'FoodFunction.php';
 <!--[if lt IE 9]>
       <script src="js/html5.js"></script>
 <![endif]-->
-
+<script src="../../foodcooking/core/js/jquery-1.9.1.js"></script>
+<script src="../../foodcooking/core/js/jquery-2.0.0.min.js"></script>
 <body id="def">
 <div class="wrapper"> 
   <!-- header -->
@@ -52,7 +53,7 @@ include 'FoodFunction.php';
               <li><a href="contact.html">contact us</a></li>
             </ul>
           </li>
-          <li><a href="menu.html">Cataosf</a>
+          <li><a href="menu.php">All food</a>
             <ul>
               <li><a href="recepie-detail-page.html">Recepie Detail Page</a></li>
             </ul>
@@ -91,7 +92,7 @@ include 'FoodFunction.php';
       </nav>
     </div>
   </header>
-  <div id="homeContent">
+  <div id="homeContent" style="display:none;">
     <div id="featured">
       <div class="gallery" >
         <div class="site"> <img src="images/banner01.jpg" alt=""> </div>
@@ -191,7 +192,7 @@ include 'FoodFunction.php';
                 <em class="price">19,95</em> </div>
             </li>
           </ul>
-          <a href="menu.html" class="c-link">View our complete menu</a> </figure>
+          <a href="menu.php" class="c-link">View our complete menu</a> </figure>
         <figure class="column three-col">
           <h2>Location</h2>
           <div class="location"> 21 M.M Alam Road, Gluberg.</div>
@@ -307,7 +308,6 @@ include 'FoodFunction.php';
 <script type="text/javascript" src="js/custom00.js"></script><!-- Custom Js file for javascript in html --> 
 <script type="text/javascript" src="js/focus.js"></script><!-- text field clear & celander Seting--> 
 
-<script src="../../foodcooking/core/js/jquery-2.0.0.min.js"></script>
 <script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script>
 

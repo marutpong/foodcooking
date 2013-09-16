@@ -221,6 +221,6 @@
 
 .form_login { display: block; margin: 0 auto; width: 236px; }
 .logUsername, .logPassword { font-size: 11px; color: #858585; box-shadow: 0 0 0px 2px #ebebeb; -webkit-box-shadow: 0 0 0px 2px #ebebeb; -moz-box-shadow: 0 0 0px 2px #ebebeb; padding: 7px 27px 7px 9px; border: 1px solid #d7d7d7; width: 198px; display: inline-block; margin-top: 15px; }
-.logUsername { background: #fbfbfb url(http://i.imgur.com/yeEafuK.png) no-repeat 213px 7px; }
-.logPassword { background: #fbfbfb url(http://i.imgur.com/0sxpIbn.png) no-repeat 214px 7px; }
-.logEmail { background: #fbfbfb url(http://i.imgur.com/zI4zRWc.png) no-repeat 213px 7px; }
+.logUsername { background: #fbfbfb url(../images/logUsername.png) no-repeat 213px 7px; }
+.logPassword { background: #fbfbfb url(../images/logPassword.png) no-repeat 214px 7px; }
+.logEmail { background: #fbfbfb url(../images/logEmail.png) no-repeat 213px 7px; }

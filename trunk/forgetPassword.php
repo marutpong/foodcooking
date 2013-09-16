@@ -47,12 +47,12 @@ include 'FoodFunction.php';
       <nav class="nav">
         <ul>
           <li><a href="index.php">Home</a></li>
-          <li><a href="menu.html">our menu</a>
+          <li><a href="menu.php">our menu</a>
             <ul>
               <li><a href="recepie-detail-page.html">Recepie Detail Page</a></li>
             </ul>
           </li>
-          <li><a href="menu.html">our menu</a>
+          <li><a href="menu.php">our menu</a>
           	<ul>
             	<li><a href="recepie-detail-page.html">Recepie Detail Page</a></li>
             </ul>

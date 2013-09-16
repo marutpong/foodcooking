@@ -117,7 +117,7 @@ $( "#addUser" ).validate({
               <li><a href="contact.html">contact us</a></li>
             </ul>
           </li>
-          <li><a href="menu.html">our menu</a>
+          <li><a href="menu.php">our menu</a>
           	<ul>
             	<li><a href="recepie-detail-page.html">Recepie Detail Page</a></li>
             </ul>
