@@ -87,7 +87,7 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
               <li><a href="contact.html">contact us</a></li>
             </ul>
           </li>
-          <li><a href="menu.html">Cataosf</a>
+          <li><a href="menu.php">Cataosf</a>
             <ul>
               <li><a href="recepie-detail-page.html">Recepie Detail Page</a></li>
             </ul>
