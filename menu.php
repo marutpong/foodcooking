@@ -2,11 +2,9 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-include 'FoodFunction.php';
-if ( !(authenAdmin()) ) {
-	header ("Location: login.php?relog=1&msg=Permission denied. Please login with admin user.&ref=".$_SERVER['PHP_SELF']);
-}
-?><!DOCTYPE html>
+	include('FoodFunction.php');
+?>
+<!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -14,15 +12,20 @@ if ( !(authenAdmin()) ) {
 <html lang="en">
 <!--<![endif]-->
 <head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <link rel="stylesheet" href="css/calendar.css" media="all">
 <!-- Basic Page Needs -->
 <meta charset="utf-8">
-<title>Register</title>
+<title>Menu</title>
 <meta name="description" content>
 <meta name="author" content>
 <!-- CSS Style -->
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
 <!-- Slider Style -->
+<link rel="stylesheet" href="css/slider.css" type="text/css" media="all">
+<!-- Calender Style -->
+<link rel="stylesheet" href="css/calendar.css" type="text/css" media="all">
+<!-- Gallery Style -->
 <link rel="stylesheet" href="skin/supersized.css" type="text/css" media="screen" />
 <!-- Short Codes Style -->
 <link rel="stylesheet" href="css/shortcode.css" type="text/css" media="all">
@@ -35,25 +38,13 @@ if ( !(authenAdmin()) ) {
 <!--[if lt IE 9]>
       <script src="js/html5.js"></script>
 <![endif]-->
-    <link rel="stylesheet" type="text/css" href="core/css/jquery-ui-1.10.3.css">
-    <script src="core/js/jquery-1.9.1.js"></script>
-    <script src="core/js/jquery-ui-1.10.3.js"></script>
-    <script>
-    $(function() {
-    /*$( "#tabs" ).tabs({
-        collapsible: true
-    }
-    );*/
-	$('#tabs').load('admin_src.php');
-    });
-    </script>
 </head>
 <body id="def">
 <div class="wrapper"> 
   <!-- header -->
   <header id="header">
     <div class="main-holder">
-      <h1 id="logo"><a href="index.php"></a></h1>
+      <h1 id="logo"><a href="index.html"></a></h1>
       <nav class="nav">
         <ul>
           <li><a href="index.php">Home</a></li>
@@ -92,46 +83,80 @@ if ( !(authenAdmin()) ) {
         </ul>
       </nav>
     </div>
+   
   </header>
+  <div class="main-holder"></div>
   <div class="sloganwrapper">
     <div class="main-holder ">
       <ul class="breadcrumb">
-        <li><a href="index.php">HOME</a></li>
-        <li>Administrator</li>
+        <li><a href="#">HOME</a></li>
+        <li>ALL FOOD</li>
       </ul>
     </div>
   </div>
   <!-- Content -->
   <section class="main-content"> <span class="top-bg"></span>
-<div class="holder-container">
-  <section class="grid-holder">
-        <h2>Administrator</h2>
-        <section class="grid w-padd">
-          <div id="tabs" style="height:630px;margin-left:25px;" align="center">
-            <? /*
-       <ul>
-        <? $a = array("Users", "Food", "Shop", "Ingredient","Tools","Use","contain","have","Favorite","Comment","FoodType"); 
-        
-        for ($i =0 ;$i < count($a);$i++){
-        ?>
-        <li><a href="#tabs-<? echo ($i+1) ?>"><? echo $a[$i]?></a></li>
-        <? } ?>
+  <ul class="category-list" id="portfolio-item-filter">
+  	<li><a href="#" data-value="All">All</a></li>
+    <?
+    $strSQL = " Select TYPEID,TYPENAME from IFOODTYPE ORDER BY TYPENAME";
+	//echo $strSQL;
+	$objParse = oci_parse($objConnect, $strSQL);
+	$objExecute = oci_execute($objParse, OCI_DEFAULT);
+	$searchOB = array();
+	while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
+		echo '<li><a href="#" data-value="'.$row['TYPEID'].'">'.$row['TYPENAME'].'</a></li>';
+	}
+	?>
+    <li><a href="#" data-value="Chinese">Chinese</a></li>
+  </ul>
+  <div class="holder-container last">
+  	<section class="grid-holder">
+      	  <section class="grid lightbox gallery" id="portfolio-item-holder">
+	<?
+    $strSQL = " Select FID,FOODNAME,PICTURE,VIEWS,UIDS,TYPEID,TYPEID,TYPENAME,NAME from IFOODS NATURAL JOIN IUSERS NATURAL JOIN IFOODTYPE";
+	//echo $strSQL;
+	$objParse = oci_parse($objConnect, $strSQL);
+	$objExecute = oci_execute($objParse, OCI_DEFAULT);
+	$searchOB = array();
+	while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
+		?>
+      <figure class="column three-col <?=$row['TYPEID']?> portfolio-item item alpha">
+        <a href="foodDetail.php?foodid=<?=$row['FID']?>"><h2 style="background:#4e4e4e;color:#CCC;border-radius:5px;"><?=$row['FOODNAME']?></h2></a>
+        <ul class="b-top-links">
+              <li class="author-name">by <?=$row['NAME']?></li>
+              <li class="pic-icon"><?=$row['TYPENAME']?></li>
+              <li class="catagory"><?=$row['VIEWS']?> views</li>
         </ul>
-    
-        <? for ($i =0 ;$i < count($a);$i++){ ?>
-        <div id="tabs-<? echo ($i+1) ?>" >
-        <iframe src="admin/<? echo $a[$i]?>" width="100%" height="550" frameborder="0" marginheight="0" marginwidth="0" hspace="0" vspace="0"></iframe>
-        </div>
-        <? } ?>
-		
-		*/ ?>
-          </div>
-        </section>
+              <? if (file_exists('files/_'.$row['PICTURE'])) {
+		  
+	  ?>
+      <img src="files/_<? echo $row['PICTURE']; ?>"><?
+	  } else {?>
+      <img src="http://10.10.188.254/group10/files/_<? echo $row['PICTURE']; ?>">
+      <? } ?>
+      
+        <a href="images/image05.jpg" rel="prettyPhoto[gallery1]" class="caption"><span class="hover-effect big zoom"></span></a>
+        <article class="menu-det">
+          <p>Nullam mi turpis, ultricies eu mattis vel, tincidunt vitae velit. Nullam quis ante sapien. Praesent sollicitudin volutpat fringilla. </p>
+        </article>
+      </figure>
+      <? } ?>
+      <figure class="column three-col Chinese portfolio-item item alpha">
+        <h2>Chinese Food</h2>
+        <a href="images/image31.jpg" rel="prettyPhoto[gallery1]" class="caption"><img src="images/image31.jpg" class="offer-img" alt=""><span class="hover-effect big zoom"></span></a>
+        <article class="menu-det">
+          <p>Nullam mi turpis, ultricies eu mattis vel, tincidunt vitae velit. Nullam quis ante sapien. Praesent sollicitudin volutpat fringilla.</p>
+        </article>
+      </figure>
+      
+   	    </section>
       </section>
-    </div>
+  </div>
     <? include '_footer.php' ?>
 </div>
 <!-- Start JavaScript --> 
+<script src="core/js/jquery-2.0.0.min.js"></script>
 <script type="text/javascript" src="js/sourtin-jquery.js"></script><!-- sourtin Slider -->
 <script type="text/javascript" src="js/jquery-u.js"></script><!-- jQuery Ui -->
 <script type="text/javascript" src="js/ddsmooth.js"></script><!-- Nav Menu ddsmoothmenu -->
@@ -139,9 +164,8 @@ if ( !(authenAdmin()) ) {
 <script type="text/javascript" src="js/colortip.js"></script><!-- Colortip Tooltip Plugin  -->
 <script type="text/javascript" src="js/tytabs00.js"></script><!-- jQuery Plugin tytabs  -->
 <script type="text/javascript" src="js/jquery04.js"></script><!-- jQuery Prettyphoto  -->
-<script type="text/javascript" src="js/jquery06.js"></script><!-- UItoTop plugin  -->
 <script type="text/javascript" src="js/custom00.js"></script><!-- Custom Js file for javascript in html -->
 <script type="text/javascript" src="js/focus.js"></script><!-- text field clear & celander Seting-->
-
+<script type="text/javascript" src="js/supersized.3.2.7.min.js"></script><!-- Image Gallery -->
 </body>
 </html>

@@ -161,20 +161,33 @@ function optionFoodType($id){
 	return($rows);
 }
 
-function authenIdUser($id,$user){
-	include 'connectDB.php';
-	$strSql = "SELECT * FROM IUSERS WHERE UIDS = '".$id."' AND USERNAME = '".$user."'";
-	$objParse = oci_parse($objConnect, $strSql);
-	oci_execute($objParse, OCI_DEFAULT);
-	if($row = oci_fetch_array($objParse, OCI_BOTH)){
-		return (true);
-	}else{
-		return (false);
+function authenIdUser(){
+	if(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) ){
+		include 'connectDB.php';
+		$strSql = "SELECT * FROM IUSERS WHERE UIDS = '".$_SESSION['UIDS']."' AND USERNAME = '".$_SESSION['USERNAME']."'";
+		$objParse = oci_parse($objConnect, $strSql);
+		oci_execute($objParse, OCI_DEFAULT);
+		if($row = oci_fetch_array($objParse, OCI_BOTH)){
+			return (true);
+		}
 	}
+	return (false);
 }
+function authenAdmin($levels=1){	
+	if(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) ){
+		$arrLevels = Explode(",", $levels); 
+		include 'connectDB.php';
+		$strSql = "SELECT * FROM IUSERS WHERE UIDS = '".$_SESSION['UIDS']."' AND USERNAME = '".$_SESSION['USERNAME']."'";
+		$objParse = oci_parse($objConnect, $strSql);
+		oci_execute($objParse, OCI_DEFAULT);
+		$row = oci_fetch_array($objParse, OCI_BOTH);
+		if($row && in_array($row['USER_LEVEL'], $arrLevels)){
+			return (true);
+		}
+	}
+	return (false);
 
-	
-	
+}
 function authenLevel($id,$user,$levels){
 	$arrLevels = Explode(",", $levels); 
 	include 'connectDB.php';
@@ -187,6 +200,36 @@ function authenLevel($id,$user,$levels){
 	}else{
 		return (false);
 	}
+}
+function isFoodOwner($id,$fid){
+	include 'connectDB.php';
+	$strSql = "SELECT FID FROM IFOODS WHERE FID = '".$fid."' AND UIDS = '".$id."'";
+	$objParse = oci_parse($objConnect, $strSql);
+	oci_execute($objParse, OCI_DEFAULT);
+	if($row = oci_fetch_array($objParse, OCI_BOTH)){
+		return (true);
+	}else{
+		return (false);
+	}
+}
+function getSingleRow($strSQL){
+	include 'connectDB.php';
+	$objParse = oci_parse($objConnect, $strSQL);
+	$objExecute = oci_execute($objParse, OCI_DEFAULT);
+	return(oci_fetch_array($objParse, OCI_BOTH));
+}
+
+function numberOfComment($fid){
+	include 'connectDB.php';
+	$total = 0;
+	if (is_numeric($fid)){
+		$strSQL = "SELECT COUNT(FID) NUM FROM ICOMMENTS WHERE FID='$fid'";
+		$objParse = oci_parse($objConnect, $strSQL);
+		oci_execute($objParse, OCI_DEFAULT);
+		$row = oci_fetch_array($objParse, OCI_BOTH);
+		$total=$row['NUM'];
+	}
+	return $total;
 }
 /**
 * ฟังก์ชั่นตรวจสอบว่าเป็นไฟล์รูปภาพหรือไม่
@@ -229,16 +272,16 @@ function uploadResizeTo($file_obj, $save_path,$entername, $ww=200, $hh=200){
 	}
 	$orig_width = ImagesX($images_orig);
 	$orig_height = ImagesY($images_orig);
-	if($orig_width > $ww || $orig_height>$hh){
+	//if($orig_width > $ww || $orig_height>$hh){
 		if($orig_width > $orig_height){
 			$hh = ($ww/$orig_width)*$orig_height;
 		}else{
 			$ww = ($hh/$orig_height)*$orig_width;
 		}
-	}else{
+	/*}else{
 		$hh = $orig_height;
 		$ww = $orig_width;
-	}
+	}*/
 	$images_fin = ImageCreateTrueColor($ww, $hh);
 	@imagecopyresized($images_fin, $images_orig, 0, 0, 0, 0, $ww, $hh, $orig_width, $orig_height);
 	$ext = end(explode(".", $file_name));

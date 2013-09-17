@@ -43,11 +43,10 @@
 	}
 
 </script>
-<?
-		if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) && authenIdUser($_SESSION['UIDS'],$_SESSION['USERNAME']) ) ) { ?>
+<? if ( !authenIdUser()) { ?>
 <div class="form1" style="float:none">
   <div class="formtitle">Login</div>
-  <form action="login.php" method="post">
+  <form action="login.php?ref=<?=$_SERVER['REQUEST_URI']?>" method="post">
     <div class="form_login">
       <input name="username" type="text" class="logUsername" id="username" placeholder="Username" >
       <input type="password" name="password" placeholder="Password" class="logPassword" >
@@ -70,12 +69,12 @@
     Welcome :
     <?=$_SESSION["NAME"]?></p>
   <ul>
-    <li><a onclick="showProfile()">ข้อมูลส่วนตัว</a></li>
+    <li><a href="javascript:showProfile();">ข้อมูลส่วนตัว</a></li>
     <li>
-      <a onclick="addFood()">เพิ่มอาหาร</a>
+      <a href="javascript:addFood();">เพิ่มอาหาร</a>
     </li>
   </ul>
-  <div class="buttons"> <a href="logout.php">
+  <div class="buttons"> <a href="logout.php?ref=<?=$_SERVER['REQUEST_URI']?>">
     <button class="orangebutton" >Logout</button>
   </a> </div>
 </div>

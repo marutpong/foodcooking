@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 include '../FoodFunction.php';
-if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser($_SESSION['UIDS'],$_SESSION['USERNAME'])) ) {
+if ( !authenIdUser() ) {
 	header ("Location: ../login.php?ref=".$_SERVER['PHP_SELF']);
 }
 ?>

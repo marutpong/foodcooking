@@ -1,3 +1,20 @@
+<?
+if (!isset($_SESSION)) {
+  session_start();
+}
+include '../../FoodFunction.php';
+	$flagOwner = false;
+	$flagAdmin = false;
+if ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) ) {
+	if( (authenIdUser() && isFoodOwner($_SESSION['UIDS'],$_GET['ids'])) ) {
+		$flagOwner = true;
+	} else if ( authenAdmin() ) {
+		$flagAdmin = true;
+	}
+}
+	if ($flagOwner || $flagAdmin) {
+
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -11,8 +28,6 @@
 	<script type="text/javascript" src="../../core/js/jquery.numeric.js"></script>
     <script src="../../core/js/combobox.js"></script>
  	<?
-		include 'connectDB.php'; 
-		include('../../FoodFunction.php');
 		$rows = optionIngredient("");
 		$rowsTool = optionTool("");
 		$rowsUser = optionUser("");
@@ -29,7 +44,7 @@
                 <option value=""></option><? echo $rows;?></select>\
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
               <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" \
-            onFocus="checkNum(this)" size="10" placeholder="จำนวน" style="width:60;"></td>\
+            onFocus="checkNum(this)" size="10" placeholder="จำนวน" style="width:60px;"></td>\
               <td><input name="unit[]" type="text" readonly  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย" style="width:100px;"></td>\
               <td><div class="remove" onClick="removeOb(this)"><img src="../../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>\
             </tr>';
@@ -79,7 +94,6 @@ var removeOb = function(e) {
 	&& isset($_POST['fid']) 
 	&& isset($_POST['method']) 
 	&& isset($_POST['views']) 
-	&& isset($_POST['owner']) 
 	&& $_POST['confirm']==2){
 	$fid = $_POST['fid'];
 	include 'connectDB.php'; 
@@ -90,7 +104,7 @@ var removeOb = function(e) {
 			if (!empty($picture)){ $strSQL .=", PICTURE = '".$picture."' "; }
 			$strSQL .=", METHOD = '".$_POST["method"]."' ";
 			$strSQL .=", VIEWS = '".$_POST["views"]."' ";
-			$strSQL .=", UIDS = '".$_POST["owner"]."' ";
+			if ($flagAdmin && isset($_POST['owner'])) { $strSQL .=", UIDS = '".$_POST["owner"]."' "; }
 			if (!empty($foodtypeID)){ $strSQL .=", TYPEID = '".$foodtypeID."' "; }
 			$strSQL .=" WHERE FID = '".$_POST["fid"]."' ";
 			//echo $strSQL;
@@ -149,7 +163,7 @@ var removeOb = function(e) {
 	echo '</div></center>';
 } else {
 	
-if (isset($_GET['ids']) && $_GET['confirm']==1) {
+if (!empty($_GET['ids']) && $_GET['confirm']==1) {
 ?>
 <form action="" method="post" enctype="multipart/form-data">
 <div>
@@ -177,27 +191,41 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
       <? if (file_exists('../../files/_'.$row['PICTURE'])) {
 		  
 	  ?>
-      <img src="files/_<? echo $row['PICTURE']; ?>"><?
+      <img src="../../files/_<? echo $row['PICTURE']; ?>"><?
 	  } else {?>
       <img src="http://10.10.188.254/group10/files/_<? echo $row['PICTURE']; ?>">
       <? } ?>
         </p>
         <p class="labelF">
-          <input name="picture" type="file"  class="input" id="picture" tabindex="2" size="50" >เลือกรูปหากต้องการเปลี่ยน
+          <input name="picture" type="file"  class="input" id="picture" tabindex="2" size="50" > 
+          เลือกรูปหากต้องการเปลี่ยน
         </p></td>
     </tr>
     <tr>
       <td align="right" valign="top" class="labelF">วิธีทำ :</td>
-      <td><textarea name="method" cols="50" rows="10" required class="input" id="method" tabindex="2"><? echo $row['METHOD']; ?></textarea>
-        <input name="views" type="hidden" required class="input number" id="views" tabindex="2" value="<? echo $row['VIEWS']; ?>"></td>
+      <td bgcolor="white"> <script type="text/javascript" src="../../core/js/nicEdit-latest.js"></script>
+       <script type="text/javascript">
+//<![CDATA[
+bkLib.onDomLoaded(function() {
+new nicEditor().panelInstance('area1');
+new nicEditor({fullPanel : true}).panelInstance('area2');
+new nicEditor({iconsPath : '../nicEditorIcons.gif'}).panelInstance('area3');
+new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('area4');
+new nicEditor({maxHeight : 100}).panelInstance('area5');
+});
+//]]>
+</script><textarea name="method" cols="50" rows="10" required class="mytextarea" id="area1" tabindex="2"><? echo $row['METHOD']; ?></textarea></td>
     </tr>
+    <? if ($flagAdmin){ ?>
     <tr>
       <td align="right" valign="top" class="labelF">เจ้าของ :</td>
       <td><select class="labelF" id="owner" name="owner" required>
         <option value=""></option>
         <? echo optionUser($row['UIDS']);?>
-      </select></td>
+      </select>
+        <input name="views" type="hidden" required class="input number" id="views" tabindex="2" value="<? echo $row['VIEWS']; ?>"></td>
     </tr>
+    <? } ?>
     <tr>
       <td align="right" valign="top" class="labelF">ประเภท :</td>
       <td><select class="labelF" id="foodtype" name="foodtype" >
@@ -283,3 +311,9 @@ if (isset($_GET['ids']) && $_GET['confirm']==1) {
 } ?>
 </body>
 </html>
+<?
+	} else if (!$flagOwner){
+		header ("Location: ../../login.php?noredirect=1&msg=Permission denied.");
+	} else {
+		header ("Location: ../../login.php?relog=1&msg=Permission denied. Please login with admin user.&ref=".$_SERVER['PHP_SELF']);
+	}
