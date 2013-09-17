@@ -9,9 +9,9 @@ header('Cache-Control: no-cache');
 	$data = curl_exec($curl); 
 	$httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 	curl_close($curl); //decoding request 
-    $valid=1;
-	if($httpCode == 404) {
-		$valid=0;
+    $valid=0;
+	if($httpCode == 200) {
+		$valid=1;
 	}
 if ($valid==0){ $data = "null"; }
 echo "data: {$data}\n\n";
