@@ -62,7 +62,7 @@
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); 
 	$data = curl_exec($curl); 
 	curl_close($curl); //decoding request 
-	if ($data!="95"){
+	if ($data!="98"){
 		echo   '<script type="text/javascript"> alert("แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ"); </script>';
 	}
   ?>
