@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 include 'FoodFunction.php';
-if ( !(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) && authenLevel($_SESSION['UIDS'],$_SESSION['USERNAME'],"1") ) ) {
+if ( !(authenAdmin()) ) {
 	header ("Location: login.php?relog=1&msg=Permission denied. Please login with admin user.&ref=".$_SERVER['PHP_SELF']);
 }
 ?>

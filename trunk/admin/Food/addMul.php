@@ -153,8 +153,19 @@ if (isset($_POST['name'])
         </tr>
 	    <tr>
 	      <td align="right" valign="top" class="labelF">วิธีทำ :</td>
-	      <td><textarea name="method" cols="50" rows="10" required class="input" id="method" tabindex="2"></textarea>
-          <input name="views" type="hidden" required class="input number" id="views" tabindex="2" value="0"></td>
+	      <td bgcolor="white"><script type="text/javascript" src="../../core/js/nicEdit-latest.js"></script>
+	        <script type="text/javascript">
+//<![CDATA[
+bkLib.onDomLoaded(function() {
+new nicEditor().panelInstance('area1');
+new nicEditor({fullPanel : true}).panelInstance('area2');
+new nicEditor({iconsPath : '../nicEditorIcons.gif'}).panelInstance('area3');
+new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('area4');
+new nicEditor({maxHeight : 100}).panelInstance('area5');
+});
+//]]>
+            </script>
+	        <textarea name="method" cols="50" rows="10" required class="mytextarea" id="area1" tabindex="2"></textarea></td>
         </tr>
         <? 
 			if (isset($_SESSION["UIDS"])){
@@ -166,7 +177,8 @@ if (isset($_POST['name'])
 	      <td><select class="labelF" id="owner" name="owner" required>
 	        <option value=""></option>
 	        <? echo $rowsUser;?>
-          </select></td>
+          </select>
+          <input name="views" type="hidden" required class="input number" id="views" tabindex="2" value="0"></td>
         </tr>
         <? }?>
 	    <tr>

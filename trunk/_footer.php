@@ -1,20 +1,26 @@
 <section class="footer-top">
       <div class="footer-inner">
         <figure class="f-column">
-          <h4 class="title3">Popular Posts</h4>
+          <h4 class="title3">Recent Comments</h4>
           <ul class="post-list">
+            <?
+				
+			include('connectDB.php');
+			$strSQL = "Select * from ICOMMENTS C JOIN IFOODS F ON C.FID=F.FID JOIN IUSERS U ON C.UIDS=U.UIDS WHERE ROWNUM < 4";
+			//echo $strSQL;
+			$objParse = oci_parse($objConnect, $strSQL);
+			$objExecute = oci_execute($objParse, OCI_DEFAULT);
+			$searchOB = array();
+			while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
+		?>
             <li>
-              <p>People sometimes and some popular forms.</p>
-              <div class="row"><em class="post-date">January 6, 2012</em> <a href="#" class="comments">23 comments</a></div>
+              <p><a href="foodDetail.php?foodid=<?=$row['FID']?>" style="color:white;"><?=$row['FOODNAME']?></a> : <?=$row['MESSAGE']?></p>
+              <div class="row">
+    	           <em class="post-date"> <? echo str_replace('.000000', '',$row['STIME'])?></em><br>
+                   <em class="mycomments">by : <?=$row['NAME']?></em>
+              </div>
             </li>
-            <li>
-              <p>Nulla interdum adipiscing semper egestas. Mauris auctor augue ac erat.</p>
-              <div class="row"><em class="post-date">January 6, 2012</em> <a href="#" class="comments">23 comments</a></div>
-            </li>
-            <li>
-              <p>Mauris auctor augue ac erat auctor augue.</p>
-              <div class="row"><em class="post-date">January 6, 2012</em> <a href="#" class="comments">23 comments</a></div>
-            </li>
+            <? } ?>
           </ul>
         </figure>
         <figure class="f-column foods">

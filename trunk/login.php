@@ -7,8 +7,10 @@ if (isset($_GET['relog']) && ($_GET['relog']==1)){
 	unset($_SESSION['UIDS']);
 	unset($_SESSION['USERNAME']);
 }
-if ( (isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME'])  && authenIdUser($_SESSION['UIDS'],$_SESSION['USERNAME'])) ) {
-	header ("Location: member/");
+if (authenIdUser()) {
+	if (!($_GET['noredirect']==1)) {
+		header ("Location: index.php");
+	}
 }
 
 if(isset($_POST["username"]) && isset($_POST["password"])){
@@ -36,8 +38,8 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
 		}
 		//echo '<meta http-equiv="refresh" content="0;url=show_pro.php"> ';
 	}else{
-		header( "location: login.php?msg=Invalid Username or Password!" );
-		//echo '<meta http-equiv="refresh" content="0;url=login.php?msg=Wrong Username or Password"> ';
+			header( "location: login.php?msg=Invalid Username or Password!" );
+			//echo '<meta http-equiv="refresh" content="0;url=login.php?msg=Wrong Username or Password"> ';
 	}
 } else {
 ?>
@@ -78,20 +80,9 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
       <h1 id="logo"><a href="index.php"></a></h1>
       <nav class="nav">
         <ul>
-          <li class="active"><a href="index.php">Home</a></li>
-          <li><a href="about.php">About Us</a>
-            <ul>
-              <li><a href="our-team.html">Our Team</a></li>
-              <li><a href="author.html">author</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="contact.html">contact us</a></li>
-            </ul>
-          </li>
-          <li><a href="menu.php">Cataosf</a>
-            <ul>
-              <li><a href="recepie-detail-page.html">Recepie Detail Page</a></li>
-            </ul>
-          </li>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="about.php">About Us</a></li>
+          <li><a href="menu.php">All food</a></li>
           <li><a href="blog_list.html">Blog</a>
             <ul>
               <li><a href="blog_double_sidebar_left.html">Blog Double Sidebar Left</a></li>

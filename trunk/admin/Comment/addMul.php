@@ -62,7 +62,7 @@ if (isset($_POST['user']) && isset($_POST['food']) && isset($_POST['message']) &
 	$now = time();
 	$sysdate = date('d-m-Y H/i/s',time());
 		if (is_numeric($_POST['user']) && is_numeric($_POST['food']) ){	
-			$sql = "INSERT INTO $table (UIDS, FID, MESSAGE, STIME) VALUES ('$user','$food','$message',TO_DATE('$sysdate','MM/DD/YYYY HH24/MI/SS') )";
+			$sql = "INSERT INTO $table (UIDS, FID, MESSAGE, STIME) VALUES ('$user','$food','$message',SYSDATE )";
 			$strSQL = $sql;
 			//echo $sql;
 			$objParse = oci_parse($objConnect , $strSQL);

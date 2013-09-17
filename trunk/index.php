@@ -45,19 +45,8 @@ include 'FoodFunction.php';
       <nav class="nav">
         <ul>
           <li class="active"><a href="index.php">Home</a></li>
-          <li><a href="about.php">About Us</a>
-            <ul>
-              <li><a href="our-team.html">Our Team</a></li>
-              <li><a href="author.html">author</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="contact.html">contact us</a></li>
-            </ul>
-          </li>
-          <li><a href="menu.php">All food</a>
-            <ul>
-              <li><a href="recepie-detail-page.html">Recepie Detail Page</a></li>
-            </ul>
-          </li>
+          <li><a href="about.php">About Us</a></li>
+          <li><a href="menu.php">All food</a></li>
           <li><a href="blog_list.html">Blog</a>
             <ul>
               <li><a href="blog_double_sidebar_left.html">Blog Double Sidebar Left</a></li>
