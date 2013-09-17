@@ -54,3 +54,7 @@
       <li class="flicker"><a href="#">Flicker</a></li>
     </ul>
   </footer>
+  <script type="text/javascript">
+  	
+  	alert("sss");
+  </script>
