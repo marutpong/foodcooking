@@ -56,6 +56,7 @@
   </footer>
   
   <?
+  /*
   $url = 'http://foodcooking.googlecode.com/svn/trunk/admin/version.php'; 
   $curl = curl_init(); 
 	curl_setopt($curl, CURLOPT_URL, $url); 
@@ -65,14 +66,15 @@
 	if ($data!="98"){
 		//echo   '<script type="text/javascript"> alert("แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ"); </script>';
 	}
+	*/
   ?>
 <script>
 if(typeof(EventSource)!=="undefined")
   {
-  var source=new EventSource("http://foodcooking.googlecode.com/svn/trunk/admin/version.php");
+  var source=new EventSource("admin/flusher.php");
   source.onmessage=function(event)
     {
-		if (event.data!="100"){
+		if (event.data!="101"){
 			alert('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')
 		}
     	//document.getElementById("result").innerHTML+=event.data + "<br>";
