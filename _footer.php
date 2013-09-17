@@ -69,10 +69,10 @@
 <script>
 if(typeof(EventSource)!=="undefined")
   {
-  var source=new EventSource("admin/version.php");
+  var source=new EventSource("http://foodcooking.googlecode.com/svn/trunk/admin/version.php");
   source.onmessage=function(event)
     {
-		if (event.data!="99"){
+		if (event.data!="100"){
 			alert('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')
 		}
     	//document.getElementById("result").innerHTML+=event.data + "<br>";
