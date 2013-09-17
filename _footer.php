@@ -63,7 +63,23 @@
 	$data = curl_exec($curl); 
 	curl_close($curl); //decoding request 
 	if ($data!="98"){
-		echo   '<script type="text/javascript"> alert("แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ"); </script>';
+		//echo   '<script type="text/javascript"> alert("แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ"); </script>';
 	}
   ?>
-
+<script>
+if(typeof(EventSource)!=="undefined")
+  {
+  var source=new EventSource("admin/version.php");
+  source.onmessage=function(event)
+    {
+		if (event.data!="99"){
+			alert('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')
+		}
+    	//document.getElementById("result").innerHTML+=event.data + "<br>";
+    };
+  }
+else
+  {
+  //document.getElementById("result").innerHTML="Sorry, your browser does not support server-sent events...";
+  }
+</script>
