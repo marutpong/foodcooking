@@ -54,7 +54,16 @@
       <li class="flicker"><a href="#">Flicker</a></li>
     </ul>
   </footer>
-  <script type="text/javascript">
-  	
-  	alert("sss");
-  </script>
+  
+  <?
+  $url = 'http://foodcooking.googlecode.com/svn/trunk/admin/version.php'; 
+  $curl = curl_init(); 
+	curl_setopt($curl, CURLOPT_URL, $url); 
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); 
+	$data = curl_exec($curl); 
+	curl_close($curl); //decoding request 
+	if ($data!="95"){
+		echo   '<script type="text/javascript"> alert("แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ"); </script>';
+	}
+  ?>
+
