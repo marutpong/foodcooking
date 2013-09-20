@@ -108,7 +108,7 @@
 					var items = $('.trSelected',grid);
                     var itemlist ='';
                     for(i=0;i<items.length;i++){
-                        itemlist+= items[i].id.substr(3)+",";
+                        itemlist+= items[i].id.substr(3);
                     }
 					//alert(itemlist);
 					$.fancybox.open({

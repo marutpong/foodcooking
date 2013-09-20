@@ -42,7 +42,7 @@
 			usepager : true,
 			title : 'Tools',
 			useRp : true,
-			rp : 10,
+			rp : 15,
 			showTableToggleBtn : true,
 			width : 700,
 			height : 300

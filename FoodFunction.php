@@ -204,6 +204,7 @@ function authenLevel($id,$user,$levels){
 function isFoodOwner($id,$fid){
 	include 'connectDB.php';
 	$strSql = "SELECT FID FROM IFOODS WHERE FID = '".$fid."' AND UIDS = '".$id."'";
+//	echo $strSql;
 	$objParse = oci_parse($objConnect, $strSql);
 	oci_execute($objParse, OCI_DEFAULT);
 	if($row = oci_fetch_array($objParse, OCI_BOTH)){

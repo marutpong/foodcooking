@@ -107,7 +107,7 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
             <div class="formtitle">Login</div>
           <form action="" method="post">
             <div class="form_login">
-              <input name="username" type="text" class="logUsername" id="username" placeholder="Username" required>
+              <input name="username" type="text" class="logUsername" id="username" placeholder="Username" required autofocus>
               <input type="password" name="password" placeholder="Password" class="logPassword" required>
               <br><br>
               <a href="forgetPassword.php">Forgot password.</a>

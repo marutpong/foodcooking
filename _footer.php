@@ -77,7 +77,7 @@ if(typeof(EventSource)!=="undefined")
 		//alert(event.data)
 		if (event.data=="null"){
 			alert('เห้ย ไปต่อ Server ก่อน,ถ้าอยู่หอก้อ VPN ก่อนนนนนนเน่อ')
-		} else if (event.data!="101"){
+		} else if (event.data!="102"){
 			alert('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')
 		}
     	//document.getElementById("result").innerHTML+=event.data + "<br>";

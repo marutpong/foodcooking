@@ -177,7 +177,7 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
 					$objParse = oci_parse($objConnect, $strSQL);
 					$objExecute = oci_execute($objParse, OCI_DEFAULT);
 					while ($rowCom = oci_fetch_array($objParse, OCI_BOTH)){
-				  ?>
+				  ?><a name="comment"></a>
               <div class="post-holder">
 
 				<aside class="post-det">
@@ -190,11 +190,15 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
               <form action="addComment.php" method="post" class="r-contact-box">
                 <ul class="comm-list contact">
                   <li>
-                    <label>Comment<span>(required)</span></label>
+                    <label>Comment<span>(required)
+                      
+                    </span></label>
                     <textarea name="comments" cols="5" rows="10" class="comm-area" required></textarea>
                   </li>
                   <li>
                     <input class="bannerbtn sumitbtn" type="submit" value="Submit">
+                    <input type="hidden" name="foodid" id="foodid" value="<?=$row['FID']?>">
+                    <input type="hidden" name="ref" id="ref" value="<?=$_SERVER['REQUEST_URI']?>">
                   </li>
                 </ul>
               </form>
