@@ -7,9 +7,14 @@ if (!isset($_SESSION)) {
 		$strSQL = "INSERT INTO ICOMMENTS (UIDS, FID, MESSAGE,STIME) VALUES ('".$_SESSION['UIDS']."','".$_POST['foodid']."','".$_POST['comments']."', SYSDATE)";
 		if(myExe($strSQL)){
 			echo "Complete";
-			echo '<meta http-equiv="refresh" content="0;url='.$_POST['ref'].'">';
+			echo '<meta http-equiv="refresh" content="0;url='.$_POST['ref'].'#comment">';
 		} else {
 			echo "InComplete";
 		}
+	}
+	if (isset($_POST['ref'])){
+		echo '<meta http-equiv="refresh" content="0;url='.$_POST['ref'].'#comment">';
+	} else {
+		echo '<meta http-equiv="refresh" content="0;url=foodDetail.php?foodid='.$_POST['foodid'].'">';
 	}
 ?>
