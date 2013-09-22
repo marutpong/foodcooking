@@ -16,14 +16,20 @@ if ( !(authenAdmin()) ) {
     <script src="core/js/jquery-1.9.1.js"></script>
     <script src="core/js/jquery-ui-1.10.3.js"></script>
     <link rel="stylesheet" href="/resources/demos/style.css" />
-    <script>
-    $(function() {
-    $( "#tabs" ).tabs({
-        collapsible: true
-    }
-    );
-    });
-    </script>
+<script>
+$(function() {
+	$( "#tabs" ).tabs({
+		hide: { effect: "scale", duration: 800 },
+		show: { effect: "scale", duration: 800 },
+		beforeLoad: function( event, ui ) {
+			var path = $(ui.tab).find("a").attr('href');
+			path = "admin/"+path+"/index.php"
+			 $('#tabs-2').attr('src', path);
+		}
+
+	});
+});
+</script>
 </head>
 <body> 
     <div id="tabs">
@@ -32,14 +38,11 @@ if ( !(authenAdmin()) ) {
         
         for ($i =0 ;$i < count($a);$i++){
         ?>
-        <li><a href="#tabs-<? echo ($i+1) ?>"><? echo $a[$i]?></a></li>
+        <li><a href="<? echo $a[$i]?>"><? echo $a[$i]?></a></li>
         <? } ?>
         </ul>
-        <? for ($i =0 ;$i < count($a);$i++){ ?>
-        <div id="tabs-<? echo ($i+1) ?>" >
-        <iframe src="admin/<? echo $a[$i]?>" width="100%" height="550" frameborder="0" marginheight="0" marginwidth="0" hspace="0" vspace="0"></iframe>
+        <iframe id="tabs-2" width="100%" height="550" frameborder="0" marginheight="0" marginwidth="0" hspace="0" vspace="0"></iframe>
         </div>
-        <? } ?>
     </div>
 </body>
 </html>

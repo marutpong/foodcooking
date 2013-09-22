@@ -1,4 +1,5 @@
 <?
+header ("Location: ../member.php");
 if (!isset($_SESSION)) {
   session_start();
 }

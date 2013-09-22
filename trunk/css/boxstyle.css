@@ -44,7 +44,7 @@
 	background: linear-gradient(top, #3f342e 0%,#ffb119 50%,#4f4037 51%,#4f4037 100%); /* W3C */
 }
 
-.input {
+.inputs {
 	width: 410px;
 	border-bottom: 1px solid #ddd;
 	margin-bottom: 10px;
@@ -52,7 +52,7 @@
 	overflow: hidden;
 }
 
-.inputtext {
+.inputtexts {
 	float: left;
 	line-height: 18px;
 	height: 35px;

@@ -28,14 +28,11 @@ include 'FoodFunction.php';
 <!-- Start Java CSS -->
 <link rel="stylesheet" href="css/javascri.css" type="text/css" media="all">
 <!-- Video Gallery CSS -->
-<link rel="stylesheet" href="css/galleria.classic.css" type="text/css" media="all">
 <!-- Color Schemes CSS -->
 <link rel="stylesheet" href="css/colors-scheme.css" type="text/css" media="all">
 <!--[if lt IE 9]>
       <script src="js/html5.js"></script>
 <![endif]-->
-<script src="../../foodcooking/core/js/jquery-1.9.1.js"></script>
-<script src="../../foodcooking/core/js/jquery-2.0.0.min.js"></script>
 <body id="def">
 <div class="wrapper"> 
   <!-- header -->
@@ -67,12 +64,6 @@ include 'FoodFunction.php';
       <p>เรามีวิธีช่วยคุณในการหารายการอาหารที่ใกล้เคียงกับวัตถุดิบที่คุณมี</p>
       <a href="search.php" class="bannerbtn">ค้นหาแบบพิเศษ</a> </div>
   </div>
-  <div class="sloganwrapper">
-    <div class="main-holder banner-bottom">
-      <blockquote>"Your awesome company slogan goes right over here, we have the best food around"<br>
-        <span>unc elementum lacus in gravida pellentesque urna dolor eleifend felis eleifend</span> </blockquote>
-    </div>
-  </div>
   <!-- Content -->
   <section class="main-content">
   <span class="top-bg"></span>
@@ -83,6 +74,38 @@ include 'FoodFunction.php';
         <? include('_side.php'); ?>
         </figure>
         <figure class="column c-one-half">
+        <?
+    $strSQL = "SELECT *
+
+FROM( SELECT *FROM IFOODS ORDER BY dbms_random.value )
+
+WHERE rownum <= 3";
+	//echo $strSQL;
+	$objParse = oci_parse($objConnect, $strSQL);
+	$objExecute = oci_execute($objParse, OCI_DEFAULT);
+	$searchOB = array();
+	while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
+		?>
+      <figure class="column three-col <?=$row['TYPEID']?> portfolio-item item alpha">
+        <a href="foodDetail.php?foodid=<?=$row['FID']?>"><h2 style="background:#4e4e4e;color:#CCC;border-radius:5px;"><?=$row['FOODNAME']?></h2></a>
+        <ul class="b-top-links">
+              <li class="author-name">by <?=$row['NAME']?></li>
+              <li class="pic-icon"><?=$row['TYPENAME']?></li>
+              <li class="catagory"><?=$row['VIEWS']?> views</li>
+        </ul>
+              <? if (file_exists('files/_'.$row['PICTURE'])) {
+		  
+	  ?>
+      <img src="files/_<? echo $row['PICTURE']; ?>"><?
+	  } else {?>
+      <img src="http://10.10.188.254/group10/files/_<? echo $row['PICTURE']; ?>">
+      <? } ?>
+  
+
+      </figure>
+      <? } ?>
+        
+        
           <article class="blog-main"> <strong class="title">Duis sed tortor a leo ullamcorper fringilla!</strong>
             <ul class="b-top-links">
               <li class="author-name">by Jason</li>
@@ -251,6 +274,9 @@ include 'FoodFunction.php';
   <? include '_footer.php' ?>
 </div>
 <!-- Start JavaScript --> 
+<script src="core/js/jquery-1.9.1.js"></script>
+<script src="core/js/jquery-2.0.0.min.js"></script>
+
 <script type="text/javascript" src="js/slider.js"></script><!-- Main Slider --> 
 <script type="text/javascript" src="js/sourtin-jquery.js"></script><!-- sourtin Slider --> 
 <script type="text/javascript" src="js/jquery-u.js"></script><!-- jQuery Ui --> 
@@ -260,7 +286,6 @@ include 'FoodFunction.php';
 <script type="text/javascript" src="js/tytabs00.js"></script><!-- jQuery Plugin tytabs  --> 
 <script type="text/javascript" src="js/jquery04.js"></script><!-- jQuery Prettyphoto  --> 
 <script type="text/javascript" src="js/jquery06.js"></script><!-- UItoTop plugin  --> 
-<script type="text/javascript" src="js/custom00.js"></script><!-- Custom Js file for javascript in html --> 
 <script type="text/javascript" src="js/focus.js"></script><!-- text field clear & celander Seting--> 
 
 <script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>

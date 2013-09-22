@@ -106,7 +106,7 @@ if ( !authenIdUser() ) {
         </tr>
 	    <tr>
 	      <td align="right" class="labelF">วันเกิด :</td>
-	      <td><input name="birthdate" type="date" required class="input" id="birthdate" tabindex="2" value="<?=$row['BIRTHDATE']?>"></td>
+	      <td><input name="birthdate" type="input" required class="input" id="birthdate" tabindex="2" value="<?=$row['BIRTHDATE']?>"></td>
         </tr>
 	    <tr>
 	      <td height="36" align="right" valign="middle" class="labelF">E-mail :</td>

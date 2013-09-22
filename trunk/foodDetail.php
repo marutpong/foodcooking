@@ -14,11 +14,14 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
 		$qobjParse = oci_parse($objConnect, $qstrSQL);
 		$qobjExecute = oci_execute($qobjParse);
 	}
+	$strSQLlike = "SELECT COUNT(FID) as \"LIKE\" FROM IFAVORITE WHERE FID = ".$_GET['foodid'];
+	//echo $strSQLlike;
+	$rowlike = getSingleRow($strSQLlike);
 }
 
 	if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 		&& (
-			( authenIdUser() && isFoodOwner($_SESSION['UIDS'],$row['FID']))
+			( authenIdUser() && ($_SESSION['UIDS']==$row['UIDS']))
 			|| authenAdmin() )
 		) {
 		$editable = true;
@@ -71,7 +74,7 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
 					}
 		});
 	}
-</script>
+	</script>
 <? } ?>
 </head>
 <body id="def">
@@ -109,7 +112,10 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
 				if($row) {
 			?>
           
-            <h2><? echo $row['FOODNAME']; if ($editable) { ?> <a href="javascript:editFood();"><img src="core/images/_myedit.png" alt="Edit Food" name="im_edit" width="31" height="31" id="im_edit">edit</a><? } ?></h2>
+            <h2><? echo $row['FOODNAME']; 
+			?><? if ($editable) { ?> 
+            <a href="javascript:editFood();"><img src="core/images/_myedit.png" alt="Edit Food" name="im_edit" width="31" height="31" id="im_edit">edit</a><? } ?>
+            </h2>
               <ul class="b-top-links">
               <li class="author-name">by
                 <?=$row['NAME']?>
@@ -121,13 +127,39 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
                 <?=$row['VIEWS']?>
                 views</li>
             </ul>
-            <p>
-              <? if (file_exists('files/'.$row['PICTURE'])) { ?>
-              <img src="files/<? echo $row['PICTURE']; ?>"><?
-              } else {?>
-              <img src="http://10.10.188.254/group10/files/<? echo $row['PICTURE']; ?>">
-             <? } ?></p>
+            <div id="likeBox">
+<?
+$likesrc = "core/images/like.png";
+if (hasLiked($row['FID'])){
+	$likesrc = "core/images/like2.png";
+}
+?>
+<form action="module/like_submit.php" method="post">
+<input name="foodid" type="hidden" value="<? echo $row['FID'];?>" />
+<input name="ref" type="hidden" value="<?=$_SERVER['REQUEST_URI']?>" />
+<table>
+  <tr>
+    <td><input type="image" src="<?=$likesrc?>" name="im_edit" width="32" height="32"/></td>
+    <td id="theLike"><?=numberOfLike($row['FID'])?>
+      </td>
+     <td>
+      likes</td>
+  </tr>
+</table>
+</form>
+<script>
+  var source2=new EventSource("module/like_flush.php?foodid=<? echo $_GET['foodid'];?>");
+  source2.onmessage=function(event)
+    {
+	  document.getElementById("theLike").innerHTML=event.data;
+//		alert(event.data);
+    };
+</script>
+
             
+                  
+            </div>
+          <div style="background-image:url('<? echo picture_url("_".$row['PICTURE']); ?>');height:400px" class="myfoodpic"></div>           
             <section class="grid-holder">
               <section class="grid">
                 <figure class="column three-col">
@@ -173,26 +205,30 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
 			?> </h2>
             <article class="blog-post"><br>
                   <? 
-				  	$strSQL = "Select UIDS,FID,MESSAGE,STIME,NAME FROM ICOMMENTS NATURAL JOIN IUSERS WHERE FID = ".$row['FID'];
+				  	$strSQL = "Select * FROM ICOMMENTS NATURAL JOIN IUSERS WHERE FID = ".$row['FID'];
 					$objParse = oci_parse($objConnect, $strSQL);
 					$objExecute = oci_execute($objParse, OCI_DEFAULT);
 					while ($rowCom = oci_fetch_array($objParse, OCI_BOTH)){
-				  ?><a name="comment"></a>
+				  ?><a name="<?=$rowCom['UIDS']?>"></a>
               <div class="post-holder">
 
-				<aside class="post-det">
-                  <h4><? if ($rowCom['UIDS']!=NULL){ echo $rowCom['NAME'];} else { echo 'Guest';}?> says:</h4>
-                  <?=$rowCom['MESSAGE']?>
+				<aside class="post-det" style="margin-left:30px;">
+                
+                  <h4 style="margin-bottom:10px;margin-top:0;"><? if ($rowCom['UIDS']!=NULL){ echo $rowCom['NAME'];} else { echo 'Guest';}?> says:</h4>
+                  <?=$rowCom['MESSAGE']?><br><br>
+                  <div class="row">
+    	           <em class="post-date"> <? echo str_replace('.000000', '',$rowCom['STIME'])?></em>
+                   <? if ($_SESSION["UIDS"]==$rowCom['UIDS']){ ?>
+                   <em class="price"><img  class="remove" onClick="removeOb(this,'<?=$rowCom['FID']?>','<?=$rowCom['STIME']?>')" src="core/css/images/close.png" alt="Remove this row" width="16" height="16"></em><? }?>
+              </div>
                 </aside>
               </div>
               <? } ?>
               <? if (authenIdUser()) { ?>
-              <form action="addComment.php" method="post" class="r-contact-box">
+              <form action="module/addComment.php" method="post" class="r-contact-box">
                 <ul class="comm-list contact">
                   <li>
-                    <label>Comment<span>(required)
-                      
-                    </span></label>
+                    <label>Comment</label>
                     <textarea name="comments" cols="5" rows="10" class="comm-area" required></textarea>
                   </li>
                   <li>
@@ -203,7 +239,7 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
                 </ul>
               </form>
               <? } else {?>
-              	<h4>Login for comment.</h4>
+           	  <h4>Login for comment.</h4>
               <? } ?>
             </article>
             <? } else { ?>
@@ -231,5 +267,24 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
     
 <script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+var removeOb = function(e,fid,time) {
+	$.post( "module/delComment.php", { foodid: fid, stime: time })
+	.done(function( data ) {
+		if(data='Complete'){
+			var ob = $(e).parent().parent().parent();
+				ob.hide('slow', function(){ ob.remove();
+			});
+		} else {
+			alert('Deleted unsuccessful.');
+		}
+	});
+
+
+	//$(e).parent().parent().remove();
+};
+
+
+</script>
 </body>
 </html>

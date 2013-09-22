@@ -48,8 +48,8 @@
   <div class="formtitle">Login</div>
   <form action="login.php?ref=<?=$_SERVER['REQUEST_URI']?>" method="post">
     <div class="form_login">
-      <input name="username" type="text" class="logUsername" id="username" placeholder="Username" >
-      <input type="password" name="password" placeholder="Password" class="logPassword" >
+      <input name="username" type="text" class="logUsername" id="username" placeholder="Username" required="required">
+      <input type="password" name="password" placeholder="Password" class="logPassword" required="required">
       <br>
       <br>
       <a href="forgetPassword.php">Forgot password.</a> <br>
@@ -69,7 +69,9 @@
     Welcome :
     <?=$_SESSION["NAME"]?></p>
   <ul>
-    <li><a href="javascript:showProfile();">ข้อมูลส่วนตัว</a></li>
+    <li><a href="member.php">ข้อมูลส่วนตัว</a></li>
+    <li><a href="member_favorite.php">อาหารที่ชอบ</a></li>
+    <li><a href="member_comments.php">คอมเม้นท์</a></li>
     <li>
       <a href="javascript:addFood();">เพิ่มอาหาร</a>
     </li>
@@ -78,18 +80,37 @@
     <button class="orangebutton" >Logout</button>
   </a> </div>
 </div>
-<? } /*?>
-<div class="form1">
+<? } ?>
+<?
+ if (!endsWith($_SERVER['PHP_SELF'],'search.php')){ ?>
+<div class="form1" style="float:none">
   <div class="formtitle">Search</div>
-  <br>
-  ข้อมูลส่วนตัว<br>
-   <div onclick="register()">เพิ่มอาหาร</div>
-
-  <div class="buttons">
-    <input class="greybutton" type="submit" value="Logout" onclick="register()" />
-  </div>
+  <form action="search.php" method="post">
+    <div style="margin-left:15px;"><br />
+    <label>ชื่ออาหาร
+      <input name="name" type="text"  autofocus="autofocus" class="input" id="name" tabindex="1" autocomplete="on" value="<?=$_POST['name']?>" size="32" style="margin-bottom:15px;" /></label>
+	<label>ประเภทอาหาร
+      <select class="labelF combobox" id="foodtype" name="foodtype" >
+        <option value="" selected="selected"> - ประเภทอาหาร - </option>
+        <? echo optionFoodType($_POST['foodtype']);?>
+      </select></label>
+      <br />
+      <br />
+    </div>
+    <div class="buttons">
+      <input name="fsearch" type="hidden" id="fsearch" value="1" />
+      <input class="orangebutton" type="submit" value="ค้นหา" />
+    </div>
+  </form>
 </div>
-<? */
+<link rel="stylesheet" type="text/css" href="core/css/jquery-ui.css">
+<script src="core/js/jquery-ui-1.10.3.js"></script>
+<script src="core/js/combobox.js"></script>
+<script type="text/javascript">
+	$( ".combobox" ).combobox();
+</script>
+<? } ?>
+<?
 	if ($_SESSION['USER_LEVEL']==1) {
 ?>
 <div class="form1">
@@ -101,3 +122,4 @@
 
 </div>
 <?	} ?>
+

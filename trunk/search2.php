@@ -32,7 +32,7 @@ if (!isset($_SESSION)) {
               <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]">\
                 <option value=""></option><? echo $rows;?></select>\
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
-              <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" \
+              <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" step="any" tabindex="1" \
             onFocus="checkNum(this)" size="10" placeholder="จำนวน"></td>\
               <td><input name="unit[]" type="text" readonly  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย"></td>\
               <td><div class="remove" onClick="removeOb(this)"><img src="core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>\

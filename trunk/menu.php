@@ -38,6 +38,7 @@ if (!isset($_SESSION)) {
 <!--[if lt IE 9]>
       <script src="js/html5.js"></script>
 <![endif]-->
+<link rel="stylesheet" type="text/css" href="core/css/mystyle.css">
 </head>
 <body id="def">
 <div class="wrapper"> 
@@ -49,7 +50,6 @@ if (!isset($_SESSION)) {
         <? include('_navbar.php'); ?>
       </nav>
     </div>
-   
   </header>
   <div class="main-holder"></div>
   <div class="sloganwrapper">
@@ -62,9 +62,9 @@ if (!isset($_SESSION)) {
   </div>
   <!-- Content -->
   <section class="main-content"> <span class="top-bg"></span>
-  <ul class="category-list" id="portfolio-item-filter">
-  	<li><a href="#" data-value="All">All</a></li>
-    <?
+    <ul class="category-list" id="portfolio-item-filter">
+      <li><a href="#" data-value="All">ทั้งหมด</a></li>
+      <?
     $strSQL = " Select TYPEID,TYPENAME from IFOODTYPE ORDER BY TYPENAME";
 	//echo $strSQL;
 	$objParse = oci_parse($objConnect, $strSQL);
@@ -74,64 +74,53 @@ if (!isset($_SESSION)) {
 		echo '<li><a href="#" data-value="'.$row['TYPEID'].'">'.$row['TYPENAME'].'</a></li>';
 	}
 	?>
-    <li><a href="#" data-value="Chinese">Chinese</a></li>
-  </ul>
-  <div class="holder-container last">
-  	<section class="grid-holder">
-      	  <section class="grid lightbox gallery" id="portfolio-item-holder">
-	<?
+    </ul>
+    <div class="holder-container last">
+      <section class="grid-holder">
+        <section class="grid lightbox gallery" id="portfolio-item-holder">
+          <?
     $strSQL = " Select FID,FOODNAME,PICTURE,VIEWS,UIDS,TYPEID,TYPEID,TYPENAME,NAME from IFOODS NATURAL JOIN IUSERS NATURAL JOIN IFOODTYPE";
 	//echo $strSQL;
 	$objParse = oci_parse($objConnect, $strSQL);
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$searchOB = array();
 	while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-		?>
-      <figure class="column three-col <?=$row['TYPEID']?> portfolio-item item alpha">
-        <a href="foodDetail.php?foodid=<?=$row['FID']?>"><h2 style="background:#4e4e4e;color:#CCC;border-radius:5px;"><?=$row['FOODNAME']?></h2></a>
-        <ul class="b-top-links">
-              <li class="author-name">by <?=$row['NAME']?></li>
-              <li class="pic-icon"><?=$row['TYPENAME']?></li>
-              <li class="catagory"><?=$row['VIEWS']?> views</li>
-        </ul>
-              <? if (file_exists('files/_'.$row['PICTURE'])) {
-		  
-	  ?>
-      <img src="files/_<? echo $row['PICTURE']; ?>"><?
-	  } else {?>
-      <img src="http://10.10.188.254/group10/files/_<? echo $row['PICTURE']; ?>">
-      <? } ?>
-      
-        <a href="images/image05.jpg" rel="prettyPhoto[gallery1]" class="caption"><span class="hover-effect big zoom"></span></a>
-        <article class="menu-det">
-          <p>Nullam mi turpis, ultricies eu mattis vel, tincidunt vitae velit. Nullam quis ante sapien. Praesent sollicitudin volutpat fringilla. </p>
-        </article>
-      </figure>
-      <? } ?>
-      <figure class="column three-col Chinese portfolio-item item alpha">
-        <h2>Chinese Food</h2>
-        <a href="images/image31.jpg" rel="prettyPhoto[gallery1]" class="caption"><img src="images/image31.jpg" class="offer-img" alt=""><span class="hover-effect big zoom"></span></a>
-        <article class="menu-det">
-          <p>Nullam mi turpis, ultricies eu mattis vel, tincidunt vitae velit. Nullam quis ante sapien. Praesent sollicitudin volutpat fringilla.</p>
-        </article>
-      </figure>
-      
-   	    </section>
+		$src=picture_url("_".$row['PICTURE']);
+	?>
+          <figure class="column three-col <?=$row['TYPEID']?> portfolio-item item alpha" ><a href="foodDetail.php?foodid=<?=$row['FID']?>">
+            <div style="background-image:url('<?=$src?>');" class="myfoodpic">
+            	<div class="myfoodpic_title"><?=$row['FOODNAME']?></div>
+            </div>
+            </a>
+            <ul class="b-top-links">
+              <li class="author-name">by
+                <?=$row['NAME']?>
+              </li>
+              <li class="pic-icon">
+                <?=$row['TYPENAME']?>
+              </li>
+              <li class="catagory">
+                <?=$row['VIEWS']?>
+                views</li>
+            </ul>
+          </figure>
+          <? } ?>
+        </section>
       </section>
-  </div>
+    </div>
     <? include '_footer.php' ?>
 </div>
 <!-- Start JavaScript --> 
-<script src="core/js/jquery-2.0.0.min.js"></script>
-<script type="text/javascript" src="js/sourtin-jquery.js"></script><!-- sourtin Slider -->
-<script type="text/javascript" src="js/jquery-u.js"></script><!-- jQuery Ui -->
-<script type="text/javascript" src="js/ddsmooth.js"></script><!-- Nav Menu ddsmoothmenu -->
-<script type="text/javascript" src="js/jquery03.js"></script><!-- Sliding Text and Icon Menu Style  -->
-<script type="text/javascript" src="js/colortip.js"></script><!-- Colortip Tooltip Plugin  -->
-<script type="text/javascript" src="js/tytabs00.js"></script><!-- jQuery Plugin tytabs  -->
-<script type="text/javascript" src="js/jquery04.js"></script><!-- jQuery Prettyphoto  -->
-<script type="text/javascript" src="js/custom00.js"></script><!-- Custom Js file for javascript in html -->
-<script type="text/javascript" src="js/focus.js"></script><!-- text field clear & celander Seting-->
+<script src="core/js/jquery-2.0.0.min.js"></script> 
+<script type="text/javascript" src="js/sourtin-jquery.js"></script><!-- sourtin Slider --> 
+<script type="text/javascript" src="js/jquery-u.js"></script><!-- jQuery Ui --> 
+<script type="text/javascript" src="js/ddsmooth.js"></script><!-- Nav Menu ddsmoothmenu --> 
+<script type="text/javascript" src="js/jquery03.js"></script><!-- Sliding Text and Icon Menu Style  --> 
+<script type="text/javascript" src="js/colortip.js"></script><!-- Colortip Tooltip Plugin  --> 
+<script type="text/javascript" src="js/tytabs00.js"></script><!-- jQuery Plugin tytabs  --> 
+<script type="text/javascript" src="js/jquery04.js"></script><!-- jQuery Prettyphoto  --> 
+<script type="text/javascript" src="js/custom00.js"></script><!-- Custom Js file for javascript in html --> 
+<script type="text/javascript" src="js/focus.js"></script><!-- text field clear & celander Seting--> 
 <script type="text/javascript" src="js/supersized.3.2.7.min.js"></script><!-- Image Gallery -->
 </body>
 </html>
