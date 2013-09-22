@@ -16,7 +16,12 @@ function myExeAndReturnID($strSQL){
 		return($id);
 	} else return($objExecute);
 }
-
+function getSingleRow($strSQL){
+	include 'connectDB.php';
+	$objParse = oci_parse($objConnect, $strSQL);
+	$objExecute = oci_execute($objParse, OCI_DEFAULT);
+	return(oci_fetch_array($objParse, OCI_BOTH));
+}
 function getIngeIdByName($inname){
 	include 'connectDB.php'; 
 	$strSQL = "SELECT IID FROM IINGREDIENT WHERE INNAME = '$inname'";
@@ -160,7 +165,13 @@ function optionFoodType($id){
 	}
 	return($rows);
 }
-
+function Login($username,$password){
+	$strSql = "SELECT * FROM IUSERS WHERE USERNAME = '".$username."' AND PASSWORD = '".sha1($password)."'";
+	if($row = getSingleRow($strSql)){
+		return $row;
+	}
+	return (false);
+}
 function authenIdUser(){
 	if(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) ){
 		include 'connectDB.php';
@@ -213,11 +224,17 @@ function isFoodOwner($id,$fid){
 		return (false);
 	}
 }
-function getSingleRow($strSQL){
+function isCommentOwner($id,$fid){
 	include 'connectDB.php';
-	$objParse = oci_parse($objConnect, $strSQL);
-	$objExecute = oci_execute($objParse, OCI_DEFAULT);
-	return(oci_fetch_array($objParse, OCI_BOTH));
+	$strSql = "SELECT FID FROM ICOMMENTS WHERE UIDS = '".$id."' AND FID = '".$fid."' ";
+	echo $strSql;
+	$objParse = oci_parse($objConnect, $strSql);
+	oci_execute($objParse, OCI_DEFAULT);
+	if($row = oci_fetch_array($objParse, OCI_BOTH)){
+		return (true);
+	}else{
+		return (false);
+	}
 }
 
 function numberOfComment($fid){
@@ -225,10 +242,18 @@ function numberOfComment($fid){
 	$total = 0;
 	if (is_numeric($fid)){
 		$strSQL = "SELECT COUNT(FID) NUM FROM ICOMMENTS WHERE FID='$fid'";
-		$objParse = oci_parse($objConnect, $strSQL);
-		oci_execute($objParse, OCI_DEFAULT);
-		$row = oci_fetch_array($objParse, OCI_BOTH);
+		$row = getSingleRow($strSQL);
 		$total=$row['NUM'];
+	}
+	return $total;
+}
+function numberOfLike($fid){
+	include 'connectDB.php';
+	$total = 0;
+	if (is_numeric($fid)){
+		$strSQLlike = "SELECT COUNT(FID) as \"LIKE\" FROM IFAVORITE WHERE FID = ".$fid;
+		$rowlike = getSingleRow($strSQLlike);
+		$total=$rowlike['LIKE'];
 	}
 	return $total;
 }
@@ -329,8 +354,8 @@ function uploadImage($path,$files){
 			if(!file_exists($SAVE_PATH)) mkdir($SAVE_PATH); //สร้าง Folder ปลายทางเมื่อไม่พบ
 			if(isImage($files)){ //ตรวจสอบว่าเป็นไฟล์รูปภาพ
 				$hashname = md5_file($files["tmp_name"]);
-				if( ($newfilename = uploadResizeTo($files, $SAVE_PATH,$hashname, 500, 375)) &&
-				    ($newfilename2 = uploadResizeTo($files, $SAVE_PATH,"_".$hashname, 180, 135)) ){
+				if( ($newfilename = uploadResizeTo($files, $SAVE_PATH,$hashname, 660, 660)) &&
+				    ($newfilename2 = uploadResizeTo($files, $SAVE_PATH,"_".$hashname, 300, 300)) ){
 						return($newfilename);
 				} else return(false);
 			}else{
@@ -366,5 +391,42 @@ function sendmail($email,$msgheader,$msgcontent){
 	{
 		echo (false);
 	}
+}
+function startsWith($haystack, $needle)
+{
+    return $needle === "" || strpos($haystack, $needle) === 0;
+}
+function endsWith($haystack, $needle)
+{
+    return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+}
+function url_exists($file) {
+	$file_headers = @get_headers($file);
+	if($file_headers[0] == 'HTTP/1.1 404 Not Found' || $file_headers[0] == 'HTTP/1.1 403 Forbidden') {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+function picture_url($url){
+	$src=NULL;
+	if (file_exists('files/'.$url)) {
+		$src = "files/".$url;
+	} else if (url_exists("http://10.10.188.254/group10/files/".$url)) {
+		$src = "http://10.10.188.254/group10/files/".$url;
+	} else {
+		$src = "core/images/no-img.png";
+	}
+	return($src);
+}
+function hasLiked($fid=NULL){
+	if(isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) && is_numeric($fid)){
+		$strSQLlike = "SELECT* FROM IFAVORITE WHERE FID = ".$fid."AND UIDS = ".$_SESSION['UIDS'];
+		if($rowlike = getSingleRow($strSQLlike)){
+			return (true);
+		}
+	}
+	return (false);
 }
 ?>

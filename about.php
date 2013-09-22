@@ -118,6 +118,7 @@ include 'FoodFunction.php';
 <script type="text/javascript" src="js/ddsmooth.js"></script><!-- Nav Menu ddsmoothmenu -->
 <script type="text/javascript" src="js/jquery03.js"></script><!-- Sliding Text and Icon Menu Style  -->
 <script type="text/javascript" src="js/jquery04.js"></script><!-- jQuery Prettyphoto  -->
+<script type="text/javascript" src="js/jquery06.js"></script><!-- UItoTop plugin  --> 
 <script type="text/javascript" src="js/focus.js"></script><!-- text field clear & celander Seting-->
 
 <script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>

@@ -6,18 +6,18 @@
             <?
 				
 			include('connectDB.php');
-			$strSQL = "Select * from ICOMMENTS C JOIN IFOODS F ON C.FID=F.FID JOIN IUSERS U ON C.UIDS=U.UIDS WHERE ROWNUM < 4";
+			$strSQL = "SELECT * FROM 	(Select * from ICOMMENTS C JOIN IFOODS F ON C.FID=F.FID JOIN IUSERS U ON C.UIDS=U.UIDS ORDER BY C.STIME DESC) WHERE ROWNUM  <= 3";
 			//echo $strSQL;
 			$objParse = oci_parse($objConnect, $strSQL);
 			$objExecute = oci_execute($objParse, OCI_DEFAULT);
 			$searchOB = array();
 			while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 		?>
-            <li>
-              <p><a href="foodDetail.php?foodid=<?=$row['FID']?>" style="color:white;"><?=$row['FOODNAME']?></a> : <?=$row['MESSAGE']?></p>
+            <li class="c-icon">
+              <p><?=$row['NAME']?> : <?=$row['MESSAGE']?></p>
               <div class="row">
     	           <em class="post-date"> <? echo str_replace('.000000', '',$row['STIME'])?></em><br>
-                   <em class="mycomments">by : <?=$row['NAME']?></em>
+                   <em class="mycomments">in : <a href="foodDetail.php?foodid=<?=$row['FID']?>" style="color:white;"><?=$row['FOODNAME']?></a></em>
               </div>
             </li>
             <? } ?>
@@ -71,13 +71,13 @@
 <script>
 if(typeof(EventSource)!=="undefined")
   {
-  var source=new EventSource("admin/flusher.php");
+  var source=new EventSource("module/flusher.php");
   source.onmessage=function(event)
     {
 		//alert(event.data)
 		if (event.data=="null"){
 			alert('เห้ย ไปต่อ Server ก่อน,ถ้าอยู่หอก้อ VPN ก่อนนนนนนเน่อ')
-		} else if (event.data!="102"){
+		} else if (event.data!="105"){
 			alert('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')
 		}
     	//document.getElementById("result").innerHTML+=event.data + "<br>";

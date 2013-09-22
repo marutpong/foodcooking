@@ -32,7 +32,7 @@ $rowsFoodtype = optionFoodType("");
               <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]">\
                 <option value=""></option><? echo $rows;?></select>\
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
-              <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" \
+              <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" step="any" tabindex="1" \
             onFocus="checkNum(this)" size="10" placeholder="จำนวน" style="width:60px;"></td>\
               <td><input name="unit[]" type="text" readonly  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย" style="width:100px;"></td>\
               <td><div class="remove" onClick="removeOb(this)"><img src="../../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>\
@@ -189,17 +189,17 @@ new nicEditor({maxHeight : 100}).panelInstance('area5');
           </select><input name="newfoodtype" type="hidden"></td>
         </tr>
     </table>
-    <table>
+    <table width="500">
       <tr>
-        <td valign="top" class="labelF">ส่วนผสม :</td>
-        <td><div>
-          <table border="0" id="addIngre">
+        <td width="75" valign="top" class="labelF">ส่วนผสม :</td>
+        <td width="425"><div>
+          <table width="420" border="0" id="addIngre">
             <tr>
               <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]">
                 <option value=""></option><? echo $rows;?>
               </select>
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>
-              <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" tabindex="1" 
+              <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" step="any" tabindex="1" 
             onFocus="checkNum(this)" size="10" placeholder="จำนวน" style="width:60px;"></td>
               <td><input name="unit[]" type="text"  required class="input unit" id="unit[]" placeholder="หน่วย" tabindex="1" size="10" readonly style="width:100px;"></td>
               <td><div class="remove" onClick="removeOb(this)"><img src="../../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>

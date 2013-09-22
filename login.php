@@ -16,11 +16,8 @@ if (authenIdUser()) {
 if(isset($_POST["username"]) && isset($_POST["password"])){
 	include 'connectdb.php';
 	$username = $_POST["username"];
-	$password = sha1($_POST["password"]);
-	$strSql = "SELECT * FROM IUSERS WHERE USERNAME = '".$username."' AND PASSWORD = '".$password."'";
-	$objParse = oci_parse($objConnect, $strSql);
-	oci_execute($objParse, OCI_DEFAULT);
-	if($row = oci_fetch_array($objParse, OCI_BOTH)){
+	$password = $_POST["password"];
+	if($row = Login($username,$password)){
 		$_SESSION["UIDS"] = $row["UIDS"];
 		$_SESSION["NAME"] = $row["NAME"];
 		$_SESSION["USERNAME"] = $row["USERNAME"];

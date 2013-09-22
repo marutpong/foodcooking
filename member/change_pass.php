@@ -19,43 +19,33 @@ if ( !authenIdUser() ) {
 <body>
 <?
 	if (isset($_POST['password_old']) && isset($_POST['password1']) && isset($_POST['password2'])  && ($_POST['password2'] == $_POST['password1'])) {
-		$count = 0;
-		include '../connecwtdb.php'; 
-		$id = $_POST['id'];
-		
-		//echo $_POST["id"];
+		if($row = Login($_SESSION['USERNAME'],$_POST['password_old'])){
+			
 			$strSQL = "UPDATE IUSERS SET ";
-			$strSQL .="password = '".$_POST["password2"]."'";			
+			$strSQL .="password = '".sha1($_POST["password2"])."'";			
 			$strSQL .=" WHERE UIDS = ".$_SESSION['UIDS']." ";
 			//echo $strSQL;
-			$objParse = oci_parse($objConnect, $strSQL);
-			$objExecute = oci_execute($objParse);
-			if($objExecute){
-				$count++;
-			}
+			$result = myExe($strSQL);
+		} else {
+			$msg = "You enter wrong password.";
+		}			
 			
-		//}
 		echo '<br><center><div class="textC1">';
-		if($count){
+		if($result){
 			echo 'Edited Successful';
 		} else {
-			echo 'Edit Unsuccessful, some input are incorect.';
+			echo $msg.'<br>Edit Unsuccessful, some input are incorect.';
 		}
 		echo '</div></center>';
 }else{
 ?>
 	
     	<div id="divmiddle">
-        	<div id="logo">
-            	Change Password
-            </div>
+        	<div id="logo"></div>
             <div id="form">
             	<form action="" method="post">
                 
                		<table width="400" align="center" id="dynamic_tb">
-                    <?
-                    	$ids = $_SESSION['UIDS'];
-					?>
                     <tr>
                     	
                       <td width="100" height="36" align="right" valign="middle" class="labelF">รหัสผ่านเก่า :</td>
