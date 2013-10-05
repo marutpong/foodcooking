@@ -122,6 +122,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
                 <span class="close"></span></div>
               <? }?>
               <form action="" method="post" id="addUser">
+                <p>&nbsp;</p>
                 <table width="400" align="center" id="dynamic_tb">
                   <tr class="labelF">
                     <td width="150" height="36" align="right" valign="middle" class="labelF">ชื่อ :</td>

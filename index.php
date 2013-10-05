@@ -47,7 +47,7 @@ include 'FoodFunction.php';
   <div id="homeContent">
     <div id="featured">
       <div class="gallery" >
-        <div class="site"> <img src="images/banner01.jpg" alt=""> </div>
+        <div class="site"><img src="images/banner01.jpg" alt=""></div>
         <div class="site"> <img src="images/banner02.jpg" alt=""> </div>
         <div class="site"> <img src="images/banner03.jpg" alt=""> </div>
       </div>
@@ -58,10 +58,12 @@ include 'FoodFunction.php';
   </div>
   <div class="main-holder">
     <div class="bannercon">
-      <h2>คุณเคยเจอปัญหามั้ย?<br>
+      <h2><span class="span-my">คุณเคยเจอปัญหามั้ย?<br>
         เวลามีวัตถุดิบอยู่<br>
-        แล้วไม่รู้จะปรุงเมนูไหนดี</h2>
-      <p>เรามีวิธีช่วยคุณในการหารายการอาหารที่ใกล้เคียงกับวัตถุดิบที่คุณมี</p>
+        แล้วไม่รู้จะปรุงเมนูไหน</span></h2>
+      <p><span class="span-my">
+      เรามีวิธีช่วยคุณในการหารายการอาหาร <br>
+      ที่ใกล้เคียงกับวัตถุดิบที่คุณมี</span></p>
       <a href="search.php" class="bannerbtn">ค้นหาแบบพิเศษ</a> </div>
   </div>
   <!-- Content -->
