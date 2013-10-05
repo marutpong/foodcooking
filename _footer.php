@@ -69,17 +69,23 @@
 	*/
   ?>
 <script>
+var alertflag = false;
 if(typeof(EventSource)!=="undefined")
   {
   var source=new EventSource("module/flusher.php");
   source.onmessage=function(event)
     {
 		//alert(event.data)
-		if (event.data=="null"){
-			alert('เห้ย ไปต่อ Server ก่อน,ถ้าอยู่หอก้อ VPN ก่อนนนนนนเน่อ')
-		} else if (event.data!="107"){
-			alert('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')
+		if (event.data=="null" && !alertflag){
+			alertflag = true;
+			if(confirm('เห้ย ไปต่อ Server ก่อน,ถ้าอยู่หอก้อ VPN ก่อนนนนนนเน่อ')) alertflag = false;
+			else alertflag = false;
+		} else if (event.data!="108" && !alertflag){
+			alertflag = true;
+			if(confirm('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')) alertflag = false;
+			else alertflag = false;
 		}
+		
     	//document.getElementById("result").innerHTML+=event.data + "<br>";
     };
   }
