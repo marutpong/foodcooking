@@ -2,13 +2,14 @@
 	margin:0 auto
 }
 #homeContent #featured .gallery {
-	display:block;
-	text-align:left;
-	position:relative;
-	margin:0 auto;
-	height:350px;
-	overflow:hidden;
-	border-bottom:1px solid #f2f0eb;
+	display: block;
+	text-align: left;
+	position: relative;
+	margin: 0 auto;
+	height: 350px;
+	overflow: hidden;
+	border-bottom: 1px solid #f2f0eb;
+	width: 980px;
 }
 #homeContent #featured .gallery .track {
 	position:absolute;

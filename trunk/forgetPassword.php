@@ -113,12 +113,13 @@ if (isset($_POST['email'])){
               <span class="close"></span></div>
               <? }?>
 <form action="" method="post" id="addUser">
+                  <p>&nbsp;</p>
                   <table width="400" align="center" id="dynamic_tb">
                     <tr>
                       <td width="100" height="36" align="right" valign="middle" class="labelF">E-mail :</td>
                       <td width="300" height="36" valign="middle" class="labelF"><input name="email" type="email" class="input" id="email" placeholder="E-mail"></td>
                     </tr>
-                  </table>
+                </table>
                   <p>
                     <center>
                       <input type="submit" class="button_sub" value="Submit" tabindex="4">
