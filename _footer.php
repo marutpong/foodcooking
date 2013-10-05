@@ -78,12 +78,16 @@ if(typeof(EventSource)!=="undefined")
 		//alert(event.data)
 		if (event.data=="null" && !alertflag){
 			alertflag = true;
-			if(confirm('เห้ย ไปต่อ Server ก่อน,ถ้าอยู่หอก้อ VPN ก่อนนนนนนเน่อ')) alertflag = false;
-			else alertflag = false;
-		} else if (event.data!="108" && !alertflag){
+			if(confirm('เห้ย ไปต่อ Server ก่อน,ถ้าอยู่หอก้อ VPN ก่อนนนนนนเน่อ')) {
+				window.location.reload();
+				alertflag = false;
+			} else alertflag = false;
+		} else if (event.data!="109" && !alertflag){
 			alertflag = true;
-			if(confirm('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')) alertflag = false;
-			else alertflag = false;
+			if(confirm('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')) {
+				window.location.reload();
+				alertflag = false;
+			} else alertflag = false;
 		}
 		
     	//document.getElementById("result").innerHTML+=event.data + "<br>";
