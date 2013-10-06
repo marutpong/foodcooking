@@ -41,7 +41,24 @@
 					}
 		});
 	}
-
+	function addShop() {
+				$.fancybox.open({
+					href : 'admin/shop/addMul.php',
+					type : 'iframe',
+					width  : 610,
+					height : 475,
+					fitToView   : true,
+					autoSize    : false,
+					padding: 5,
+					openEffect : 'elastic',
+					openSpeed  : 150,
+					closeEffect : 'elastic',
+					closeSpeed  : 150,
+					afterClose : function() {
+						window.location.reload();
+					}
+				});
+	}
 </script>
 <? if ( !authenIdUser()) { ?>
 <div class="form1" style="float:none">
@@ -73,9 +90,8 @@
     <li><a href="member_myfood.php">อาหารของฉัน</a></li>
     <li><a href="member_favorite.php">อาหารที่ชอบ</a></li>
     <li><a href="member_comments.php">คอมเม้นท์</a></li>
-    <li>
-      <a href="javascript:addFood();">เพิ่มอาหาร</a>
-    </li>
+    <li><a href="javascript:addFood();">เพิ่มอาหาร</a></li>
+    <li><a href="javascript:addShop();">เพิ่มร้านค้า</a></li>
   </ul>
   <div class="buttons"> <a href="logout.php?ref=<?=$_SERVER['REQUEST_URI']?>">
     <button class="orangebutton" >Logout</button>
