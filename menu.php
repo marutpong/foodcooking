@@ -55,7 +55,7 @@ if (!isset($_SESSION)) {
   <div class="sloganwrapper">
     <div class="main-holder ">
       <ul class="breadcrumb">
-        <li><a href="#">HOME</a></li>
+        <li><a href="index.php">HOME</a></li>
         <li>ALL FOOD</li>
       </ul>
     </div>
