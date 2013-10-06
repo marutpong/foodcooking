@@ -1,33 +1,52 @@
+<?
+if (!isset($_SESSION)) {
+  session_start();
+}
+include('../../FoodFunction.php');
+$rows = optionIngredient("");
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
 <title>Add Ingredient</title>
-<meta charset="UTF-8" />
-<link href="../../core/css/flexigrid2.css" rel="stylesheet" type="text/css">
-<link href="../../core/css/mystyle.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="../../core/js/jquery-1.6.4.min.js"></script>
-<script type="text/javascript" src="../../core/js/jquery.numeric.js"></script>
+	<meta charset="UTF-8" />
+	<script type="text/javascript" src="../../core/js/jquery-1.6.4.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../core/css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="../../core/css/mystyle.css">
+    <script src="../../core/js/jquery-2.0.0.min.js"></script>
+    <script src="../../core/js/jquery-ui-1.10.3.js"></script>
+    <script src="../../core/js/combobox.js"></script>
+
 <script type="text/javascript">
-$(document).ready(function() {
-		$('#name[0]').focus();
+	$(document).ready(function() {
+		$('#name').focus();
+		$( ".combobox" ).combobox();
+		$( "#foodtype" ).combobox();
 		$('#addmore').click(function () {
-			var htmlStr = ' <tr>\
-	      <td><input name="name[]" type="text"  required class="input number" id="name[]" tabindex="2" ></td>\
-	      <td><input name="latitude[]" type="number" required class="input" id="latitude[]" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>\
-		  <td><input name="longitude[]" type="number" required class="input" id="longitude[]" tabindex="2" size="10" onfocus="javascript:checkNum(this)"></td>\
-        </tr>';
-			$('#dynamic_tb').append(htmlStr);
-		});
-		$('#button_sub').click(function () {
-			$('#googleMap').show();
+			var htmlStr = '<tr>\
+              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]" required >\
+                <option value=""></option><? echo $rows;?></select>\
+                <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
+				<td>&nbsp;</td>\
+              <td><input name="unit[]" type="text" readonly  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย" style="width:100px;"></td>\
+              <td><div class="remove" onClick="removeOb(this)"><img src="../../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>\
+            </tr>';
+			$('#addIngre').append(htmlStr);
+			$( ".combobox" ).combobox();
 		});
 
 	});
-var checkNum = function(evt) {
+var checkNum = function(evt) { 
 		$(evt).numeric({ negative: false }, function() { 
-			alert("No negative values"); this.value = ""; this.focus(); 
+			alert("No negative values"); this.value = ""; this.focus();
 		});
 }
+var removeOb = function(e) {
+	var ob = $(e).parent().parent();
+	ob.hide('slow', function(){ ob.remove();
+	 } );
+	//$(e).parent().parent().remove();
+};
 </script>
 <script
 src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
@@ -95,20 +114,29 @@ if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitu
 	$count = 0;
 	$num = count($_POST['name']);
 	include 'connectDB.php'; 
-	for ($i=0;$i<$num;$i++){
-		if (is_numeric($_POST['latitude'][$i]) && is_numeric($_POST['longitude'][$i])){	
-			$sql = "INSERT INTO $table (SHOPNAME, LATITUDE, LONGITUDE) VALUES ('$name[$i]','$latitude[$i]','$longitude[$i]')";
-			$strSQL = $sql;
-			//echo $sql;
-			$objParse = oci_parse($objConnect , $strSQL);
-			$objExecute = oci_execute($objParse);
-			if($objExecute){
-				$count++;
+		if (is_numeric($latitude) && is_numeric($longitude)){	
+			if ($sid = insertShop($name,$latitude,$longitude)){
+			$count++;
+			/////// Add INGREDIENT  ////////
+			if ( isset($_POST['ingredient']) && isset($_POST['newingredient']) && (is_numeric($sid)) ){
+				$ingredient = $_POST['ingredient'];
+				$newIG = $_POST['newingredient'];
+				$num = count($_POST['ingredient']);
+				for ($i=0;$i<$num;$i++){
+						$theIngreID = "";
+						if ( empty($ingredient[$i]) && !empty($newIG[$i]) ) {			
+							$theIngreID = insertIngredient($newIG[$i],$_POST['unit'][$i]);
+						} else if (!empty($ingredient[$i])){
+							$theIngreID = $ingredient[$i];
+						}
+						insertHave($sid,$theIngreID);
+				}
+			}
 			}
 		}
-	}
+
 	echo '<br><br><br><center><div class="textC1">';
-	if($objExecute){
+	if($count){
 		echo 'Add Succesful '.$count.' items<P>';
 		echo '<a href="addMul.php"  class="button_addmore">Add more Shop</a>';
 	} else {
@@ -129,9 +157,9 @@ if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitu
         </tr>
 	    <tr>
 	  
-	      <td><input name="name[]" type="text"  required class="input number" id="name[]" tabindex="2"  > </td>
-	      <td><input name="latitude[]" type="text" required class="input" id="latitude" tabindex="2" onfocus="javascript:checkNum(this)" size="10" readonly></td>
-		  <td><input name="longitude[]" type="text" required class="input" id="longitude" tabindex="2" onfocus="javascript:checkNum(this)" size="10" readonly></td>
+	      <td><input name="name" type="text"  required class="input number" id="name" tabindex="2"  > </td>
+	      <td><input name="latitude" type="text" required class="input" id="latitude" tabindex="2" onfocus="javascript:checkNum(this)" size="10" readonly></td>
+		  <td><input name="longitude" type="text" required class="input" id="longitude" tabindex="2" onfocus="javascript:checkNum(this)" size="10" readonly></td>
 		  <td>&nbsp;</td>
         </tr>
 	    <tr>
@@ -142,6 +170,26 @@ if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitu
         </tr>
     </table>
 	<div id="googleMap" style="width: 550px; height: 300px;"></div>
+    <table width="500">
+      <tr>
+        <td width="75" valign="top" class="labelF">ส่วนผสม :</td>
+        <td width="425"><div>
+          <table width="420" border="0" id="addIngre">
+            <tr>
+              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]" required >
+                <option value=""></option>
+                <? echo $rows;?>
+                </select>
+                <input name="newingredient[]" type="hidden" id="newingredient[]"></td>
+              <td>&nbsp;</td>
+              <td><input name="unit[]" type="text"  class="input unit" id="unit[]" placeholder="หน่วย" tabindex="1" size="10" readonly style="width:100px;" required></td>
+              <td><div class="remove" onClick="removeOb(this)"><img src="../../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>
+            </tr>
+          </table>
+        </div></td>
+      </tr>
+    </table>
+    <div class="button_addmore" id="addmore" tabindex="4" ><img src="../../core/css/images/add.png" width="16" height="16">เพิ่มส่วนผสม</div>
 </div>
 	<footer>
 	    <input name="confirm" type="hidden" value="1">
