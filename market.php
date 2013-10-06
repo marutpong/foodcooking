@@ -3,6 +3,12 @@ if (!isset($_SESSION)) {
   session_start();
 }
 include 'FoodFunction.php';
+$editable=false;
+if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
+		&& authenIdUser() ) {
+		$editable = true;
+	}
+
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -28,8 +34,57 @@ include 'FoodFunction.php';
 <!--[if lt IE 9]>
       <script src="js/html5.js"></script>
 <![endif]-->
+<link rel="stylesheet" href="core/css/box.css" type="text/css" media="all">
+
   <script src="http://maps.google.com/maps/api/js?sensor=false" 
           type="text/javascript"></script>
+          
+          <script src="core/js/jquery-1.9.1.js"></script>
+<script src="core/js/jquery-2.0.0.min.js"></script>
+<? if ($editable) { ?>
+<script type="text/javascript">
+	function editMarket(sid) {
+		$.fancybox.open({
+					href : 'admin/shop/edit.php?confirm=1&ids='+sid,
+					type : 'iframe',
+					width  : 550,
+					height : 600,
+					fitToView   : false,
+					autoSize    : true,
+					padding: 5,
+					openEffect : 'elastic',
+					openSpeed  : 150,
+					closeEffect : 'elastic',
+					closeSpeed  : 150,
+					afterClose : function() {
+						window.location.reload();
+					}
+		});
+	}
+	
+		function delMarket(sid) {
+			if (confirm('Do you want to delete <?=$rowShop['SHOPNAME']; ?> ? ')){
+				$.fancybox.open({
+							href : 'admin/shop/delete.php?confirm=1&ids='+sid,
+							type : 'iframe',
+							width  : 550,
+							height : 600,
+							fitToView   : false,
+							autoSize    : true,
+							padding: 5,
+							openEffect : 'elastic',
+							openSpeed  : 150,
+							closeEffect : 'elastic',
+							closeSpeed  : 150,
+							afterClose : function() {
+								 window.location="market.php";
+		//						window.location.reload();
+							}
+				});
+			}
+	}
+	</script>
+    <? }?>
 </head>
 <body id="def">
 <div class="wrapper"> 
@@ -74,7 +129,12 @@ include 'FoodFunction.php';
 		$j=1;
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 			$tmp = array();
-			array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j,$row['LATITUDE']);
+			$dis="";
+			if (is_numeric($_SESSION['lat']) && is_numeric($_SESSION['lng'])){
+					$dis = distance($_SESSION['lat'], $_SESSION['lng'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'], "K")." km.";
+				}
+				
+			array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j,$row['LATITUDE'],$dis);
 			array_push($shop,$tmp);
 			$j++;
 		}
@@ -130,7 +190,8 @@ include 'FoodFunction.php';
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
-          infowindow.setContent('<a href="market_detail.php?sid='+shop[i][3]+'">'+shop[i][0]+'</a>');
+			var text = '<a href="market_detail.php?sid='+shop[i][3]+'">'+shop[i][0]+'</a> '+shop[i][5];
+          infowindow.setContent(text);
           infowindow.open(map, marker);
         }
       })(marker, i));
@@ -146,10 +207,8 @@ include 'FoodFunction.php';
 			//array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j);
 			//array_push($shop,$tmp);
 ?>
-            <article class="staff-list">
-              <aside class="det-bar">
-                <h3><a href="market_detail.php?sid=<? echo $row['SID'] ?>"><? echo $row['SHOPNAME'] ?></a></h3>
-                <em class="title4" id="theDistance"><script src="core/js/calcDistance.js"></script>
+            <article class="box14 boxB">
+                <h3><a href="market_detail.php?sid=<? echo $row['SID'] ?>"><? echo $row['SHOPNAME']."  " ?></a><span style="font-size:14px" id="theDistance"><script src="core/js/calcDistance.js"></script>
 <script type="text/javascript">
 var distance = distanceFrom({
     // NYC
@@ -160,21 +219,36 @@ var distance = distanceFrom({
     'lng2': <?=(double)$row['LONGITUDE']?>
 });
 document.write(""+distance+" kilometers");
-</script></em>
+</script><?=$rowShop['SHOPNAME']?> 
+			<? if ($editable) { ?> 
+            <a href="javascript:editMarket(<? echo $row['SID'] ?>);"><img src="core/images/_myedit.png" alt="Edit" name="im_edit" width="26" height="26" id="im_edit">edit</a>
+			<a href="javascript:delMarket(<? echo $row['SID'] ?>);"><img src="core/images/_mydelete.png" alt="Delete" name="im_del" width="26" height="26" id="im_del">delete</a>
+			<? } ?></span></h3>
+ <ul >
                 <?            
-		$strSQL2 = "SELECT * FROM IHAVE NATURAL JOIN IINGREDIENT WHERE SID = ".$row['SID'];
+		$strSQL2 = "SELECT * FROM IHAVE NATURAL JOIN IINGREDIENT WHERE SID = ".$row['SID']."AND rownum <= 5";
 		$objParse2 = oci_parse($objConnect, $strSQL2);
 		$objExecute2 = oci_execute($objParse2, OCI_DEFAULT);
 		while ($rowHave = oci_fetch_array($objParse2, OCI_BOTH)) {
 			//array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j);
 			//array_push($shop,$tmp);
 ?>			
-                <p><?=$rowHave['INNAME']?></p
-><? } ?>
-              </aside>
+
+                  <li>
+                    <?=$rowHave['INNAME']?>
+                  </li>
+                <? } ?>
+               
+</ul>
+	 <? 
+$total = numberOfHave($row['SID']);
+if ($total > 5){
+	echo '<a href="market_detail.php?sid='.$row['SID'].'">and '.($total-5).' more</a>';
+}
+?>
             </article>
             
-<? }   ?>
+<? } 		 ?>
           </figure>
         </section>
       </section>

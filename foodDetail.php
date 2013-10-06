@@ -212,7 +212,7 @@ if (hasLiked($row['FID'])){
                 <? } ?>
               </section>
             </section>
-            <h2>Mothod</h2>
+            <h2>Method</h2>
            		<p> <?
                 // Provides: <body text='black'>
 				echo $bodytag = str_replace('\"', '"', $row['METHOD']);

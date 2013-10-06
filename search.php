@@ -95,7 +95,7 @@ $keyword = $_SESSION['keyword'];
                   <table id="dynamic_tb">
                     <tr class="labelF">
                       <td width="70" align="right" valign="top">ชื่ออาหาร :</td>
-                      <td><input name="name" type="text"  autofocus class="input" id="name" tabindex="1" autocomplete="on" value="<?=$_POST['name']?>" size="32" placeholder="ชื่ออาหาร">
+                      <td><input name="name" type="text" autofocus class="input" id="name" tabindex="1" autocomplete="on" value="<?=$_POST['name']?>" size="32">
                         <input name="fsearch" type="hidden" id="fsearch" value="1"></td>
                     </tr>
                     <tr>

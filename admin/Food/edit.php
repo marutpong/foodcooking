@@ -14,6 +14,10 @@ if ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) ) {
 }
 	if ($flagOwner || $flagAdmin) {
 
+		$rows = optionIngredient("");
+		$rowsTool = optionTool("");
+		$rowsUser = optionUser("");
+		$rowsFoodtype = optionFoodType("");
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -27,12 +31,7 @@ if ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) ) {
     <script src="../../core/js/jquery-ui-1.10.3.js"></script>
 	<script type="text/javascript" src="../../core/js/jquery.numeric.js"></script>
     <script src="../../core/js/combobox.js"></script>
- 	<?
-		$rows = optionIngredient("");
-		$rowsTool = optionTool("");
-		$rowsUser = optionUser("");
-		$rowsFoodtype = optionFoodType("");
-	?>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#name').focus();

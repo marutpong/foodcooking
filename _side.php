@@ -48,7 +48,7 @@
 					width  : 610,
 					height : 475,
 					fitToView   : true,
-					autoSize    : false,
+					autoSize    : true,
 					padding: 5,
 					openEffect : 'elastic',
 					openSpeed  : 150,

@@ -10,6 +10,12 @@ if (is_numeric($_GET['sid'])){
 	$rLat=(double)$rowShop['LATITUDE'];
 	$rLng=(double)$rowShop['LONGITUDE'];
 }
+
+$editable=false;
+if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
+		&& authenIdUser() ) {
+		$editable = true;
+	}
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -37,6 +43,52 @@ if (is_numeric($_GET['sid'])){
 <![endif]-->
   <script src="http://maps.google.com/maps/api/js?sensor=false" 
           type="text/javascript"></script>
+<script src="core/js/jquery-1.9.1.js"></script>
+<script src="core/js/jquery-2.0.0.min.js"></script>
+<? if ($editable) { ?>
+<script type="text/javascript">
+	function editMarket() {
+		$.fancybox.open({
+					href : 'admin/shop/edit.php?confirm=1&ids=<? echo $rowShop['SID']; ?>',
+					type : 'iframe',
+					width  : 550,
+					height : 600,
+					fitToView   : false,
+					autoSize    : true,
+					padding: 5,
+					openEffect : 'elastic',
+					openSpeed  : 150,
+					closeEffect : 'elastic',
+					closeSpeed  : 150,
+					afterClose : function() {
+						window.location.reload();
+					}
+		});
+	}
+	
+		function delMarket() {
+			if (confirm('Do you want to delete <?=$rowShop['SHOPNAME']; ?> ? ')){
+				$.fancybox.open({
+							href : 'admin/shop/delete.php?confirm=1&ids=<? echo $rowShop['SID']; ?>',
+							type : 'iframe',
+							width  : 550,
+							height : 600,
+							fitToView   : false,
+							autoSize    : true,
+							padding: 5,
+							openEffect : 'elastic',
+							openSpeed  : 150,
+							closeEffect : 'elastic',
+							closeSpeed  : 150,
+							afterClose : function() {
+								 window.location="market.php";
+		//						window.location.reload();
+							}
+				});
+			}
+	}
+	</script>
+<? } ?>
 </head>
 <body id="def">
 <div class="wrapper"> 
@@ -66,7 +118,16 @@ if (is_numeric($_GET['sid'])){
             <? include('_side.php'); ?>
           </figure>
           <figure class="column c-one-half">
-            <h2>Market : <?=$rowShop['SHOPNAME']?>
+          
+          <?
+				if($rowShop) {
+			?>
+            
+            <h2>Market : <?=$rowShop['SHOPNAME']?> 
+			<? if ($editable) { ?> 
+            <a href="javascript:editMarket();"><img src="core/images/_myedit.png" alt="Edit" name="im_edit" width="26" height="26" id="im_edit">edit</a>
+			<a href="javascript:delMarket();"><img src="core/images/_mydelete.png" alt="Delete" name="im_del" width="26" height="26" id="im_del">delete</a>
+			<? } ?>
             </h2>
             <article class="staff-list">
               <div id="map" style="width: 669px; height: 400px;"></div>
@@ -149,7 +210,6 @@ $.get( "module/setLoc.php?lat="+lat+"&lng="+lng, function( data ) {
              </article>
             <article class="staff-list">
               <aside class="det-bar">
-                <h3><? echo $rowShop['SHOPNAME'] ?></h3>
                 <em class="title4" id="theDistance">
                 <? if (is_numeric($_SESSION['lat']) && is_numeric($_SESSION['lng'])){
 					echo "distance ".distance($_SESSION['lat'], $_SESSION['lng'], $rLat, $rLng, "K")." kilometers.";
@@ -158,22 +218,27 @@ $.get( "module/setLoc.php?lat="+lat+"&lng="+lng, function( data ) {
 				}
                 ?>
                 </em>
-
+				 <ul class="normal-list">
                 <?            
-		$strSQL2 = "SELECT * FROM IHAVE NATURAL JOIN IINGREDIENT WHERE SID = ".$rowShop['SID'];
-		$objParse2 = oci_parse($objConnect, $strSQL2);
-		$objExecute2 = oci_execute($objParse2, OCI_DEFAULT);
-		while ($rowHave = oci_fetch_array($objParse2, OCI_BOTH)) {
-			//array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j);
-			//array_push($shop,$tmp);
-?>			
-                <p><?=$rowHave['INNAME']?></p>
-
-				
+					$strSQL2 = "SELECT * FROM IHAVE NATURAL JOIN IINGREDIENT WHERE SID = ".$rowShop['SID'];
+					$objParse2 = oci_parse($objConnect, $strSQL2);
+					$objExecute2 = oci_execute($objParse2, OCI_DEFAULT);
+					while ($rowHave = oci_fetch_array($objParse2, OCI_BOTH)) {
+						//array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j);
+						//array_push($shop,$tmp);
+					?><li><?=$rowHave['INNAME']?></li>
 				<? } ?>
+                </ul>
               </aside>
             </article>
           </figure>
+                      <? } else { ?>
+            	<p>
+                <div class="alert error hideit" >
+                  <p>Error. Not found the Market.</p>
+                  <span class="close"></span>
+              </div>
+            <? } ?>
         </section>
       </section>
     </div>

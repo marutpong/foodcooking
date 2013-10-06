@@ -97,12 +97,22 @@ function insertContain($fid,$iid,$quantity){
 	$strSQL = "INSERT INTO ICONTAIN (FID, IID, QUANTITY) VALUES ('$fid','$iid','$quantity')";
 	return(myExe($strSQL));
 }
+
+function insertHave($sid,$iid){
+	$strSQL = "INSERT INTO IHAVE (SID, IID) VALUES ('$sid','$iid')";
+	return(myExe($strSQL));
+}
+
 function insertUse($fid,$tid){
 	$strSQL = "INSERT INTO IUSE (FID, TID) VALUES ('$fid','$tid')";
 	return(myExe($strSQL));
 }
 function insertFood($name,$picture,$method,$views,$owner,$foodtypeID){
 	$strSQL = "INSERT INTO IFOODS (FOODNAME, PICTURE, METHOD, VIEWS, UIDS, TYPEID) VALUES ('$name','$picture','$method','$views','$owner','$foodtypeID') returning FID into :ID";
+	return(myExeAndReturnID($strSQL));
+}
+function insertShop($name,$latitude,$longitude){
+	$strSQL = "INSERT INTO ISHOP (SHOPNAME, LATITUDE, LONGITUDE) VALUES ('$name','$latitude','$longitude') returning SID into :ID";
 	return(myExeAndReturnID($strSQL));
 }
 function optionIngredient($id){
@@ -242,6 +252,16 @@ function numberOfComment($fid){
 	$total = 0;
 	if (is_numeric($fid)){
 		$strSQL = "SELECT COUNT(FID) NUM FROM ICOMMENTS WHERE FID='$fid'";
+		$row = getSingleRow($strSQL);
+		$total=$row['NUM'];
+	}
+	return $total;
+}
+function numberOfHave($sid){
+	include 'connectDB.php';
+	$total = 0;
+	if (is_numeric($sid)){
+		$strSQL = "SELECT COUNT(SID) NUM FROM IHAVE WHERE SID='$sid'";
 		$row = getSingleRow($strSQL);
 		$total=$row['NUM'];
 	}
@@ -440,7 +460,7 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit) {
   $unit = strtoupper($unit);
 
   if ($unit == "K") {
-    return ($miles * 1.609344);
+    return round(($miles * 1.609344), 4);
   } else if ($unit == "N") {
       return ($miles * 0.8684);
     } else {
