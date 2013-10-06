@@ -27,6 +27,7 @@
 		//echo json_encode($shop);
     ?>
   <script type="text/javascript">
+
   var i;
   var shop=<?php echo json_encode($shop); ?>;
   //alert();
@@ -38,16 +39,31 @@
       ["Maroubra Beach", -33.950198, 151.259302, 5]
     ];*/
 
+     getLocation();
+	 
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
-      center: new google.maps.LatLng(18.6943830036,98.8549804688),
+      center: new google.maps.LatLng(18.795633199999997,98.9529055),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
     var infowindow = new google.maps.InfoWindow();
 
     var marker;
-
+ function getLocation() {
+		  if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		  } else {
+			alert("Geolocation is not supported by this browser.");
+		  }
+		}
+		function showPosition(position) {
+		  var lat = position.coords.latitude;
+		  var lng = position.coords.longitude;
+		  map.setCenter(new google.maps.LatLng(lat, lng));
+		  //locations[1000] = ["Your Location", lat, lng, 1000];
+		}
+		
     for (i = 0; i < shop.length; i++) {  
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(shop[i][1], shop[i][2]),
@@ -61,6 +77,7 @@
         }
       })(marker, i));
     }
+	 
   </script>
 </body>
 </html>

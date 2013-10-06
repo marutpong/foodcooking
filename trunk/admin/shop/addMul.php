@@ -33,12 +33,25 @@ var checkNum = function(evt) {
 src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
 </script>
 <script>
+
 var map;
 var myCenter=new google.maps.LatLng(18.769814809450903,98.96072387695312);
 var markers;
 var close =0;
 function initialize()
 {
+	  function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+function showPosition(position) {
+  var lat = position.coords.latitude;
+  var lng = position.coords.longitude;
+  map.setCenter(new google.maps.LatLng(lat, lng));
+}
 var mapProp = {
   center:myCenter,
   zoom:10,
