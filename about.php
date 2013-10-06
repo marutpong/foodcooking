@@ -59,7 +59,7 @@ include 'FoodFunction.php';
           <figure class="column c-one-half">
             <h2>Our Staff</h2>
             <article class="staff-list">
-              <div class="img-box"><img src="images/image20.jpg" alt=""></div>
+              <div class="img-box"><img src="http://10.10.188.254/group10/files/6b58900b8e0e79a8faa79b301f214d84.jpg" alt=""></div>
               <aside class="det-bar">
                 <h3>Chalermpong Somdulyawat</h3>
                 <em class="title4">Owner</em>
@@ -68,7 +68,7 @@ include 'FoodFunction.php';
               </aside>
             </article>
             <article class="staff-list">
-              <div class="img-box"><img src="images/image16.jpg" alt=""></div>
+              <div class="img-box"><img src="http://10.10.188.254/group10/files/1097c37d897ad5f4a1e94117d7c20708.jpg" alt=""></div>
               <aside class="det-bar">
                 <h3>Marutpong Chailangka</h3>
                 <em class="title4">Owner</em>
@@ -77,7 +77,7 @@ include 'FoodFunction.php';
               </aside>
             </article>
             <article class="staff-list">
-              <div class="img-box"><img src="images/image19.jpg" alt=""></div>
+              <div class="img-box"><img src="http://10.10.188.254/group10/files/9d94e5f04cbbed775fe3b04b357f125d.jpg" alt=""></div>
               <aside class="det-bar">
                 <h3>Panupong Jantapoon</h3>
                 <em class="title4">Owner</em>
@@ -86,7 +86,7 @@ include 'FoodFunction.php';
               </aside>
             </article>
             <article class="staff-list">
-              <div class="img-box"><img src="images/image19.jpg" alt=""></div>
+              <div class="img-box"><img src="http://10.10.188.254/group10/files/357170fa12ec2fe62e2e75523512ca18.jpg" alt=""></div>
               <aside class="det-bar">
                 <h3>Phasit Panyaphruek</h3>
                 <em class="title4">Owner</em>
@@ -95,7 +95,7 @@ include 'FoodFunction.php';
               </aside>
             </article>
             <article class="staff-list">
-              <div class="img-box"><img src="images/image19.jpg" alt=""></div>
+              <div class="img-box"><img src="http://10.10.188.254/group10/files/01b465544c0f7694329182148eae1d6d.jpg" alt=""></div>
               <aside class="det-bar">
                 <h3>tanaphon Aunhinkong</h3>
                 <em class="title4">Owner</em>

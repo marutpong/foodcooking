@@ -87,24 +87,27 @@ WHERE rownum <= 3";
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$searchOB = array();
 	while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-		?>
-      <figure class="column three-col <?=$row['TYPEID']?> portfolio-item item alpha">
-        <a href="foodDetail.php?foodid=<?=$row['FID']?>"><h2 style="background:#4e4e4e;color:#CCC;border-radius:5px;"><?=$row['FOODNAME']?></h2></a>
-        <ul class="b-top-links">
-              <li class="author-name">by <?=$row['NAME']?></li>
-              <li class="pic-icon"><?=$row['TYPENAME']?></li>
-              <li class="catagory"><?=$row['VIEWS']?> views</li>
-        </ul>
-              <? if (file_exists('files/_'.$row['PICTURE'])) {
-		  
-	  ?>
-      <img src="files/_<? echo $row['PICTURE']; ?>"><?
-	  } else {?>
-      <img src="http://10.10.188.254/group10/files/_<? echo $row['PICTURE']; ?>">
-      <? } ?>
-  
+	$src=picture_url("_".$row['PICTURE']);
 
-      </figure>
+		?>
+     <figure class="column three-col <?=$row['TYPEID']?> portfolio-item item alpha" >
+     <a href="foodDetail.php?foodid=<?=$row['FID']?>">
+            <div style="background-image:url('<?=$src?>');" class="myfoodpic">
+            	<div class="myfoodpic_title"><?=$row['FOODNAME']?></div>
+            </div>
+            </a>
+            <ul class="b-top-links">
+              <li class="author-name">by
+                <?=$row['NAME']?>
+              </li>
+              <li class="pic-icon">
+                <?=$row['TYPENAME']?>
+              </li>
+              <li class="catagory">
+                <?=$row['VIEWS']?>
+                views</li>
+            </ul>
+          </figure>
       <? } ?>
         
         
