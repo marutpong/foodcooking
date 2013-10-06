@@ -9,8 +9,8 @@
 <body>
   <div id="map" style="width: 1000px; height: 600px;"></div>
 	<?
-		include 'connectDB.php';
-    	$strSQL = "SELECT * FROM $table order by sid";
+		include '../../connectDB.php';
+    	$strSQL = "SELECT * FROM ISHOP order by sid";
 		//echo $strSQL;
 		$objParse = oci_parse($objConnect, $strSQL);
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
