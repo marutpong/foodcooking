@@ -1,5 +1,5 @@
 <?
-		include 'connectDB.php';
+		include '../connectDB.php';
     	$strSQL = "SELECT * FROM $table";
 		//echo $strSQL;
 		$objParse = oci_parse($objConnect, $strSQL);

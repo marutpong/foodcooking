@@ -70,6 +70,7 @@
     <?=$_SESSION["NAME"]?></p>
   <ul>
     <li><a href="member.php">ข้อมูลส่วนตัว</a></li>
+    <li><a href="member_myfood.php">อาหารของฉัน</a></li>
     <li><a href="member_favorite.php">อาหารที่ชอบ</a></li>
     <li><a href="member_comments.php">คอมเม้นท์</a></li>
     <li>

@@ -93,17 +93,13 @@ var removeOb = function(e) {
 	if (isset($_POST['name']) 
 	&& isset($_POST['fid']) 
 	&& isset($_POST['method']) 
-	&& isset($_POST['views']) 
 	&& $_POST['confirm']==2){
 	$fid = $_POST['fid'];
 	include 'connectDB.php'; 
-
-		if (is_numeric($_POST['views'])){
 			$strSQL = "UPDATE $table SET ";
 			$strSQL .="FOODNAME = '".$_POST["name"]."'";
 			if (!empty($picture)){ $strSQL .=", PICTURE = '".$picture."' "; }
 			$strSQL .=", METHOD = '".$_POST["method"]."' ";
-			$strSQL .=", VIEWS = '".$_POST["views"]."' ";
 			if ($flagAdmin && isset($_POST['owner'])) { $strSQL .=", UIDS = '".$_POST["owner"]."' "; }
 			if (!empty($foodtypeID)){ $strSQL .=", TYPEID = '".$foodtypeID."' "; }
 			$strSQL .=" WHERE FID = '".$_POST["fid"]."' ";
@@ -113,7 +109,7 @@ var removeOb = function(e) {
 			if($objExecute){
 				$count++;
 			}
-		}
+		
 
 	echo '<br><center><div class="textC1">';
 	if($count){
@@ -214,7 +210,7 @@ new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrou
 new nicEditor({maxHeight : 100}).panelInstance('area5');
 });
 //]]>
-</script><textarea name="method" cols="50" rows="10" required class="mytextarea" id="area1" tabindex="2"><? echo $row['METHOD']; ?></textarea></td>
+</script><textarea name="method" cols="50" rows="10"  class="mytextarea" id="area1" tabindex="2"><? echo $row['METHOD']; ?></textarea></td>
     </tr>
     <? if ($flagAdmin){ ?>
     <tr>
@@ -223,7 +219,7 @@ new nicEditor({maxHeight : 100}).panelInstance('area5');
         <option value=""></option>
         <? echo optionUser($row['UIDS']);?>
       </select>
-        <input name="views" type="hidden" required class="input number" id="views" tabindex="2" value="<? echo $row['VIEWS']; ?>"></td>
+        </td>
     </tr>
     <? } ?>
     <tr>
