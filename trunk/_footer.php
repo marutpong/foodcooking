@@ -1,3 +1,6 @@
+<?
+$foodversion = 111;
+?>
 <section class="footer-top">
       <div class="footer-inner">
         <figure class="f-column">
@@ -82,7 +85,7 @@ if(typeof(EventSource)!=="undefined")
 				window.location.reload();
 				alertflag = false;
 			} else alertflag = false;
-		} else if (event.data!="110" && !alertflag){
+		} else if (event.data!="<?=$foodversion?>" && !alertflag){
 			alertflag = true;
 			if(confirm('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')) {
 				window.location.reload();
