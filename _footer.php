@@ -1,5 +1,5 @@
 <?
-$foodversion = 117;
+$foodversion = 118;
 ?>
 <section class="footer-top">
       <div class="footer-inner">
