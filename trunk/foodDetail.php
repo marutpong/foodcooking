@@ -74,6 +74,26 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
 					}
 		});
 	}
+	
+		function delFood() {
+		$.fancybox.open({
+					href : 'admin/food/delete.php?confirm=1&ids=<? if($row) { echo $row['FID']; } ?>',
+					type : 'iframe',
+					width  : 550,
+					height : 600,
+					fitToView   : false,
+					autoSize    : false,
+					padding: 5,
+					openEffect : 'elastic',
+					openSpeed  : 150,
+					closeEffect : 'elastic',
+					closeSpeed  : 150,
+					afterClose : function() {
+						 window.location="menu.php";
+//						window.location.reload();
+					}
+		});
+	}
 	</script>
 <? } ?>
 </head>
@@ -197,7 +217,7 @@ if (hasLiked($row['FID'])){
            		</p>
             <br>
             <h2><? $numComment = numberOfComment($row['FID']);
-			if ($numComment) { echo $numComment.' COMMENTS'; }
+			if ($numComment) { echo '<span id="numCom">'.$numComment.'</span> COMMENTS'; }
 			else {
 				echo 'Not has Comments, Let\'s the 1st Comment.';
 			}
@@ -275,6 +295,7 @@ var removeOb = function(e,fid,time) {
 			var ob = $(e).parent().parent().parent();
 				ob.hide('slow', function(){ ob.remove();
 			});
+			$('#numCom').html($('#numCom').html()-1);
 		} else {
 			alert('Deleted unsuccessful.');
 		}

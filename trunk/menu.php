@@ -45,7 +45,7 @@ if (!isset($_SESSION)) {
   <!-- header -->
   <header id="header">
     <div class="main-holder">
-      <h1 id="logo"><a href="index.html"></a></h1>
+      <h1 id="logo"><a href="index.php"></a></h1>
       <nav class="nav">
         <? include('_navbar.php'); ?>
       </nav>
