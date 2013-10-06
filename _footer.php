@@ -82,7 +82,7 @@ if(typeof(EventSource)!=="undefined")
 				window.location.reload();
 				alertflag = false;
 			} else alertflag = false;
-		} else if (event.data!="109" && !alertflag){
+		} else if (event.data!="110" && !alertflag){
 			alertflag = true;
 			if(confirm('แหม่ๆ ยังไม่ Update SVN เลย ไป Update ก่อนนะครับ')) {
 				window.location.reload();

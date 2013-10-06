@@ -16,7 +16,7 @@ $rowsFoodtype = optionFoodType("");
 	<meta charset="UTF-8" />
 	<script type="text/javascript" src="../../core/js/jquery-1.6.4.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../core/css/jquery-ui.css">
-	<link href="../../core/css/mystyle.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../../core/css/mystyle.css">
     <script src="../../core/js/jquery-2.0.0.min.js"></script>
     <script src="../../core/js/jquery-ui-1.10.3.js"></script>
 	<script type="text/javascript" src="../../core/js/jquery.numeric.js"></script>
@@ -29,10 +29,10 @@ $rowsFoodtype = optionFoodType("");
 		$( "#foodtype" ).combobox();
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
-              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]">\
+              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]" required >\
                 <option value=""></option><? echo $rows;?></select>\
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
-              <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" step="any" tabindex="1" \
+              <td><input name="quantity[]" type="number"   class="input number" id="quantity[]" min="0" step="any" tabindex="1" required \
             onFocus="checkNum(this)" size="10" placeholder="จำนวน" style="width:60px;"></td>\
               <td><input name="unit[]" type="text" readonly  required class="input unit" id="unit[]" tabindex="1" size="10" placeholder="หน่วย" style="width:100px;"></td>\
               <td><div class="remove" onClick="removeOb(this)"><img src="../../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>\
@@ -42,7 +42,7 @@ $rowsFoodtype = optionFoodType("");
 		});
 		$('#addToolMore').click(function () {
 			var htmlStr = '<tr>\
-            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" >\
+            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" required >\
               <option value=""></option>\
               <? echo $rowsTool;?></select>\
               <input name="newtool[]" type="hidden" id="newtool[]"></td>\
@@ -79,7 +79,6 @@ var removeOb = function(e) {
 	}
 if (isset($_POST['name']) 
 	&& isset($_POST['method']) 
-	&& isset($_POST['views']) 
 	&& !empty($foodtypeID) 
 	&& $_POST['confirm']==1){
 	
@@ -91,7 +90,7 @@ if (isset($_POST['name'])
 	
 	$name = $_POST['name'];
 	$method = $_POST['method'];
-	$views = $_POST['views'];
+	$views = 0;
 ///// Insert Food ////
 	if($fid = insertFood($name,$picture,$method,$views,$owner,$foodtypeID)){
 		$count=1;	
@@ -143,7 +142,7 @@ if (isset($_POST['name'])
     <table id="dynamic_tb">
 	    <tr class="labelF">
 	      <td align="right" valign="top">ชื่ออาหาร :</td>
-	      <td><input name="name" type="text"  required autofocus autocomplete="on" class="input" id="name" tabindex="1" size="50" ></td>
+	      <td><input name="name" type="text"  autofocus autocomplete="on" class="input" id="name" tabindex="1" size="50" required ></td>
         </tr>
 	    <tr>
 	      <td align="right" valign="top"><span class="labelF">รูปภาพ :</span></td>
@@ -165,7 +164,7 @@ new nicEditor({maxHeight : 100}).panelInstance('area5');
 });
 //]]>
             </script>
-	        <textarea name="method" cols="50" rows="10" required class="mytextarea" id="area1" tabindex="2"></textarea></td>
+	        <textarea name="method" cols="50" rows="10" class="mytextarea" id="area1" tabindex="2" ></textarea></td>
         </tr>
         <? 
 			if (isset($_SESSION["UIDS"])){
@@ -174,16 +173,16 @@ new nicEditor({maxHeight : 100}).panelInstance('area5');
 		?>
 	    <tr>
 	      <td align="right" valign="top" class="labelF">เจ้าของ :</td>
-	      <td><select class="labelF" id="owner" name="owner" required>
+	      <td><select class="labelF" id="owner" name="owner" required >
 	        <option value=""></option>
 	        <? echo $rowsUser;?>
           </select>
-          <input name="views" type="hidden" required class="input number" id="views" tabindex="2" value="0"></td>
+          </td>
         </tr>
         <? }?>
 	    <tr>
 	      <td align="right" valign="top" class="labelF">ประเภท :</td>
-	      <td><select class="labelF" id="foodtype" name="foodtype" >
+	      <td><select class="labelF" id="foodtype" name="foodtype" required>
 	        <option value=""></option>
 	        <? echo $rowsFoodtype;?>
           </select><input name="newfoodtype" type="hidden"></td>
@@ -195,13 +194,13 @@ new nicEditor({maxHeight : 100}).panelInstance('area5');
         <td width="425"><div>
           <table width="420" border="0" id="addIngre">
             <tr>
-              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]">
+              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]" required >
                 <option value=""></option><? echo $rows;?>
               </select>
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>
-              <td><input name="quantity[]" type="number"  required class="input number" id="quantity[]" min="0" step="any" tabindex="1" 
-            onFocus="checkNum(this)" size="10" placeholder="จำนวน" style="width:60px;"></td>
-              <td><input name="unit[]" type="text"  required class="input unit" id="unit[]" placeholder="หน่วย" tabindex="1" size="10" readonly style="width:100px;"></td>
+              <td><input name="quantity[]" type="number"   class="input number" id="quantity[]" min="0" step="any" tabindex="1" 
+            onFocus="checkNum(this)" size="10" placeholder="จำนวน" style="width:60px;" required></td>
+              <td><input name="unit[]" type="text"  class="input unit" id="unit[]" placeholder="หน่วย" tabindex="1" size="10" readonly style="width:100px;" required></td>
               <td><div class="remove" onClick="removeOb(this)"><img src="../../core/css/images/close.png" alt="Remove this row" width="16" height="16"></div></td>
             </tr>
           </table>
@@ -216,7 +215,7 @@ new nicEditor({maxHeight : 100}).panelInstance('area5');
         <td valign="top" class="labelF">อุปกรณ์ :</td>
         <td><table id="addTool">
           <tr>
-            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" >
+            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" required>
               <option value=""></option>
               <? echo $rowsTool;?></select>
               <input name="newtool[]" type="hidden" id="newtool[]"></td>
