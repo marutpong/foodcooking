@@ -274,7 +274,7 @@ function isImage($file_obj){
 * return เป็นชื่อไฟล์ที่ถูกเก็บ
 * string uploadResizeTo(resource $file_obj,string $save_path,string $save_filename[,int $ww,int $hh])
 */
-function uploadResizeTo($file_obj, $save_path,$entername, $ww=200, $hh=200){
+function uploadResizeTo($file_obj, $save_path,$entername, $ww=660, $hh=1000){
 	$file_name = $file_obj['name'];
 	$file_type = $file_obj['type'];
 	$tmp_name = $file_obj['tmp_name'];
@@ -354,8 +354,8 @@ function uploadImage($path,$files){
 			if(!file_exists($SAVE_PATH)) mkdir($SAVE_PATH); //สร้าง Folder ปลายทางเมื่อไม่พบ
 			if(isImage($files)){ //ตรวจสอบว่าเป็นไฟล์รูปภาพ
 				$hashname = md5_file($files["tmp_name"]);
-				if( ($newfilename = uploadResizeTo($files, $SAVE_PATH,$hashname, 660, 660)) &&
-				    ($newfilename2 = uploadResizeTo($files, $SAVE_PATH,"_".$hashname, 300, 300)) ){
+				if( ($newfilename = uploadResizeTo($files, $SAVE_PATH,$hashname, 660, 1000)) &&
+				    ($newfilename2 = uploadResizeTo($files, $SAVE_PATH,"_".$hashname, 300, 500)) ){
 						return($newfilename);
 				} else return(false);
 			}else{
