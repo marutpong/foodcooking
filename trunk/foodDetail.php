@@ -183,7 +183,7 @@ if (hasLiked($row['FID'])){
             
                   
             </div>
-          <div style="background-image:url('<? echo picture_url("_".$row['PICTURE']); ?>');height:400px" class="myfoodpic"></div>           
+          <div style="background-image:url('<? echo picture_url($row['PICTURE']); ?>');height:400px" class="myfoodpic"></div>           
             <section class="grid-holder">
               <section class="grid">
                 <figure class="column three-col">
