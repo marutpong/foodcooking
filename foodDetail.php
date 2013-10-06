@@ -76,23 +76,25 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
 	}
 	
 		function delFood() {
-		$.fancybox.open({
-					href : 'admin/food/delete.php?confirm=1&ids=<? if($row) { echo $row['FID']; } ?>',
-					type : 'iframe',
-					width  : 550,
-					height : 600,
-					fitToView   : false,
-					autoSize    : false,
-					padding: 5,
-					openEffect : 'elastic',
-					openSpeed  : 150,
-					closeEffect : 'elastic',
-					closeSpeed  : 150,
-					afterClose : function() {
-						 window.location="menu.php";
-//						window.location.reload();
-					}
-		});
+			if (confirm('Do you want to delete <?=$row['FOODNAME']; ?> ? ')){
+				$.fancybox.open({
+							href : 'admin/food/delete.php?confirm=1&ids=<? if($row) { echo $row['FID']; } ?>',
+							type : 'iframe',
+							width  : 550,
+							height : 600,
+							fitToView   : false,
+							autoSize    : true,
+							padding: 5,
+							openEffect : 'elastic',
+							openSpeed  : 150,
+							closeEffect : 'elastic',
+							closeSpeed  : 150,
+							afterClose : function() {
+								 window.location="menu.php";
+		//						window.location.reload();
+							}
+				});
+			}
 	}
 	</script>
 <? } ?>
@@ -134,7 +136,9 @@ if(!empty($_GET['foodid']) && is_numeric($_GET['foodid'])){
           
             <h2><? echo $row['FOODNAME']; 
 			?><? if ($editable) { ?> 
-            <a href="javascript:editFood();"><img src="core/images/_myedit.png" alt="Edit Food" name="im_edit" width="31" height="31" id="im_edit">edit</a><? } ?>
+            <a href="javascript:editFood();"><img src="core/images/_myedit.png" alt="Edit Food" name="im_edit" width="31" height="31" id="im_edit">edit</a>
+			<a href="javascript:delFood();"><img src="core/images/_mydelete.png" alt="Delete Food" name="im_del" width="31" height="31" id="im_del">delete</a>
+			<? } ?>
             </h2>
               <ul class="b-top-links">
               <li class="author-name">by
