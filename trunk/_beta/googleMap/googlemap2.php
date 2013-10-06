@@ -39,7 +39,7 @@
     ];*/
 
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 10,
+      zoom: 14,
       center: new google.maps.LatLng(18.6943830036,98.8549804688),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
