@@ -3,6 +3,13 @@ if (!isset($_SESSION)) {
   session_start();
 }
 include 'FoodFunction.php';
+if (is_numeric($_GET['sid'])){
+	$strSQL = "SELECT * FROM ISHOP WHERE SID = ".$_GET['sid'];
+	//echo $strSQL;
+	$rowShop = getSingleRow($strSQL);
+	$rLat=(double)$rowShop['LATITUDE'];
+	$rLng=(double)$rowShop['LONGITUDE'];
+}
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -59,12 +66,12 @@ include 'FoodFunction.php';
             <? include('_side.php'); ?>
           </figure>
           <figure class="column c-one-half">
-            <h2>Market</h2>
+            <h2>Market : <?=$rowShop['SHOPNAME']?>
+            </h2>
             <article class="staff-list">
               <div id="map" style="width: 669px; height: 400px;"></div>
 	<?
 		include 'connectDB.php';
-    	$strSQL = "SELECT * FROM ISHOP order by sid";
 		//echo $strSQL;
 		$objParse = oci_parse($objConnect, $strSQL);
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
@@ -74,7 +81,7 @@ include 'FoodFunction.php';
 		$j=1;
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 			$tmp = array();
-			array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j,$row['LATITUDE']);
+			array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j);
 			array_push($shop,$tmp);
 			$j++;
 		}
@@ -97,7 +104,7 @@ include 'FoodFunction.php';
 	 
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
-      center: new google.maps.LatLng(18.795633199999997,98.9529055),
+      center: new google.maps.LatLng(<?=$rLat?>,<?=$rLng?>),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
@@ -114,11 +121,12 @@ include 'FoodFunction.php';
 		function showPosition(position) {
 		  var lat = position.coords.latitude;
 		  var lng = position.coords.longitude;
-		  map.setCenter(new google.maps.LatLng(lat, lng));
-		  $.get( "module/setLoc.php?lat="+lat+"&lng="+lng, function( data ) {
-		/*$( ".result" ).html( data );
-		alert( "Load was performed." );*/
-	});
+
+$.get( "module/setLoc.php?lat="+lat+"&lng="+lng, function( data ) {
+	/*$( ".result" ).html( data );
+	alert( "Load was performed." );*/
+});
+			 // map.setCenter(new google.maps.LatLng(lat, lng));
 		  //locations[1000] = ["Your Location", lat, lng, 1000];
 		}
 		
@@ -130,51 +138,41 @@ include 'FoodFunction.php';
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
-          infowindow.setContent('<a href="market_detail.php?sid='+shop[i][3]+'">'+shop[i][0]+'</a>');
+          infowindow.setContent(shop[i][0]);
           infowindow.open(map, marker);
         }
       })(marker, i));
     }
 	 
   </script>
-            </article>
-<?            
-		$strSQL = "SELECT * FROM ISHOP order by SHOPNAME";
-		$objParse = oci_parse($objConnect, $strSQL);
-		$objExecute = oci_execute($objParse, OCI_DEFAULT);
-		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-			//array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j);
-			//array_push($shop,$tmp);
-?>
+
+             </article>
             <article class="staff-list">
               <aside class="det-bar">
-                <h3><a href="market_detail.php?sid=<? echo $row['SID'] ?>"><? echo $row['SHOPNAME'] ?></a></h3>
-                <em class="title4" id="theDistance"><script src="core/js/calcDistance.js"></script>
-<script type="text/javascript">
-var distance = distanceFrom({
-    // NYC
-    'lat1': <?=$_SESSION['lat']?>,
-    'lng1': <?=$_SESSION['lng']?>,
-    // Philly
-    'lat2': <?=(double)$row['LATITUDE']?>,
-    'lng2': <?=(double)$row['LONGITUDE']?>
-});
-document.write(""+distance+" kilometers");
-</script></em>
+                <h3><? echo $rowShop['SHOPNAME'] ?></h3>
+                <em class="title4" id="theDistance">
+                <? if (is_numeric($_SESSION['lat']) && is_numeric($_SESSION['lng'])){
+					echo "distance ".distance($_SESSION['lat'], $_SESSION['lng'], $rLat, $rLng, "K")." kilometers.";
+				} else {
+					echo "Have";
+				}
+                ?>
+                </em>
+
                 <?            
-		$strSQL2 = "SELECT * FROM IHAVE NATURAL JOIN IINGREDIENT WHERE SID = ".$row['SID'];
+		$strSQL2 = "SELECT * FROM IHAVE NATURAL JOIN IINGREDIENT WHERE SID = ".$rowShop['SID'];
 		$objParse2 = oci_parse($objConnect, $strSQL2);
 		$objExecute2 = oci_execute($objParse2, OCI_DEFAULT);
 		while ($rowHave = oci_fetch_array($objParse2, OCI_BOTH)) {
 			//array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j);
 			//array_push($shop,$tmp);
 ?>			
-                <p><?=$rowHave['INNAME']?></p
-><? } ?>
+                <p><?=$rowHave['INNAME']?></p>
+
+				
+				<? } ?>
               </aside>
             </article>
-            
-<? }   ?>
           </figure>
         </section>
       </section>
@@ -194,5 +192,6 @@ document.write(""+distance+" kilometers");
 
 <script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script>
+
 </body>
 </html>

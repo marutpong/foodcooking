@@ -54,7 +54,7 @@ function showPosition(position) {
 }
 var mapProp = {
   center:myCenter,
-  zoom:10,
+  zoom:12,
   mapTypeId:google.maps.MapTypeId.ROADMAP
   };
 
@@ -134,8 +134,14 @@ if ( isset($_POST['name']) && isset($_POST['latitude']) && isset($_POST['longitu
 		  <td><input name="longitude[]" type="text" required class="input" id="longitude" tabindex="2" onfocus="javascript:checkNum(this)" size="10" readonly></td>
 		  <td>&nbsp;</td>
         </tr>
+	    <tr>
+	      <td class="labelF">เลือกพิกัดจากแผนที่</td>
+	      <td>&nbsp;</td>
+	      <td>&nbsp;</td>
+	      <td>&nbsp;</td>
+        </tr>
     </table>
-	<div id="googleMap" style="width:400px;height:300px;"></div>
+	<div id="googleMap" style="width: 550px; height: 300px;"></div>
 </div>
 	<footer>
 	    <input name="confirm" type="hidden" value="1">
