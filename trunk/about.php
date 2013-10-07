@@ -72,8 +72,8 @@ include 'FoodFunction.php';
               <aside class="det-bar">
                 <h3>Marutpong Chailangka</h3>
                 <em class="title4">Owner</em>
-                <p>ชีวิตคลุกคลีอยู่กับแวดวงการอาหาร เพราะครอบครัวทั้ง พ่อ, ลุง และน้อง ทำอาชีพเดียวกันจึงเกิดความสนใจ ประกอบกับการที่ได้เห็นภาพเชฟรุ่นพี่ยกกระทะ แล้วดูเท่ห์ จึงเกิดแรงบันดาลใจที่จะเป็นเชฟอย่างจริงจัง โดยเริ่มเข้าสู่วงการอาหารในขณะที่มีอายุเพียง 17 ปี ฝึกฝนฝีมือการปรุงอาหาร ในห้องอาหารชื่อดังต่างๆ ในฐานะ “ผู้ช่วยเชฟ” ที่ประเทศฮ่องกง แล้วย้ายไปอยู่เกาลูนไปทำตำแน่ง “ผู้ช่วยเขียง” จึงกลับไปที่ฮ่องกงอีกครั้ง ในตำแหน่ง “Demi Chef” ในภัตตาคารอาหารทะเล โหย่ว ลี่ .</p>
-                <p>อายุ 29 ปี ย้ายกลับมาประจำที่ “ลีการ์เด้น” กับพ่อ ในตำแหน่งเป็น “ผู้ช่วยเชฟ” / จากนั้นก้าวสู่ “หัวหน้าเชฟ” ประจำที่ห้องอาหารจีน ของโรงแรม ระดับ 5 ดาว ที่ประเทศคูเวต / Chef De cuisine รร.ไฮแอท เซ็นทรัลพลาซ่า / Executive Chinese Chef โรงแรมไฮแอท ในกรุงโซล ประเทศเกาหลีใต้ / Food Court ที่เมลเบิ้ล ประเทศออสเตรเลีย / Executive Chinese Chef โรงแรมเจ้าพระยาปาร์ค / Intercontinental กัมพูชา .</p>
+                <p>540610639</p>
+                <p>www.facebook.com/JameJiNeedEat.</p>
               </aside>
             </article>
             <article class="staff-list">
@@ -90,8 +90,8 @@ include 'FoodFunction.php';
               <aside class="det-bar">
                 <h3>Phasit Panyaphruek</h3>
                 <em class="title4">Owner</em>
-                <p>เทพเจ้าดาวเหนือ</p>
-                <p>Aenean tempor nunc sit amet dolor porta cursus. Morbi sit amet dolor orci. Donec consequat egestas condimentum. Sed eu libero non velit elementum dapibus vel at urna. Etiam in quam congue lorem varius interdum.</p>
+                <p>540610635</p>
+                <p>www.facebook.com/bungyugi</p>
               </aside>
             </article>
             <article class="staff-list">
