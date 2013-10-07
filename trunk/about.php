@@ -97,10 +97,10 @@ include 'FoodFunction.php';
             <article class="staff-list">
               <div class="img-box"><img src="http://10.10.188.254/group10/files/01b465544c0f7694329182148eae1d6d.jpg" alt=""></div>
               <aside class="det-bar">
-                <h3>tanaphon Aunhinkong</h3>
+                <h3>Tanaphon Aunhinkong</h3>
                 <em class="title4">Owner</em>
-                <p>Pellentesque fermentum lorem at odio gravida consectetur. Fusce id nulla quam, vitae vehicula tellus. Sed et lectus eget ipsum vulputate mollis eu et dolor. Nunc hendrerit sapien eu ante fringilla consectetur. Sed ut diam neque, vel pharetra dui.</p>
-                <p>Aenean tempor nunc sit amet dolor porta cursus. Morbi sit amet dolor orci. Donec consequat egestas condimentum. Sed eu libero non velit elementum dapibus vel at urna. Etiam in quam congue lorem varius interdum.</p>
+                <p>540610611</p>
+                <p>www.facebook.com/tanaphonble</p>
               </aside>
             </article>
             <p>&nbsp;</p>
