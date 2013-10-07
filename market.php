@@ -134,7 +134,7 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 					$dis = distance($_SESSION['lat'], $_SESSION['lng'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'], "K")." km.";
 				}
 				
-			array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j,$row['LATITUDE'],$dis);
+			array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j,$row['LATITUDE'],$dis,$row['SID']);
 			array_push($shop,$tmp);
 			$j++;
 		}
@@ -175,10 +175,16 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 		  var lat = position.coords.latitude;
 		  var lng = position.coords.longitude;
 		  map.setCenter(new google.maps.LatLng(lat, lng));
+		  var marker = new google.maps.Marker({
+				  position: new google.maps.LatLng(lat,lng),
+				  map: map,
+				  icon: 'core/images/blue-dot.png',
+				  title: 'Hello World!'
+			  });
 		  $.get( "module/setLoc.php?lat="+lat+"&lng="+lng, function( data ) {
-		/*$( ".result" ).html( data );
-		alert( "Load was performed." );*/
-	});
+				/*$( ".result" ).html( data );
+				alert( "Load was performed." );*/
+			});
 		  //locations[1000] = ["Your Location", lat, lng, 1000];
 		}
 		
@@ -190,7 +196,7 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
-			var text = '<a href="market_detail.php?sid='+shop[i][3]+'">'+shop[i][0]+'</a> '+shop[i][5];
+			var text = '<a href="market_detail.php?sid='+shop[i][6]+'">'+shop[i][0]+'</a> '+shop[i][5];
           infowindow.setContent(text);
           infowindow.open(map, marker);
         }
@@ -199,6 +205,7 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 	 
   </script>
             </article>
+            <div id="sort">
 <?            
 		$strSQL = "SELECT * FROM ISHOP order by SHOPNAME";
 		$objParse = oci_parse($objConnect, $strSQL);
@@ -248,7 +255,7 @@ if ($total > 5){
 ?>
             </article>
             
-<? } 		 ?>
+<? } 		 ?></div>
           </figure>
         </section>
       </section>

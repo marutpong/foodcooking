@@ -162,12 +162,12 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
     ];*/
 
      getLocation();
-	 
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
       center: new google.maps.LatLng(<?=$rLat?>,<?=$rLng?>),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
+
 
     var infowindow = new google.maps.InfoWindow();
 
@@ -182,15 +182,21 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 		function showPosition(position) {
 		  var lat = position.coords.latitude;
 		  var lng = position.coords.longitude;
-
-$.get( "module/setLoc.php?lat="+lat+"&lng="+lng, function( data ) {
-	/*$( ".result" ).html( data );
-	alert( "Load was performed." );*/
-});
+			var marker = new google.maps.Marker({
+				  position: new google.maps.LatLng(lat,lng),
+				  map: map,
+				  icon: 'core/images/blue-dot.png',
+				  title: 'Hello World!'
+			  });
+			$.get( "module/setLoc.php?lat="+lat+"&lng="+lng, function( data ) {
+				/*$( ".result" ).html( data );
+				alert( "Load was performed." );*/
+			});
 			 // map.setCenter(new google.maps.LatLng(lat, lng));
 		  //locations[1000] = ["Your Location", lat, lng, 1000];
 		}
-		
+
+	
     for (i = 0; i < shop.length; i++) {  
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(shop[i][1], shop[i][2]),

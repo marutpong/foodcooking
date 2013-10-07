@@ -1,11 +1,11 @@
 <?
-$foodversion = 122;
+$foodversion = 123;
 ?>
 <section class="footer-top">
       <div class="footer-inner">
         <figure class="f-column">
           <h4 class="title3">Recent Comments</h4>
-          <ul class="post-list">
+          <ul class="post-list" id="theComment">
             <?
 				
 			include('connectDB.php');
@@ -25,6 +25,21 @@ $foodversion = 122;
             </li>
             <? } ?>
           </ul>
+          <script>
+	if(typeof(EventSource)!=="undefined")
+	  {
+	  var source3=new EventSource("module/newcomment_flush.php");
+	  source3.onmessage=function(event)
+		{
+		  document.getElementById("theComment").innerHTML=event.data;
+		//alert(event.data);
+		};
+	  }
+	else
+	  {
+	  //document.getElementById("result").innerHTML="Sorry, your browser does not support server-sent events...";
+	  }
+	</script>
         </figure>
         <figure class="f-column foods">
           <h4 class="title3">Hours of Operation </h4>
