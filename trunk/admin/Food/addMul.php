@@ -29,7 +29,7 @@ $rowsFoodtype = optionFoodType("");
 		$( "#foodtype" ).combobox();
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
-              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]" required >\
+              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]" >\
                 <option value=""></option><? echo $rows;?></select>\
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>\
               <td><input name="quantity[]" type="number"   class="input number" id="quantity[]" min="0" step="any" tabindex="1" required \
@@ -42,7 +42,7 @@ $rowsFoodtype = optionFoodType("");
 		});
 		$('#addToolMore').click(function () {
 			var htmlStr = '<tr>\
-            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" required >\
+            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" >\
               <option value=""></option>\
               <? echo $rowsTool;?></select>\
               <input name="newtool[]" type="hidden" id="newtool[]"></td>\
@@ -194,7 +194,7 @@ new nicEditor({maxHeight : 100}).panelInstance('area5');
         <td width="425"><div>
           <table width="420" border="0" id="addIngre">
             <tr>
-              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]" required >
+              <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]" >
                 <option value=""></option><? echo $rows;?>
               </select>
                 <input name="newingredient[]" type="hidden" id="newingredient[]"></td>
@@ -215,7 +215,7 @@ new nicEditor({maxHeight : 100}).panelInstance('area5');
         <td valign="top" class="labelF">อุปกรณ์ :</td>
         <td><table id="addTool">
           <tr>
-            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]" required>
+            <td width="200"><select class="labelF combobox" id="tool[]" name="tool[]">
               <option value=""></option>
               <? echo $rowsTool;?></select>
               <input name="newtool[]" type="hidden" id="newtool[]"></td>
