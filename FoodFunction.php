@@ -30,7 +30,14 @@ function getIngeIdByName($inname){
 	$row = oci_fetch_array($objParse, OCI_BOTH);		
 	return $row['IID'];
 }
-
+function getIngeNameById($iid){
+	include 'connectDB.php'; 
+	$strSQL = "SELECT INNAME FROM IINGREDIENT WHERE IID = '$iid'";
+	$objParse = oci_parse($objConnect, $strSQL);
+	$objExecute = oci_execute($objParse, OCI_DEFAULT);
+	$row = oci_fetch_array($objParse, OCI_BOTH);		
+	return $row['INNAME'];
+}
 function getTypeIdByName($typename){
 	include 'connectDB.php'; 
 	$strSQL = "SELECT TYPEID FROM IFOODTYPE WHERE TYPENAME = '$typename'";

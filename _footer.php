@@ -1,6 +1,7 @@
 <?
-$foodversion = 125;
+$foodversion = 132;
 ?>
+<link rel="stylesheet" type="text/css" href="core/css/box.css"/>
 <section class="footer-top">
       <div class="footer-inner">
         <figure class="f-column">
@@ -41,20 +42,11 @@ $foodversion = 125;
 	  }
 	</script>
         </figure>
-        <figure class="f-column foods">
-          <h4 class="title3">Hours of Operation </h4>
-          <ul class="post-list">
-            <li>Mon-Thur 11:30 am - 9:30 pm</li>
-            <li>Friday 11:30 am - 10:00 pm</li>
-            <li>Saturday 12:00 pm - 10:00 pm</li>
-            <li>Sunday Closed</li>
-            <li>All credit cards accepted. <img src="images/card-icon.png" width="51" height="16" alt=""></li>
-          </ul>
-        </figure>
-        <figure class="f-column contact">
-          <h4 class="title3">Get Directions</h4>
-          <p>Adipiscing justo semper egestas. Mauris auctor justo semper egestas. </p>
-          <div class="b-map"> <img src="images/image41.jpg" width="273" height="124" alt=""> </div>
+        <figure class="f-column">
+          <h4 class="title3">Sponsors</h4>
+          <img src="core/images/sponsor/IronChef.jpg" width="240" height="180" alt="" class="boxD"/>
+          <img src="core/images/sponsor/naauan.jpeg" width="179" height="180" alt=""  class="boxD"/>
+          <img src="core/images/sponsor/cp.jpg" width="177" height="180" alt=""  class="boxD"/>
         </figure>
       </div>
     </section>
