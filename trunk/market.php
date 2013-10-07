@@ -126,18 +126,35 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 		$rows = array();
 		$tmp = array();
 		$shop=array();
+		$shopDic=array();
 		$j=1;
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 			$tmp = array();
+			$tmp2 = array();
 			$dis="";
 			if (is_numeric($_SESSION['lat']) && is_numeric($_SESSION['lng'])){
 					$dis = distance($_SESSION['lat'], $_SESSION['lng'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'], "K")." km.";
 				}
-				
+			$tmp2['SHOPNAME']=$row['SHOPNAME'];
+			$tmp2['LATITUDE']=(double)$row['LATITUDE'];
+			$tmp2['ORDER']=$j;
+			$tmp2['LONGITUDE']=(double)$row['LONGITUDE'];
+			$tmp2['DIS']=$dis;
+			$tmp2['SID']=$row['SID'];
+			array_push($shopDic,$tmp2);
+			
 			array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j,$row['LATITUDE'],$dis,$row['SID']);
 			array_push($shop,$tmp);
 			$j++;
 		}
+		function cmp($a, $b) {
+		if ($a['DIS'] == $b['DIS']) {
+			return 0;
+		}
+		return ($a['DIS'] < $b['DIS']) ? -1 : 1;
+	}
+	uasort($shopDic, 'cmp');
+		//print_r($shopDic);
 		//echo json_encode($shop);
     ?>
   <script type="text/javascript">
@@ -206,13 +223,14 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
   </script>
             </article>
             <div id="sort">
-<?            
-		$strSQL = "SELECT * FROM ISHOP order by SHOPNAME";
+<? 
+	foreach ($shopDic as $row){
+	/*	$strSQL = "SELECT * FROM ISHOP order by SHOPNAME";
 		$objParse = oci_parse($objConnect, $strSQL);
 		$objExecute = oci_execute($objParse, OCI_DEFAULT);
 		while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 			//array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j);
-			//array_push($shop,$tmp);
+			//array_push($shop,$tmp);*/
 ?>
             <article class="box14 boxB">
                 <h3><a href="market_detail.php?sid=<? echo $row['SID'] ?>"><? echo $row['SHOPNAME']."  " ?></a><span style="font-size:14px" id="theDistance"><script src="core/js/calcDistance.js"></script>

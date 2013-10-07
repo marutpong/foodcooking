@@ -229,7 +229,7 @@ if (hasLiked($row['FID'])){
 			?> </h2>
             <article class="blog-post"><br>
                   <? 
-				  	$strSQL = "Select * FROM ICOMMENTS NATURAL JOIN IUSERS WHERE FID = ".$row['FID'];
+				  	$strSQL = "Select * FROM ICOMMENTS NATURAL JOIN IUSERS WHERE FID = ".$row['FID']."ORDER BY STIME";
 					$objParse = oci_parse($objConnect, $strSQL);
 					$objExecute = oci_execute($objParse, OCI_DEFAULT);
 					while ($rowCom = oci_fetch_array($objParse, OCI_BOTH)){
