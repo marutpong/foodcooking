@@ -2,8 +2,11 @@
 <link rel="stylesheet" type="text/css" href="core/css/mystyle.css"/>
 <link rel="stylesheet" type="text/css" href="core/fancyapps/source/jquery.fancybox.css" media="screen" />
 <script type="text/javascript" src="core/js/jquery.min-1.8.3.js"></script>
+<script src="core/js/jquery-1.9.1.js"></script>
+<script src="core/js/jquery-2.0.0.min.js"></script>
 <script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script>
+
 <script type="text/javascript">
 	function addFood() {
 		$.fancybox.open({
@@ -105,7 +108,7 @@
   <form action="search.php" method="post">
     <div style="margin-left:15px;"><br />
     <label>ชื่ออาหาร
-      <input name="name" type="text"  autofocus="autofocus" class="input" id="name" tabindex="1" autocomplete="on" value="<?=$_POST['name']?>" size="32" style="margin-bottom:15px;" /></label>
+      <input name="name" type="text"  autofocus="autofocus" class="input" id="name" tabindex="1" autocomplete="on" value="<?=$_POST['foodname']?>" size="32" style="margin-bottom:15px;" /></label>
 	<label>ประเภทอาหาร
       <select class="labelF combobox" id="foodtype" name="foodtype" >
         <option value="" selected="selected"> - ประเภทอาหาร - </option>

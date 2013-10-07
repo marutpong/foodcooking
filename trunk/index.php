@@ -33,6 +33,7 @@ include 'FoodFunction.php';
 <!--[if lt IE 9]>
       <script src="js/html5.js"></script>
 <![endif]-->
+<link rel="stylesheet" type="text/css" href="core/css/styleShowcase.css">
 <body id="def">
 <div class="wrapper"> 
   <!-- header -->
@@ -46,10 +47,11 @@ include 'FoodFunction.php';
   </header>
   <div id="homeContent">
     <div id="featured">
-      <div class="gallery" >
+      <div class="gallery">
         <div class="site"><img src="images/banner01.jpg" alt=""></div>
         <div class="site"> <img src="images/banner02.jpg" alt=""> </div>
         <div class="site"> <img src="images/banner03.jpg" alt=""> </div>
+        <div class="site"> <img src="images/banner04.jpg" alt=""> </div>
       </div>
       <div class="pagination stopClickPropagation"> <a href="#" class="left"><img src="images/arrow_le.png" alt=""></a>
         <div class="pages" ></div>
@@ -61,227 +63,83 @@ include 'FoodFunction.php';
       <h2><span class="span-my">คุณเคยเจอปัญหามั้ย?<br>
         เวลามีวัตถุดิบอยู่<br>
         แล้วไม่รู้จะปรุงเมนูไหน</span></h2>
-      <p><span class="span-my">
-      เรามีวิธีช่วยคุณในการหารายการอาหาร <br>
-      ที่ใกล้เคียงกับวัตถุดิบที่คุณมี</span></p>
+      <p><span class="span-my"> เรามีวิธีช่วยคุณในการหารายการอาหาร <br>
+        ที่ใกล้เคียงกับวัตถุดิบที่คุณมี</span></p>
       <a href="search.php" class="bannerbtn">ค้นหาแบบพิเศษ</a> </div>
   </div>
   <!-- Content -->
-  <section class="main-content">
-  <span class="top-bg"></span>
-  <div class="holder-container">
-    <section class="grid-holder">
-      <section class="grid w-padd">
-        <figure class="column forth-col">
-        <? include('_side.php'); ?>
-        </figure>
-        <figure class="column c-one-half">
-        <?
-    $strSQL = "SELECT *
-
-FROM( SELECT *FROM IFOODS ORDER BY dbms_random.value )
-
-WHERE rownum <= 3";
+  <section class="main-content"> <span class="top-bg"></span>
+    <div class="holder-container">
+      <section class="grid-holder">
+        <section class="grid w-padd">
+          <figure class="column forth-col">
+            <? include('_side.php'); ?>
+          </figure>
+          <figure class="column c-one-half">
+          
+          <?
+		  $foodList = array();
+		  $rtitle = array("Recent Food","Random Food","Most Favorite Food","Most Viewed Food");
+		  $rQuery = array(
+		  	"SELECT *
+				FROM( SELECT *FROM IFOODS ORDER BY FID DESC )
+				WHERE rownum <= 8",
+			"SELECT *
+	FROM( SELECT *FROM IFOODS ORDER BY dbms_random.value )
+	WHERE rownum <= 8",
+			"SELECT * FROM (SELECT * FROM( select FID, count(FID) NUM from IFAVORITE Group by FID ORDER BY NUM DESC )  WHERE rownum <= 8) NATURAL JOIN IFOODS ORDER BY NUM DESC",
+			"SELECT * FROM( SELECT * FROM IFOODS ORDER BY VIEWS DESC ) WHERE rownum <= 8");
+			$foodList['title']=$rtitle;
+			$foodList['query']=$rQuery;
+			//print_r($foodList);
+			for ($j=0 ; $j<count($foodList['title']) ; $j++){
+		  ?>
+          <article class="blog-main"> <strong class="title"><?=$foodList['title'][$j]?></strong>
+            <div id="showcase<?=$j?>" class="showcase">
+              <div class="showcase-slide">
+                <div class="showcase-content">
+                  <?
+    $strSQL = $foodList['query'][$j];
 	//echo $strSQL;
 	$objParse = oci_parse($objConnect, $strSQL);
 	$objExecute = oci_execute($objParse, OCI_DEFAULT);
 	$searchOB = array();
+	$i=0;
 	while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
-	$src=picture_url("_".$row['PICTURE']);
+		$i++;
+		$src=picture_url("_".$row['PICTURE']);
 
 		?>
-     <figure class="column three-col <?=$row['TYPEID']?> portfolio-item item alpha" >
-     <a href="foodDetail.php?foodid=<?=$row['FID']?>">
-            <div style="background-image:url('<?=$src?>');" class="myfoodpic">
-            	<div class="myfoodpic_title"><?=$row['FOODNAME']?></div>
+                  <figure class="column three-col <?=$row['TYPEID']?> portfolio-item item alpha" >
+                    <div style="background-image:url('<?=$src?>');" class="myfoodpic">
+                      <div class="myfoodpic_title"> <a href="foodDetail.php?foodid=<?=$row['FID']?>" style="color:#FFF;">
+                        <?=$row['FOODNAME']?>
+                      </a></div>
+                    </div>
+                  </figure>
+                  <? 
+	  if ($i%2==0 && $i!=8){
+		 echo '</div></div> <div class="showcase-slide">
+          <div class="showcase-content">';
+	  }
+	  } ?>
+                </div>
+              </div>
             </div>
-            </a>
-            <ul class="b-top-links">
-              <li class="author-name">by
-                <?=$row['NAME']?>
-              </li>
-              <li class="pic-icon">
-                <?=$row['TYPENAME']?>
-              </li>
-              <li class="catagory">
-                <?=$row['VIEWS']?>
-                views</li>
-            </ul>
+          </article>
+          <? } ?>
           </figure>
-      <? } ?>
-        
-        
-          <article class="blog-main"> <strong class="title">Duis sed tortor a leo ullamcorper fringilla!</strong>
-            <ul class="b-top-links">
-              <li class="author-name">by Jason</li>
-              <li class="pic-icon">Section</li>
-              <li class="c-icon">12</li>
-            </ul>
-            <img src="images/image08.jpg" class="blog-img2" alt="">
-            <p>Rhoncus quis, varius sed velit. Mauris quis nunc eu nunc molestie egestas et sit amet odio. Morbi lacinia velit in nibh sodales sed pharetra sem feugiat. Vivamus ut cursus augue. Integer sit amet arcu lorem, at egestas tellus. Phasellus tellus orci, congue at tristique at, mattis ut arcu. Donec dictum eros eu felis laoreet egestas. Nullam adipiscing nibh id felis lacinia a iaculis nisi vestibulum. Ut sit amet urna enim, at accumsan quam. Nunc dui elit, hendrerit quis convallis sit amet, dapibus in metus. Ut dolor est, blandit a auctor vitae, accumsan id eros.</p>
-          </article>
-          <article class="blog-main"> <strong class="title">Duis sed tortor a leo ullamcorper fringilla!</strong>
-            <ul class="b-top-links">
-              <li class="author-name">by Jason</li>
-              <li class="pic-icon">Section</li>
-              <li class="c-icon">12</li>
-            </ul>
-            <img src="images/image08.jpg" class="blog-img2" alt="">
-            <p>Rhoncus quis, varius sed velit. Mauris quis nunc eu nunc molestie egestas et sit amet odio. Morbi lacinia velit in nibh sodales sed pharetra sem feugiat. Vivamus ut cursus augue. Integer sit amet arcu lorem, at egestas tellus. Phasellus tellus orci, congue at tristique at, mattis ut arcu. Donec dictum eros eu felis laoreet egestas. Nullam adipiscing nibh id felis lacinia a iaculis nisi vestibulum. Ut sit amet urna enim, at accumsan quam. Nunc dui elit, hendrerit quis convallis sit amet, dapibus in metus. Ut dolor est, blandit a auctor vitae, accumsan id eros.</p>
-          </article>
-          <ul class="pager">
-            <li class="p-title">Page 1 of 3</li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#"> > </a></li>
-          </ul>
-        </figure>
+        </section>
       </section>
-    </section>
-  </div>
-  <div class="holder-container">
-    <section class="grid-holder">
-      <section class="grid">
-        <figure class="column three-col">
-          <h2>Reservations</h2>
-          <div id="calendar"></div>
-          <em class="event-det">Wednesday, May 16th at 21:00 for party of 2</em> <a href="seat-reserve.html" class="bannerbtn">Reserve Table</a> </figure>
-        <figure class="column three-col">
-          <h2>Special</h2>
-          <ul class="special-list">
-            <li> <img src="images/image01.jpg" width="60" height="60" alt="">
-              <div class="img-det"> <strong class="title">Item Name</strong>
-                <p>A little description <br>
-                  will go here.</p>
-                <em class="price">17,95</em> </div>
-            </li>
-            <li class="even"> <img src="images/image02.jpg" width="60" height="60" alt="">
-              <div class="img-det"> <strong class="title">Item Name</strong>
-                <p>A little description <br>
-                  will go here.</p>
-                <em class="price">13,95</em> </div>
-            </li>
-            <li> <img src="images/image03.jpg" width="60" height="60" alt="">
-              <div class="img-det"> <strong class="title">Item Name</strong>
-                <p>A little description <br>
-                  will go here.</p>
-                <em class="price">21,95</em> </div>
-            </li>
-            <li class="even"> <img src="images/image04.jpg" width="60" height="60" alt="">
-              <div class="img-det"> <strong class="title">Item Name</strong>
-                <p>A little description <br>
-                  will go here.</p>
-                <em class="price">19,95</em> </div>
-            </li>
-          </ul>
-          <a href="menu.php" class="c-link">View our complete menu</a> </figure>
-        <figure class="column three-col">
-          <h2>Location</h2>
-          <div class="location"> 21 M.M Alam Road, Gluberg.</div>
-          <div class="map"><img src="images/map.jpg" alt=""></div>
-          <div class="bisnesshour">
-            <div class="bisnessleft">Business
-              Hours</div>
-            <div class="bisnessright"><strong>MON - FRI:</strong> &nbsp; <span class="time"> 9AM to 10PM</span><br>
-              <strong>SAT & SUN:</strong> &nbsp; <span class="time">9AM to 10PM</span></div>
-          </div>
-        </figure>
-      </section>
-    </section>
-  </div>
-  <div class="holder-container last">
-    <section class="grid-holder">
-      <section class="grid">
-        <figure class="column three-col">
-          <article>
-            <h2>Special of the Month</h2>
-            <img src="images/image05.jpg" class="offer-img" alt="">
-            <div class="img-det offer"> <strong class="title">Item Name</strong>
-              <p>Nullam mi turpis, ultricies eu mattis vel, tincidunt vitae velit. Nullam quis ante sapien. Praesent sollicitudin volutpat fringilla.</p>
-              <em class="price">17,95</em> </div>
-          </article>
-        </figure>
-        <figure class="column three-col">
-          <h2>Our Staff</h2>
-          <ul class="special-list">
-            <li> <img src="images/image20.jpg" width="60" height="60" alt="">
-              <div class="img-det"> <strong class="title2">Aron Stone</strong>
-                <p>Owner </p>
-              </div>
-              <a href="#" class="det-link">Detail</a> </li>
-            <li class="even"> <img src="images/image19.jpg" width="60" height="60" alt="">
-              <div class="img-det"> <strong class="title2">Mile Arton</strong>
-                <p>Head Chef</p>
-              </div>
-              <a href="#" class="det-link">Detail</a> </li>
-            <li> <img src="images/image16.jpg" width="18" height="60" alt="">
-              <div class="img-det"> <strong class="title2">JENA Wolf</strong>
-                <p>Head Chef</p>
-              </div>
-              <a href="#" class="det-link">Detail</a> </li>
-          </ul>
-          <a href="our-team.html" class="c-link">meet the rest of the team</a> </figure>
-        <figure class="column three-col">
-          <h2>Events Gallery</h2>
-          <ul class="special-list">
-            <li><img src="images/image01.jpg" alt="" width="60" height="60" >
-              <div class="img-det"> <em>21-04-2012</em> <strong class="title">a news item</strong>
-                <p>equipment, tips</p>
-              </div>
-              <a href="#" class="det-link">Detail</a> </li>
-            <li class="even"><img src="images/image02.jpg" width="60" height="60" alt="">
-              <div class="img-det"> <em>21-04-2012</em> <strong class="title">a news item</strong>
-                <p>equipment, tips</p>
-              </div>
-              <a href="#" class="det-link">Detail</a> </li>
-            <li><img src="images/image03.jpg" width="60" height="60" alt="">
-              <div class="img-det"> <em>21-04-2012</em> <strong class="title">a news item</strong>
-                <p>equipment, tips</p>
-              </div>
-              <a href="#" class="det-link">Detail</a> </li>
-          </ul>
-          <a href="blog.html" class="c-link">more entries on our blog</a> </figure>
-      </section>
-    </section>
-  </div>
-  <div class="holder-container last">
-    <section class="grid-holder">
-      <section class="grid">
-        <figure class="column forth-fourth-col">
-          <h2>Upcoming special offer's</h2>
-        </figure>
-        <br class="clearfix">
-        <figure class="column three-col">
-          <ul class="special-list2">
-            <li> <a href="#" class="active">BBQ am Outdoorgrill</a> </li>
-            <li> <a href="#">Spring special sushi</a> </li>
-            <li> <a href="#">Sesamie delicious</a> </li>
-            <li> <a href="#">Soup + Menu = $10.00</a> </li>
-          </ul>
-        </figure>
-        <figure class="column three-fourth-col">
-          <article class="box-1"> <img src="images/image39.jpg" width="194" height="160" alt="" class="team-img margin">
-            <div class="box-inner">
-              <h3>BBQ am Outdoorgrill </h3>
-              <ul class="b-top-links box-list">
-                <li class="cape"><a href="#">Cape venue</a></li>
-                <li class="cal"><a href="#">21-02-2012</a></li>
-                <li class="time-date"><a href="#">12:00 am t0 3:00 pm</a></li>
-              </ul>
-              <p>Just as the soul fills the body, so God fills the world. Just as the soul bears the body. Just as the soul sees but is not seen, so God sees but is not seen. Just as the soul feeds the body, so God gives food to the world.</p>
-            </div>
-          </article>
-        </figure>
-      </section>
-    </section>
-  </div>
-  <? include '_footer.php' ?>
+    </div>
+    <div class="holder-container last">
+      <section class="grid-holder"></section>
+    </div>
+    <? include '_footer.php' ?>
 </div>
 <!-- Start JavaScript --> 
-<script src="core/js/jquery-1.9.1.js"></script>
-<script src="core/js/jquery-2.0.0.min.js"></script>
-
+<script src="core/js/jquery-1.9.1.js"></script> 
+<script src="core/js/jquery-2.0.0.min.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script><!-- Main Slider --> 
 <script type="text/javascript" src="js/sourtin-jquery.js"></script><!-- sourtin Slider --> 
 <script type="text/javascript" src="js/jquery-u.js"></script><!-- jQuery Ui --> 
@@ -293,9 +151,51 @@ WHERE rownum <= 3";
 <script type="text/javascript" src="js/jquery06.js"></script><!-- UItoTop plugin  --> 
 <script type="text/javascript" src="js/focus.js"></script><!-- text field clear & celander Seting--> 
 
-<script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>
-<script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script> 
+<script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script> 
+<script src="core/js/jquery.aw-showcase.js"></script> 
+<script type="text/javascript">
+ 
+$(document).ready(function()
+{
+	<? for ($num=0;$num<4;$num++) { ?>
+	$("#showcase<?=$num?>").awShowcase(
+	{
+		content_width:			660,
+		content_height:			240,
+		fit_to_parent:			false,
+		auto:					true,
+		interval:				2500,
+		continuous:				false,
+		loading:				true,
+		tooltip_width:			200,
+		tooltip_icon_width:		32,
+		tooltip_icon_height:	32,
+		tooltip_offsetx:		18,
+		tooltip_offsety:		0,
+		arrows:				false,
+		buttons:				true,
+		btn_numbers:			false,
+		keybord_keys:			true,
+		mousetrace:				false, /* Trace x and y coordinates for the mouse */
+		pauseonover:			true,
+		stoponclick:			false,
+		transition:				'hslide', /* hslide/vslide/fade */
+		transition_delay:		0,
+		transition_speed:		500,
+		show_caption:			'onload', /* onload/onhover/show */
+		thumbnails:				false,
+		thumbnails_position:	'outside-last', /* outside-last/outside-first/inside-last/inside-first */
+		thumbnails_direction:	'vertical', /* vertical/horizontal */
+		thumbnails_slidex:		1, /* 0 = auto / 1 = slide one thumbnail / 2 = slide two thumbnails / etc. */
+		dynamic_height:			true, /* For dynamic height to work in webkit you need to set the width and height of images in the source. Usually works to only set the dimension of the first slide in the showcase. */
+		speed_change:			true, /* Set to true to prevent users from swithing more then one slide at once. */
+		viewline:				false, /* If set to true content_width, thumbnails, transition and dynamic_height will be disabled. As for dynamic height you need to set the width and height of images in the source. */
+		custom_function:		null /* Define a custom function that runs on content change */
+	});
+	<? } ?>
+});
 
-
+</script>
 </body>
 </html>

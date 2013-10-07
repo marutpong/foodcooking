@@ -34,12 +34,12 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 <!--[if lt IE 9]>
       <script src="js/html5.js"></script>
 <![endif]-->
+<link rel="stylesheet" type="text/css" href="core/css/mystyle.css">
 <link rel="stylesheet" href="core/css/box.css" type="text/css" media="all">
 
   <script src="http://maps.google.com/maps/api/js?sensor=false" 
           type="text/javascript"></script>
-          
-          <script src="core/js/jquery-1.9.1.js"></script>
+<script src="core/js/jquery-1.9.1.js"></script>
 <script src="core/js/jquery-2.0.0.min.js"></script>
 <? if ($editable) { ?>
 <script type="text/javascript">
@@ -114,8 +114,21 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
             <? include('_side.php'); ?>
           </figure>
           <figure class="column c-one-half">
-            <h2>Market</h2>
-            <article class="staff-list">
+            <h2>Market</h2><br>
+            <table width="674" border="0" id="addIngre">
+              <tr>
+                <td>&nbsp;</td>
+                <td align="right"> Search By Ingrdient </td>
+                <td width="200"><select class="labelF combobox" id="iid" name="ingredient[]">
+                  <option value=""></option>
+                  <?=optionIngredient("");?>
+                  </select>
+                  <input name="inname" type="hidden" id="inname"></td>
+            	<td width="100" ><a class="button_sub" href="javascript:searchIngre()">SEARCH</a>
+                </td>
+            </tr>
+            </table><br>
+<article class="staff-list">
               <div id="map" style="width: 669px; height: 400px;"></div>
 	<?
 		include 'connectDB.php';
@@ -151,7 +164,7 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 		if ($a['DIS'] == $b['DIS']) {
 			return 0;
 		}
-		return ($a['DIS'] < $b['DIS']) ? -1 : 1;
+		return (floatval($a['DIS']) < floatval($b['DIS'])) ? -1 : 1;
 	}
 	uasort($shopDic, 'cmp');
 		//print_r($shopDic);
@@ -291,7 +304,45 @@ if ($total > 5){
 <script type="text/javascript" src="js/jquery06.js"></script><!-- UItoTop plugin  --> 
 <script type="text/javascript" src="js/focus.js"></script><!-- text field clear & celander Seting-->
 
+
+<script type="text/javascript" src="core/js/jquery-1.6.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="core/css/jquery-ui.css">
+<link href="core/css/mystyle.css" rel="stylesheet" type="text/css">
+<script src="core/js/jquery-ui-1.10.3.js"></script> 
+<script type="text/javascript" src="core/js/jquery.numeric.js"></script> 
+<script src="core/js/combobox.js"></script> 
+
 <script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$( "#iid" ).combobox();
+		
+	})
+	function searchIngre() {
+		var iid=$('#iid').val();
+		var iname=$('#inname').val();
+		if (iid==""){
+			iid=-1;
+		}
+		$.fancybox.open({
+					href : 'module/market_by_ingre.php?iid='+iid+'&iname='+iname,
+					type : 'iframe',
+					width  : 550,
+					height : 600,
+					fitToView   : false,
+					autoSize    : true,
+					padding: 5,
+					openEffect : 'elastic',
+					openSpeed  : 150,
+					closeEffect : 'elastic',
+					closeSpeed  : 150,
+					afterClose : function() {
+						window.location.reload();
+					}
+		});
+	}
+
+</script>
 </body>
 </html>

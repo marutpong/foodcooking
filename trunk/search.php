@@ -24,8 +24,8 @@ if (!isset($_SESSION)) {
 	$input = $_SESSION["INPUTCAL"];
 
 $_SESSION['keyword'] = array();
-if (isset($_POST['name']) && !empty($_POST['name'])){
-	$tmp = array('attr'  => 'FOODNAME', 'value'  => $_POST['name']);
+if (isset($_POST['foodname']) && !empty($_POST['foodname'])){
+	$tmp = array('attr'  => 'FOODNAME', 'value'  => $_POST['foodname']);
 	array_push($_SESSION['keyword'],$tmp);
 }
 if (isset($_POST['foodtype']) && !empty($_POST['foodtype'])){
@@ -49,16 +49,15 @@ $keyword = $_SESSION['keyword'];
 <!-- CSS Style -->
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
 <link rel="stylesheet" type="text/css" href="core/css/bar-style.css">
+<link rel="stylesheet" href="css/shortcode.css" type="text/css" media="all">
+
 <!-- Short Codes Style -->
 <!-- Start Java CSS -->
 <!-- Color Schemes CSS -->
 <!--[if lt IE 9]>
       <script src="js/html5.js"></script>
 <![endif]-->
-<script src="core/js/jquery-1.9.1.js"></script>
-<script src="core/js/jquery-2.0.0.min.js"></script>
-<script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>
-<script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script>
+
 </head>
 <body id="def">
 <div class="wrapper"> 
@@ -95,7 +94,7 @@ $keyword = $_SESSION['keyword'];
                   <table id="dynamic_tb">
                     <tr class="labelF">
                       <td width="70" align="right" valign="top">ชื่ออาหาร :</td>
-                      <td><input name="name" type="text" autofocus class="input" id="name" tabindex="1" autocomplete="on" value="<?=$_POST['name']?>" size="32">
+                      <td><input name="foodname" type="text" autofocus  class="input" id="name" tabindex="1" autocomplete="on" value="<? echo $_POST['foodname']; ?>" size="32" onblur="clearText()" >
                         <input name="fsearch" type="hidden" id="fsearch" value="1"></td>
                     </tr>
                     <tr>
@@ -222,7 +221,7 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 	else { $color = "#86e01e"; }
 	$subSearchOB['COLOR']=$color;
 
-	if ($percentSim!=0 || ($percentSim==0 && empty($input) && (!empty($_POST['name']) || !empty($_POST['foodtype'])))){
+	if ($percentSim!=0 || ($percentSim==0 && empty($input) && (!empty($_POST['foodname']) || !empty($_POST['foodtype'])))){
 		$searchOB[$row['FID']]=$subSearchOB;
 	}
 	
@@ -279,10 +278,10 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
                 </article>
                 <? if (!empty($input)) { ?>
                 <article class=" column three-col"><span class="title6">วัตถุดิบที่ขาด</span>
-                  <ul>
-                    <? foreach ($ob['LACK'] as $ig){
-					echo "<li>".$ig['INNAME']."\t".$ig['QUANTITY']."\t".$ig['UNIT']."</li>";
-					} ?>
+                  <ul style="color:#C30">
+                    <? foreach ($ob['LACK'] as $ig){?>
+					<li><a href="javascript:showMarket(<?=$ig['IID']?>,'<?=$ig['INNAME']?>')"><?=$ig['INNAME']?> <?=$ig['QUANTITY']?> <?=$ig['UNIT']?></a></li>
+					<? } ?>
                   </ul>
                 </article>
                 <? } ?>
@@ -290,6 +289,10 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
               <section class="grid"></section>
             </article>
             <? } ?>
+            <? if (count($searchOB)==0) {?>
+            <div class="alert notice hideit">
+              <p>Not found the food.</p>
+             </div><? } ?>
           </figure>
         </section>
       </section>
@@ -299,23 +302,26 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 <!-- Start JavaScript --> 
 <script src="core/js/jquery-1.9.1.js"></script> 
 <script src="core/js/jquery-2.0.0.min.js"></script> 
+
 <script type="text/javascript" src="js/jquery-u.js"></script><!-- jQuery Ui --> 
 <script type="text/javascript" src="js/ddsmooth.js"></script><!-- Nav Menu ddsmoothmenu --> 
 <script type="text/javascript" src="js/jquery03.js"></script><!-- Sliding Text and Icon Menu Style  --> 
 <script type="text/javascript" src="js/jquery04.js"></script><!-- jQuery Prettyphoto  --> 
 <script type="text/javascript" src="js/focus.js"></script><!-- text field clear & celander Seting--> 
 
-<script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script> 
-<script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script> 
+
 <script type="text/javascript" src="core/js/jquery-1.6.4.min.js"></script>
 <link rel="stylesheet" type="text/css" href="core/css/jquery-ui.css">
 <link href="core/css/mystyle.css" rel="stylesheet" type="text/css">
 <script src="core/js/jquery-ui-1.10.3.js"></script> 
 <script type="text/javascript" src="core/js/jquery.numeric.js"></script> 
 <script src="core/js/combobox.js"></script> 
+
+<script type="text/javascript" src="core/fancyapps/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+<script type="text/javascript" src="core/fancyapps/source/jquery.fancybox.pack.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#name').focus();
 		$( ".combobox" ).combobox();
 		$( "#foodtype" ).combobox();
 /*		 $( ".number" ).spinner({
@@ -362,6 +368,25 @@ var removeOb = function(e) {
 	 } );
 	//$(e).parent().parent().remove();
 };
+function showMarket(iid,iname) {
+		$.fancybox.open({
+					href : 'module/market_by_ingre.php?iid='+iid+'&iname='+iname,
+					type : 'iframe',
+					width  : 550,
+					height : 600,
+					fitToView   : false,
+					autoSize    : true,
+					padding: 5,
+					openEffect : 'elastic',
+					openSpeed  : 150,
+					closeEffect : 'elastic',
+					closeSpeed  : 150,
+					afterClose : function() {
+						window.location.reload();
+					}
+		});
+	}
+function clearText(){ document.getElementById("foodname").value = ""; }
 </script>
 </body>
 </html>
