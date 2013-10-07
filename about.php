@@ -90,7 +90,7 @@ include 'FoodFunction.php';
               <aside class="det-bar">
                 <h3>Phasit Panyaphruek</h3>
                 <em class="title4">Owner</em>
-                <p>Pellentesque fermentum lorem at odio gravida consectetur. Fusce id nulla quam, vitae vehicula tellus. Sed et lectus eget ipsum vulputate mollis eu et dolor. Nunc hendrerit sapien eu ante fringilla consectetur. Sed ut diam neque, vel pharetra dui.</p>
+                <p>เทพเจ้าดาวเหนือ</p>
                 <p>Aenean tempor nunc sit amet dolor porta cursus. Morbi sit amet dolor orci. Donec consequat egestas condimentum. Sed eu libero non velit elementum dapibus vel at urna. Etiam in quam congue lorem varius interdum.</p>
               </aside>
             </article>
