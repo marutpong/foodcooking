@@ -56,7 +56,7 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 		$shopDic=array();
 		if (is_numeric($_GET['iid'])) { 
 		include '../connectDB.php';
-    	echo $strSQL = "SELECT * FROM IHAVE H JOIN ISHOP S ON H.SID=S.SID WHERE IID = ".$_GET['iid'];
+    	$strSQL = "SELECT * FROM IHAVE H JOIN ISHOP S ON H.SID=S.SID WHERE IID = ".$_GET['iid'];
 		//echo $strSQL;
 
 		$j=1;

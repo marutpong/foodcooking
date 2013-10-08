@@ -63,8 +63,8 @@ include 'FoodFunction.php';
               <aside class="det-bar">
                 <h3>Chalermpong Somdulyawat</h3>
                 <em class="title4">Owner</em>
-                <p>540610596</p>
-                <p>www.facebook.com/chalermpong.somdulyawat</p>
+                <p>Student ID : 540610596</p>
+                <p><a href="http://www.facebook.com/chalermpong.somdulyawat" target="_blank"><img src="images/facebook.png" alt="Facebook" width="18" height="18"> www.facebook.com/chalermpong.somdulyawat</a></p>
               </aside>
             </article>
             <article class="staff-list">
@@ -72,8 +72,8 @@ include 'FoodFunction.php';
               <aside class="det-bar">
                 <h3>Marutpong Chailangka</h3>
                 <em class="title4">Owner</em>
-                <p>540610639</p>
-                <p>www.facebook.com/JameJiNeedEat.</p>
+                <p>Student ID : 540610639</p>
+                <p><a href="http://www.facebook.com/MrJamesMrp" target="_blank"><img src="images/facebook.png" alt="Facebook" width="18" height="18">www.facebook.com/MrJamesMrp</a></p>
               </aside>
             </article>
             <article class="staff-list">
@@ -81,8 +81,8 @@ include 'FoodFunction.php';
               <aside class="det-bar">
                 <h3>Panupong Jantapoon</h3>
                 <em class="title4">Owner</em>
-                <p>540610633.</p>
-              <p>www.facebook.com/panupong.jantapoon</p>
+                <p>Student ID : 540610633</p>
+                <p><a href="http://www.facebook.com/PanupongJantapoon" target="_blank"><img src="images/facebook.png" alt="Facebook" width="18" height="18">www.facebook.com/PanupongJantapoon</a></p>
               </aside>
             </article>
             <article class="staff-list">
@@ -90,8 +90,8 @@ include 'FoodFunction.php';
               <aside class="det-bar">
                 <h3>Phasit Panyaphruek</h3>
                 <em class="title4">Owner</em>
-                <p>540610635</p>
-                <p>www.facebook.com/bungyugi</p>
+                <p>Student ID : 540610635</p>
+                <p><a href="http://www.facebook.com/bungyugi" target="_blank"><img src="images/facebook.png" alt="Facebook" width="18" height="18">www.facebook.com/bungyugi</a></p>
               </aside>
             </article>
             <article class="staff-list">
@@ -99,8 +99,8 @@ include 'FoodFunction.php';
               <aside class="det-bar">
                 <h3>Tanaphon Aunhinkong</h3>
                 <em class="title4">Owner</em>
-                <p>540610611</p>
-                <p>www.facebook.com/tanaphonble</p>
+                <p>Student ID : 540610611</p>
+                <p><a href="http://www.facebook.com/tanaphonble" target="_blank"><img src="images/facebook.png" alt="Facebook" width="18" height="18">www.facebook.com/tanaphonble</a></p>
               </aside>
             </article>
             <p>&nbsp;</p>

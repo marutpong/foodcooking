@@ -80,6 +80,7 @@ if (isset($_POST['email'])){
 		$randomString .= $characters[rand(0, strlen($characters) - 1)];
 	}
 	$newpass = str_shuffle($randomString);
+	$newEncodepass = sha1($newpass);
 	$msgheader = "Reset Password from www.foodcooking.com";
 	$msgcontent = "รหัสผ่านใหม่ของคุณคือ :$newpass";
 	
@@ -89,7 +90,7 @@ if (isset($_POST['email'])){
 	oci_execute($objParse, OCI_DEFAULT);
 	$total = oci_fetch_all($objParse, $Result);
 	if($total==1){
-		$strSQL = "update iusers set password = '$newpass' where EMAIL = '$email'";
+		$strSQL = "update iusers set password = '$newEncodepass' where EMAIL = '$email'";
 		$objParse = oci_parse($objConnect, $strSQL);
 		$objExecute = oci_execute($objParse);
 		sendmail($email,$msgheader,$msgcontent);

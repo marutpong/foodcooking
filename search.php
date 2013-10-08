@@ -243,7 +243,7 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 <?	foreach ($searchOB as $ob){ 
 	$src=picture_url("_".$ob['PICTURE']);
 ?>
-            <article class="blog-main">
+            <article class="blog-main" style="display:none;">
               <section class="grid" style="background:#E9E9E9;padding-top:20px;border-radius:15px;">
                 <article class=" column three-col">
                   <? if (!empty($input)) { ?>
@@ -289,7 +289,8 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
               <section class="grid"></section>
             </article>
             <? } ?>
-            <? if (count($searchOB)==0) {?>
+            <? if (count($searchOB)>5) { ?><div id="load" class="button_addmore my_loadmore">Load More</div><? } ?>
+<? if ((count($searchOB)==0 && count($input)!=0) || (count($searchOB)==0 && count($_POST['foodname'])!="")) {?>
             <div class="alert notice hideit">
               <p>Not found the food.</p>
              </div><? } ?>
@@ -324,12 +325,15 @@ while ($row = oci_fetch_array($objParse, OCI_BOTH)) {
 	$(document).ready(function() {
 		$( ".combobox" ).combobox();
 		$( "#foodtype" ).combobox();
-/*		 $( ".number" ).spinner({
-			min: 0,
-			step: 1.00,
-			numberFormat: "n"
-			});
-*/
+		 $("article.blog-main").slice(0, 5).show(); // select the first ten
+		$("#load").click(function(e){ // click event for load more
+				e.preventDefault();
+				$("article.blog-main:hidden").slice(0, 5).show('slow'); // select next 10 hidden divs and show them
+				if($("article.blog-main:hidden").length == 0){ // check if any hidden divs still exist
+					$('#load').hide('slow');
+					//alert("No more divs"); // alert if there are none left
+				}
+		});
 		$('#addmore').click(function () {
 			var htmlStr = '<tr>\
               <td width="200"><select class="labelF combobox" id="combobox" name="ingredient[]">\
