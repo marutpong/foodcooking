@@ -245,7 +245,7 @@ if ( ( isset($_SESSION['UIDS']) && isset($_SESSION['USERNAME']) )
 			//array_push($tmp,$row['SHOPNAME'],(double)$row['LATITUDE'],(double)$row['LONGITUDE'],$j);
 			//array_push($shop,$tmp);*/
 ?>
-            <article class="box14 boxB">
+            <article class="box14 boxB" style="display:none;">
                 <h3><a href="market_detail.php?sid=<? echo $row['SID'] ?>"><? echo $row['SHOPNAME']."  " ?></a><span style="font-size:14px" id="theDistance"><script src="core/js/calcDistance.js"></script>
 <script type="text/javascript">
 var distance = distanceFrom({
@@ -286,7 +286,10 @@ if ($total > 5){
 ?>
             </article>
             
-<? } 		 ?></div>
+<? } 		 ?>
+			
+			<div id="load" class="button_addmore my_loadmore">Load More</div>
+			</div>
           </figure>
         </section>
       </section>
@@ -317,7 +320,15 @@ if ($total > 5){
 <script type="text/javascript">
 	$(document).ready(function() {
 		$( "#iid" ).combobox();
-		
+		    $("article.boxB").slice(0, 10).show(); // select the first ten
+			$("#load").click(function(e){ // click event for load more
+				e.preventDefault();
+				$("article.boxB:hidden").slice(0, 10).show('slow'); // select next 10 hidden divs and show them
+				if($("article.boxB:hidden").length == 0){ // check if any hidden divs still exist
+					$('#load').hide('slow');
+					//alert("No more divs"); // alert if there are none left
+				}
+			});
 	})
 	function searchIngre() {
 		var iid=$('#iid').val();

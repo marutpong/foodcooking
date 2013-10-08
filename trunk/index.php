@@ -94,7 +94,7 @@ include 'FoodFunction.php';
 			//print_r($foodList);
 			for ($j=0 ; $j<count($foodList['title']) ; $j++){
 		  ?>
-          <article class="blog-main"> <strong class="title"><?=$foodList['title'][$j]?></strong>
+          <article class="blog-main"><h2> <strong class="title"><?=$foodList['title'][$j]?></strong></h2>
             <div id="showcase<?=$j?>" class="showcase">
               <div class="showcase-slide">
                 <div class="showcase-content">
@@ -166,7 +166,7 @@ $(document).ready(function()
 		fit_to_parent:			false,
 		auto:					true,
 		interval:				2500,
-		continuous:				false,
+		continuous:				true,
 		loading:				true,
 		tooltip_width:			200,
 		tooltip_icon_width:		32,

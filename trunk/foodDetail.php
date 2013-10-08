@@ -200,6 +200,7 @@ if (hasLiked($row['FID'])){
                    
                   </ul>
                 </figure>
+                
                 <? if (isset($_SESSION["RESULT"][$row['FID']]['LACK'])){ ?>
                 <figure class="column three-col">
                   <h2>Lack Ingredients</h2>
@@ -210,6 +211,20 @@ if (hasLiked($row['FID'])){
                   </ul>
                 </figure>
                 <? } ?>
+                <figure class="column three-col">
+                  <h2>Tools</h2>
+                  <ul class="normal-list">
+                  <? 
+				  	$strSQL = "Select * from IUSE NATURAL JOIN ITOOLS WHERE FID = ".$row['FID'];
+						$objParse = oci_parse($objConnect, $strSQL);
+						$objExecute = oci_execute($objParse, OCI_DEFAULT);
+					while ($rowIngre = oci_fetch_array($objParse, OCI_BOTH)){
+				  ?>
+                    <li><? echo $rowIngre['TOOLNAME']; ?> </li>
+                   <? } ?> 
+                   
+                  </ul>
+                </figure>
               </section>
             </section>
             <h2>Method</h2>
